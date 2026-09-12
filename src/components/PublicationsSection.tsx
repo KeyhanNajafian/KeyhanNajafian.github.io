@@ -22,7 +22,7 @@ export const PublicationsSection: React.FC = () => {
   const [expandedBibtexId, setExpandedBibtexId] = useState<string | null>(null);
 
   const categories = [
-    { id: 'all', label: 'All Publications' },
+    { id: 'all', label: 'Chosen Publications' },
     { id: 'precision-ag', label: 'Precision Agriculture' },
     { id: 'medical-imaging', label: 'Medical Imaging' },
     { id: 'foundation-models', label: 'Foundation Models & Video' },
