@@ -16,7 +16,7 @@ import {
   Check,
   Copy
 } from 'lucide-react';
-import { PERSONAL_INFO, EDUCATION, AWARDS, EXPERIENCES, PUBLICATIONS, TECHNICAL_SKILLS, TEACHING_AND_SERVICE, REFERENCES } from '../data/portfolioData';
+import { PERSONAL_INFO, EDUCATION, AWARDS, EXPERIENCES, PUBLICATIONS, TECHNICAL_SKILLS, TEACHING_AND_SERVICE } from '../data/portfolioData';
 
 interface CvModalProps {
   isOpen: boolean;
@@ -119,7 +119,6 @@ export const CvModal: React.FC<CvModalProps> = ({ isOpen, onClose }) => {
 
             <div className="text-xs text-slate-600 font-mono space-y-1 text-center sm:text-right">
               <div>{PERSONAL_INFO.email}</div>
-              <div>{PERSONAL_INFO.phone}</div>
               <div className="text-[#0369A1]">Calgary, AB, Canada</div>
             </div>
           </div>
@@ -226,22 +225,6 @@ export const CvModal: React.FC<CvModalProps> = ({ isOpen, onClose }) => {
                 <div key={idx}>
                   <strong className="text-[#0F172A]">{skill.category}: </strong>
                   <span>{skill.skills.join(', ')}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* References */}
-          <div>
-            <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-500 border-b border-slate-200 pb-1 mb-2">
-              Academic References
-            </h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-              {REFERENCES.map((ref, idx) => (
-                <div key={idx} className="p-2.5 rounded bg-slate-50 border border-slate-200">
-                  <strong className="text-[#0F172A] block">{ref.name}</strong>
-                  <span className="text-slate-600 block">{ref.role}, {ref.affiliation}</span>
-                  <span className="text-[#0369A1] font-mono text-[11px] block mt-0.5">{ref.email}</span>
                 </div>
               ))}
             </div>

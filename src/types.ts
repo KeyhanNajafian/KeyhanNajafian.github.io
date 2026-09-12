@@ -70,10 +70,3 @@ export interface MentorshipItem {
   period: string;
   description: string;
 }
-
-export interface AcademicReference {
-  name: string;
-  role: string;
-  affiliation: string;
-  email: string;
-}

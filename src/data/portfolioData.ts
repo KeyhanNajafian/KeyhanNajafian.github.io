@@ -1,4 +1,4 @@
-import { Publication, EducationItem, AwardItem, ExperienceItem, TeachingItem, MentorshipItem, AcademicReference } from '../types';
+import { Publication, EducationItem, AwardItem, ExperienceItem, TeachingItem, MentorshipItem } from '../types';
 
 export const PERSONAL_INFO = {
   name: 'Dr. Keyhan Najafian',
@@ -7,8 +7,7 @@ export const PERSONAL_INFO = {
   location: 'Calgary, Alberta, Canada',
   email: '***REMOVED***',
   altEmail: '***REMOVED***',
-  phone: '***REMOVED***',
-  avatarUrl: '***REMOVED***',
+  avatarUrl: '/headshot.png',
   githubUrl: 'https://github.com/KeyhanNajafian',
   linkedinUrl: 'https://www.linkedin.com/in/keyhannajafian/',
   scholarUrl: 'https://scholar.google.ca/citations?hl=en&user=3RI_XdQAAAAJ',
@@ -565,30 +564,3 @@ export const TEACHING_AND_SERVICE = {
     }
   ]
 };
-
-export const REFERENCES: AcademicReference[] = [
-  {
-    name: 'Prof. Ian Stavness',
-    role: 'Professor',
-    affiliation: 'Department of Computer Science, University of Saskatchewan',
-    email: '***REMOVED***'
-  },
-  {
-    name: 'Prof. Lingling Jin',
-    role: 'Associate Professor',
-    affiliation: 'Department of Computer Science, University of Saskatchewan',
-    email: '***REMOVED***'
-  },
-  {
-    name: 'Prof. Farhad Maleki',
-    role: 'Assistant Professor',
-    affiliation: 'Department of Computer Science, University of Calgary',
-    email: '***REMOVED***'
-  },
-  {
-    name: 'Prof. Katie Ovens',
-    role: 'Assistant Professor',
-    affiliation: 'Department of Computer Science, University of Calgary',
-    email: '***REMOVED***'
-  }
-];
