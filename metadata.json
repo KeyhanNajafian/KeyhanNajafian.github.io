@@ -1,0 +1,6 @@
+{
+  "name": "Dr. Keyhan Najafian - Academic Portfolio",
+  "description": "Academic portfolio of Dr. Keyhan Najafian, Postdoctoral Researcher in AI Systems and Deployment at the University of Calgary's Vision Research Lab.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
