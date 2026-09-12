@@ -86,7 +86,7 @@ export const PublicationsSection: React.FC = () => {
             <div className="flex items-center gap-3">
               <span className="w-1.5 h-6 bg-[#047857] rounded-full" />
               <h2 className="text-2xl sm:text-3xl font-bold text-[#0F172A] tracking-tight">
-                Selected Publications
+                Chosen Publications
               </h2>
             </div>
             <p className="mt-1.5 text-sm text-slate-600">
