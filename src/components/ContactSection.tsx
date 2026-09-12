@@ -33,16 +33,11 @@ export const ContactSection: React.FC = () => {
     <section id="contact" className="py-12 sm:py-16">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-3">
-            <span className="w-1.5 h-6 bg-[#047857] rounded-full" />
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#0F172A] tracking-tight">
-              Contact & Academic Inquiries
-            </h2>
-          </div>
-          <span className="text-xs font-mono font-semibold text-[#047857] bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-            Open for Collaboration
-          </span>
+        <div className="flex items-center gap-3 mb-8">
+          <span className="w-1.5 h-6 bg-[#047857] rounded-full" />
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#0F172A] tracking-tight">
+            Contact & Academic Inquiries
+          </h2>
         </div>
 
         <div className="flex justify-center">
