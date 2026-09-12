@@ -204,7 +204,7 @@ export const CvModal: React.FC<CvModalProps> = ({ isOpen, onClose }) => {
           {/* Publications */}
           <div>
             <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-500 border-b border-slate-200 pb-1 mb-3">
-              Selected Publications
+              Chosen Publications
             </h4>
             <ol className="list-decimal list-inside space-y-2.5 text-xs text-slate-800">
               {PUBLICATIONS.slice(0, 7).map((pub) => (
