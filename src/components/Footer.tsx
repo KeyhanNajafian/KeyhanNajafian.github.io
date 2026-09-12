@@ -1,6 +1,7 @@
 import React from 'react';
 import { Github, Linkedin, GraduationCap, Mail, ArrowUp, ExternalLink } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
+import { SculptedLiquidKNLogo } from './SculptedLiquidKNLogo';
 
 export const Footer: React.FC = () => {
   const scrollToTop = () => {
@@ -12,9 +13,7 @@ export const Footer: React.FC = () => {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-slate-800">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-emerald-900/60 border border-emerald-600/40 text-emerald-400 flex items-center justify-center font-mono font-bold text-sm">
-              [KN]
-            </div>
+            <SculptedLiquidKNLogo className="w-10 h-10" />
             <div>
               <h3 className="text-base font-bold text-white tracking-tight">
                 {PERSONAL_INFO.name}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FileText, Menu, X, ExternalLink, GraduationCap, Github, Linkedin, Mail } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
+import { SculptedLiquidKNLogo } from './SculptedLiquidKNLogo';
 
 interface HeaderProps {
   onOpenCv: () => void;
@@ -59,9 +60,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenCv }) => {
           className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0369A1] rounded-lg p-1"
           id="brand-logo-link"
         >
-          <div className="w-10 h-10 rounded-lg bg-emerald-700/10 border border-emerald-700/20 text-[#047857] flex items-center justify-center font-mono font-bold text-sm tracking-tight transition-transform group-hover:scale-105">
-            [KN]
-          </div>
+          <SculptedLiquidKNLogo className="w-10 h-10 transition-transform group-hover:scale-105" />
           <div className="flex flex-col">
             <span className="text-base font-bold text-[#0F172A] tracking-tight group-hover:text-[#0369A1] transition-colors leading-snug">
               Dr. Keyhan Najafian
