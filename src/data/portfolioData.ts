@@ -416,20 +416,6 @@ export const EXPERIENCES: ExperienceItem[] = [
     skills: ['PyTorch', 'Semi-Self-Supervised', 'Precision Agriculture', 'Plant Phenomics', 'HPC Clusters']
   },
   {
-    id: 'exp-waves',
-    role: 'AI Research Intern (Foundation Models & EEG)',
-    labOrGroup: 'Waves Lab (Dr. Abou-Zeid Research Group)',
-    organization: 'Dept. of Electrical and Software Engineering, University of Calgary',
-    location: 'Calgary, AB, Canada',
-    period: 'May 2025 – November 2025',
-    type: 'internship',
-    points: [
-      'Collaborated with Waves Lab to architect a scalable EEG foundation-model research framework that unifies signal processing, model development, and standardized benchmarking.',
-      'Integrated comprehensive pipelines for pretraining, fine-tuning, linear probing, and LoRA adaptation, enabling systematic evaluation across motor imagery and event-related EEG paradigms.'
-    ],
-    skills: ['Signal Processing', 'EEG Foundation Models', 'LoRA Adaptation', 'Standardized Benchmarking']
-  },
-  {
     id: 'exp-rail',
     role: 'AI Specialist and Researcher',
     labOrGroup: 'RAIL & AIPHL Laboratories',
