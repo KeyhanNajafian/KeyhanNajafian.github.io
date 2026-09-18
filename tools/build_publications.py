@@ -274,6 +274,7 @@ def page(
     <p>Keyhan Najafian, Vision Research Lab, Department of Computer Science, University of Calgary.</p>
     <p><a href="{base}/">Homepage</a> &middot; <a href="{base}/publications/">All publications</a> &middot;
        <a href="https://scholar.google.ca/citations?hl=en&amp;user=3RI_XdQAAAAJ">Google Scholar</a> &middot;
+       <a href="https://www.semanticscholar.org/author/Keyhan-Najafian/1994693921">Semantic Scholar</a> &middot;
        <a href="https://github.com/KeyhanNajafian">GitHub</a></p>
   </div>
 </footer>
@@ -802,7 +803,8 @@ two areas. Each entry links to a page with the published abstract, the methods a
 behind it, a citation, and links to code where the repository is public.</p>
 <nav class="tags" aria-label="Research areas">{"".join(toc)}</nav>
 <p class="meta">Complete record also on
-<a href="https://scholar.google.ca/citations?hl=en&amp;user=3RI_XdQAAAAJ">Google Scholar</a>.</p>
+<a href="{esc(data["site"]["scholarUrl"])}">Google Scholar</a> and
+<a href="{esc(data["site"]["semanticScholarUrl"])}">Semantic Scholar</a>.</p>
 {"".join(sections)}
 </main>
 </div>
@@ -855,6 +857,7 @@ behind it, a citation, and links to code where the repository is public.</p>
             u for u in [
                 data["site"].get("orcidUrl"),
                 data["site"]["scholarUrl"],
+                data["site"].get("semanticScholarUrl"),
                 data["site"]["githubUrl"],
                 data["site"]["linkedinUrl"],
             ] if u
