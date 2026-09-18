@@ -186,7 +186,7 @@ export const PublicationsSection: React.FC = () => {
 
                   {/* Title */}
                   <h3 className="text-base sm:text-lg font-bold text-[#0F172A] leading-snug group-hover:text-[#0369A1] transition-colors">
-                    {pub.title}
+                    <a href={`/publications/${pub.slug}/`}>{pub.title}</a>
                   </h3>
 
                   {/* Authors */}
