@@ -321,6 +321,18 @@ def breadcrumb_ld(trail: List[Dict[str, str]]) -> Dict[str, Any]:
     }
 
 
+def venue_title(pub: Dict[str, Any]) -> str:
+    """ Return the bare venue name, without volume, issue, or page details.
+
+        Args:
+            pub: Publication record.
+
+        Returns:
+            The venue string up to its first comma.
+    """
+    return pub["venue"].split(",")[0].strip()
+
+
 def citation_tags(pub: Dict[str, Any], base: str) -> str:
     """ Build Highwire Press and Dublin Core metadata tags for a publication.
 
@@ -340,7 +352,7 @@ def citation_tags(pub: Dict[str, Any], base: str) -> str:
     lines.append(f'<meta name="citation_publication_date" content="{pub["year"]}">')
     lines.append(f'<meta name="citation_date" content="{pub["year"]}">')
 
-    venue_name = pub["venue"].split(",")[0].strip()
+    venue_name = venue_title(pub)
     if pub["venueType"] == "journal":
         lines.append(f'<meta name="citation_journal_title" content="{esc(venue_name)}">')
     elif pub["venueType"] == "conference":
@@ -417,7 +429,7 @@ def periodical_ld(pub: Dict[str, Any]) -> Dict[str, Any]:
     if pub["venueType"] != "journal":
         return {"@type": "PublicationEvent", "name": pub["venue"]}
 
-    periodical: Dict[str, Any] = {"@type": "Periodical", "name": pub["venue"]}
+    periodical: Dict[str, Any] = {"@type": "Periodical", "name": venue_title(pub)}
     if pub.get("issn"):
         periodical["issn"] = pub["issn"]
 
