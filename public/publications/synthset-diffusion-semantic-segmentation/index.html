@@ -78,7 +78,14 @@ padding:1.1rem 1.15rem;margin:.75rem 0}
 .card h3{margin:0 0 .3rem;font-size:1.02rem}
 .card h3 a{color:var(--ink)}
 .card p{margin:.35rem 0;font-size:.88rem;color:var(--muted)}
-.year{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--faint)}
+.year{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--faint);margin:.2rem 0}
+.authors{font-size:.85rem;color:var(--muted);margin:.25rem 0}
+h3.sub{margin-top:1.75rem;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;
+color:var(--faint);font-family:'JetBrains Mono',monospace}
+section[id]{scroll-margin-top:5rem;padding-top:.5rem}
+a.tag.area{text-decoration:none}
+a.tag.area:hover{background:#D1FAE5}
+.backtop{font-size:.78rem;margin-top:1.25rem}
 footer.site{border-top:1px solid var(--line);background:#0F172A;color:#94A3B8;
 padding:2rem 0;font-size:.85rem}
 footer.site a{color:#CBD5E1}
@@ -231,12 +238,6 @@ footer.site a{color:#CBD5E1}
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "Precision Agriculture",
-      "item": "https://keyhannajafian.github.io/publications/precision-agriculture/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 4,
       "name": "SynthSet diffusion data generation",
       "item": "https://keyhannajafian.github.io/publications/synthset-diffusion-semantic-segmentation/"
     }
@@ -249,12 +250,12 @@ footer.site a{color:#CBD5E1}
 <header class="site">
   <div class="wrap">
     <a class="brand" href="https://keyhannajafian.github.io/">Dr. Keyhan Najafian<span>Postdoctoral Researcher, Vision Research Lab, University of Calgary</span></a>
-    <nav aria-label="Main"><a href="https://keyhannajafian.github.io/">Home</a><a href="https://keyhannajafian.github.io/publications/" aria-current="page">Publications</a><a href="https://keyhannajafian.github.io/publications/precision-agriculture/">Precision Agriculture</a><a href="https://keyhannajafian.github.io/publications/precision-health/">Precision Health</a></nav>
+    <nav aria-label="Main"><a href="https://keyhannajafian.github.io/">Home</a><a href="https://keyhannajafian.github.io/publications/" aria-current="page">Publications</a></nav>
   </div>
 </header>
 
 <div class="wrap">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="https://keyhannajafian.github.io/">Home</a> / <a href="https://keyhannajafian.github.io/publications/">Publications</a> / <a href="https://keyhannajafian.github.io/publications/precision-agriculture/">Precision Agriculture</a> / SynthSet diffusion data generation</nav>
+<nav class="crumbs" aria-label="Breadcrumb"><a href="https://keyhannajafian.github.io/">Home</a> / <a href="https://keyhannajafian.github.io/publications/">Publications</a> / SynthSet diffusion data generation</nav>
 <main id="main">
 <article>
   <p><span class="tag area">Precision Agriculture</span> <span class="year">ECCVW 2024</span></p>
@@ -280,7 +281,7 @@ footer.site a{color:#CBD5E1}
   <h2>Code and implementation</h2><article class="card"><h3><a href="https://github.com/VisionResearchLab/SynthSet" rel="noopener">SynthSet</a></h3><p class="mono year">https://github.com/VisionResearchLab/SynthSet</p><p>Pipeline package for the dual diffusion synthesis method, built on the ClasSeg pipeline with super-resolution and unstable-diffusion extensions.</p></article>
 
   <h2>Research topics and keywords</h2>
-  <div class="tags"><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">diffusion models</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">DDPM</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">generative data synthesis</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">image-mask pairs</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">super-resolution</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">semantic segmentation</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">precision agriculture</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">wheat head segmentation</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">annotation-free learning</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">synthetic datasets</a></div>
+  <div class="tags"><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-agriculture">diffusion models</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-agriculture">DDPM</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-agriculture">generative data synthesis</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-agriculture">image-mask pairs</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-agriculture">super-resolution</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-agriculture">semantic segmentation</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-agriculture">precision agriculture</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-agriculture">wheat head segmentation</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-agriculture">annotation-free learning</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-agriculture">synthetic datasets</a></div>
 
   <h2>Cite this work</h2>
   <pre class="cite">@inproceedings{heschl2024synthset,
@@ -297,7 +298,7 @@ footer.site a{color:#CBD5E1}
 
   <h2>Related work in Precision Agriculture</h2>
   <article class="card"><h3><a href="https://keyhannajafian.github.io/publications/wheat-head-detection-limited-labeled-samples/">A Semi-Self-Supervised Learning Approach for Wheat Head Detection Using Extremely Small Number of Labeled Samples</a></h3><p class="year">ICCVW 2021</p><p>Trains a wheat head detector from three contoured images and a few minutes of handheld video. The annotated wheat heads are cut out, augmented, and pasted onto background field footage to simulate a large computationally annotated dataset, and two domain adaptation stages then close the gap to real imagery.</p></article><article class="card"><h3><a href="https://keyhannajafian.github.io/publications/semi-self-supervised-segmentation-dense-patterns/">Semi-Self-Supervised Learning for Semantic Segmentation in Images with Dense Patterns</a></h3><p class="year">Plant Phenomics 2023</p><p>Extends the synthesis-plus-domain-adaptation idea from detection to pixel-level segmentation. Two annotated images and one short video clip are enough to train a customized U-Net that reaches a Dice score of 0.89 internally and generalizes to wheat fields from 18 domains across five countries.</p></article><article class="card"><h3><a href="https://keyhannajafian.github.io/publications/fusarium-damaged-kernel-detection-wheatseedbelt/">Detection of Fusarium Damaged Kernels in Wheat Using Deep Semi-Supervised Learning on a Novel WheatSeedBelt Dataset</a></h3><p class="year">ICCVW 2023</p><p>Introduces WheatSeedBelt, a 40,420-image single-kernel dataset covering 268 wheat varieties with damage annotations, and uses it to train semi-supervised classifiers for Fusarium damaged kernel grading. An inter-rater study shows human experts do not outperform the model.</p></article>
-  <p><a href="https://keyhannajafian.github.io/publications/precision-agriculture/">All Precision Agriculture publications</a> &middot;
+  <p><a href="https://keyhannajafian.github.io/publications/#precision-agriculture">All Precision Agriculture publications</a> &middot;
      <a href="https://keyhannajafian.github.io/publications/">Complete publication list</a></p>
 </article>
 </main>

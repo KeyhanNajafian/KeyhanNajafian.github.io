@@ -2,8 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://keyhannajafian.github.io/</loc><lastmod>2026-09-18</lastmod><changefreq>monthly</changefreq><priority>1.0</priority></url>
   <url><loc>https://keyhannajafian.github.io/publications/</loc><lastmod>2026-09-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://keyhannajafian.github.io/publications/precision-agriculture/</loc><lastmod>2026-09-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://keyhannajafian.github.io/publications/precision-health/</loc><lastmod>2026-09-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://keyhannajafian.github.io/publications/wheat-head-detection-limited-labeled-samples/</loc><lastmod>2026-09-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://keyhannajafian.github.io/publications/semi-self-supervised-segmentation-dense-patterns/</loc><lastmod>2026-09-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://keyhannajafian.github.io/publications/fusarium-damaged-kernel-detection-wheatseedbelt/</loc><lastmod>2026-09-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>

@@ -80,7 +80,14 @@ padding:1.1rem 1.15rem;margin:.75rem 0}
 .card h3{margin:0 0 .3rem;font-size:1.02rem}
 .card h3 a{color:var(--ink)}
 .card p{margin:.35rem 0;font-size:.88rem;color:var(--muted)}
-.year{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--faint)}
+.year{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--faint);margin:.2rem 0}
+.authors{font-size:.85rem;color:var(--muted);margin:.25rem 0}
+h3.sub{margin-top:1.75rem;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;
+color:var(--faint);font-family:'JetBrains Mono',monospace}
+section[id]{scroll-margin-top:5rem;padding-top:.5rem}
+a.tag.area{text-decoration:none}
+a.tag.area:hover{background:#D1FAE5}
+.backtop{font-size:.78rem;margin-top:1.25rem}
 footer.site{border-top:1px solid var(--line);background:#0F172A;color:#94A3B8;
 padding:2rem 0;font-size:.85rem}
 footer.site a{color:#CBD5E1}
@@ -159,8 +166,6 @@ def page(
     nav_items = [
         ("Home", f"{base}/", "home"),
         ("Publications", f"{base}/publications/", "publications"),
-        ("Precision Agriculture", f"{base}/publications/precision-agriculture/", "pa"),
-        ("Precision Health", f"{base}/publications/precision-health/", "ph"),
     ]
     nav = "".join(
         f'<a href="{href}"{" aria-current=\"page\"" if key == active else ""}>{esc(label)}</a>'
@@ -381,7 +386,6 @@ def render_publication(pub: Dict[str, Any], data: Dict[str, Any], area: Dict[str
     trail = [
         {"name": "Home", "url": f"{base}/"},
         {"name": "Publications", "url": f"{base}/publications/"},
-        {"name": area["name"], "url": f"{base}/publications/{area['slug']}/"},
         {"name": pub["shortTitle"], "url": url},
     ]
 
@@ -451,7 +455,7 @@ def render_publication(pub: Dict[str, Any], data: Dict[str, Any], area: Dict[str
     )
 
     keyword_html = "".join(
-        f'<a class="tag" href="{base}/publications/{area["slug"]}/">{esc(k)}</a>'
+        f'<a class="tag" href="{base}/publications/#{area["slug"]}">{esc(k)}</a>'
         for k in pub["keywords"]
     )
 
@@ -501,7 +505,7 @@ def render_publication(pub: Dict[str, Any], data: Dict[str, Any], area: Dict[str
 
   <h2>Related work in {esc(area["name"])}</h2>
   {related_html}
-  <p><a href="{base}/publications/{area["slug"]}/">All {esc(area["name"])} publications</a> &middot;
+  <p><a href="{base}/publications/#{area["slug"]}">All {esc(area["name"])} publications</a> &middot;
      <a href="{base}/publications/">Complete publication list</a></p>
 </article>
 </main>
@@ -520,94 +524,8 @@ def render_publication(pub: Dict[str, Any], data: Dict[str, Any], area: Dict[str
     return page(base, url, title, description, body, extra_head, active="publications")
 
 
-def render_area(area: Dict[str, Any], data: Dict[str, Any]) -> str:
-    """ Render a research area landing page.
-
-        Args:
-            area: Area record.
-            data: Full data file.
-
-        Returns:
-            Full HTML document.
-    """
-    base = data["site"]["baseUrl"]
-    url = f"{base}/publications/{area['slug']}/"
-    pubs = sorted(
-        [p for p in data["publications"] if p["area"] == area["slug"]],
-        key=lambda p: (-p["year"], p["title"]),
-    )
-
-    trail = [
-        {"name": "Home", "url": f"{base}/"},
-        {"name": "Publications", "url": f"{base}/publications/"},
-        {"name": area["name"], "url": url},
-    ]
-
-    intro = "".join(f"<p>{esc(par)}</p>" for par in area["intro"])
-    cards = "".join(
-        f'<article class="card"><h3><a href="{base}/publications/{p["slug"]}/">'
-        f'{esc(p["title"])}</a></h3>'
-        f'<p class="year">{esc(p["venueShort"])} &middot; {esc(", ".join(p["authors"][:3]))}'
-        f'{" et al." if len(p["authors"]) > 3 else ""}</p>'
-        f'<p>{esc(p["summary"])}</p></article>'
-        for p in pubs
-    )
-
-    dsets = [d for d in data["datasets"]
-             if any(p["slug"] == d["relatedPublication"] for p in pubs)]
-    dataset_html = ""
-    if dsets:
-        items = "".join(
-            f'<article class="card"><h3><a href="{base}/datasets/{d["slug"]}/">'
-            f'{esc(d["name"])}</a></h3><p>{esc(d["description"][:200])}</p></article>'
-            for d in dsets
-        )
-        dataset_html = f"<h2>Datasets</h2>{items}"
-
-    body = f"""
-<div class="wrap">
-{breadcrumbs(base, trail)}
-<main id="main">
-<h1>{esc(area["title"])}</h1>
-{intro}
-<h2>Publications</h2>
-{cards}
-{dataset_html}
-<p><a href="{base}/publications/">All publications</a></p>
-</main>
-</div>
-"""
-
-    ld = {
-        "@context": "https://schema.org",
-        "@type": "CollectionPage",
-        "name": area["title"],
-        "url": url,
-        "description": area["metaDescription"],
-        "about": [{"@type": "Thing", "name": area["name"]}],
-        "mainEntity": {
-            "@type": "ItemList",
-            "itemListElement": [
-                {
-                    "@type": "ListItem",
-                    "position": i + 1,
-                    "url": f"{base}/publications/{p['slug']}/",
-                    "name": p["title"],
-                }
-                for i, p in enumerate(pubs)
-            ],
-        },
-    }
-
-    extra_head = "\n".join([jsonld(ld), jsonld(breadcrumb_ld(trail))])
-    key = "pa" if area["slug"] == "precision-agriculture" else "ph"
-    title = f"{area['title']} | Keyhan Najafian"
-
-    return page(base, url, title, area["metaDescription"], body, extra_head, active=key)
-
-
 def render_index(data: Dict[str, Any]) -> str:
-    """ Render the publications hub page listing every work.
+    """ Render the single publications page, divided into the two research areas.
 
         Args:
             data: Full data file.
@@ -617,32 +535,65 @@ def render_index(data: Dict[str, Any]) -> str:
     """
     base = data["site"]["baseUrl"]
     url = f"{base}/publications/"
-    pubs = sorted(data["publications"], key=lambda p: (-p["year"], p["title"]))
+    all_pubs = sorted(data["publications"], key=lambda p: (-p["year"], p["title"]))
 
     trail = [{"name": "Home", "url": f"{base}/"}, {"name": "Publications", "url": url}]
 
-    area_cards = "".join(
-        f'<article class="card"><h3><a href="{base}/publications/{a["slug"]}/">'
-        f'{esc(a["title"])}</a></h3><p>{esc(a["metaDescription"])}</p></article>'
-        for a in data["areas"]
-    )
+    def card(pub: Dict[str, Any]) -> str:
+        repos = pub.get("repositories") or []
+        repo_line = ""
+        if repos:
+            names = " &middot; ".join(
+                f'<a href="{esc(r["url"])}" rel="noopener">{esc(r["name"])}</a>'
+                for r in repos
+            )
+            repo_line = f'<p class="year">Code: {names}</p>'
+        doi_line = ""
+        if pub.get("doi"):
+            doi_line = (f'<p class="year"><a href="https://doi.org/{esc(pub["doi"])}">'
+                        f'doi:{esc(pub["doi"])}</a></p>')
+        return (
+            f'<article class="card">'
+            f'<h3><a href="{base}/publications/{pub["slug"]}/">{esc(pub["title"])}</a></h3>'
+            f'<p class="year">{esc(pub["venueShort"])} &middot; {esc(pub["venue"])}</p>'
+            f'<p class="authors">{author_html(pub["authors"][:4], data["site"]["authorName"])}'
+            f'{" et al." if len(pub["authors"]) > 4 else ""}</p>'
+            f'<p>{esc(pub["summary"])}</p>'
+            f'{doi_line}{repo_line}'
+            f'</article>'
+        )
 
-    rows = "".join(
-        f'<article class="card"><h3><a href="{base}/publications/{p["slug"]}/">'
-        f'{esc(p["title"])}</a></h3>'
-        f'<p class="year">{esc(p["venueShort"])} &middot; '
-        f'{esc(next(a["name"] for a in data["areas"] if a["slug"] == p["area"]))}</p>'
-        f'<p>{esc(", ".join(p["authors"][:4]))}'
-        f'{" et al." if len(p["authors"]) > 4 else ""}</p>'
-        f'<p>{esc(p["summary"])}</p></article>'
-        for p in pubs
-    )
+    sections = []
+    toc = []
+    for area in data["areas"]:
+        pubs = [p for p in all_pubs if p["area"] == area["slug"]]
+        if not pubs:
+            continue
 
-    dataset_cards = "".join(
-        f'<article class="card"><h3><a href="{base}/datasets/{d["slug"]}/">'
-        f'{esc(d["title"])}</a></h3><p>{esc(d["description"][:220])}</p></article>'
-        for d in data["datasets"]
-    )
+        toc.append(f'<a class="tag area" href="#{area["slug"]}">{esc(area["name"])} '
+                   f'({len(pubs)})</a>')
+
+        intro = "".join(f"<p>{esc(par)}</p>" for par in area["intro"])
+        cards = "".join(card(p) for p in pubs)
+
+        dsets = [d for d in data["datasets"]
+                 if any(p["slug"] == d["relatedPublication"] for p in pubs)]
+        dataset_html = ""
+        if dsets:
+            items = "".join(
+                f'<article class="card"><h3><a href="{base}/datasets/{d["slug"]}/">'
+                f'{esc(d["name"])}</a></h3><p>{esc(d["description"][:220])}</p></article>'
+                for d in dsets
+            )
+            dataset_html = (f'<h3 class="sub">Datasets from this area</h3>{items}')
+
+        sections.append(
+            f'<section id="{area["slug"]}" aria-labelledby="{area["slug"]}-heading">'
+            f'<h2 id="{area["slug"]}-heading">{esc(area["title"])}</h2>'
+            f'{intro}{cards}{dataset_html}'
+            f'<p class="backtop"><a href="#main">Back to top</a></p>'
+            f'</section>'
+        )
 
     body = f"""
 <div class="wrap">
@@ -650,19 +601,12 @@ def render_index(data: Dict[str, Any]) -> str:
 <main id="main">
 <h1>Publications</h1>
 <p class="lede">Peer-reviewed research by Keyhan Najafian on label-efficient computer vision,
-spanning precision agriculture and precision health. Each entry includes the published abstract,
-the methods and datasets used, reported results, and a citation.</p>
+organized into two areas. Each entry links to a page with the published abstract, the methods
+and datasets used, reported results, code repositories, and a citation.</p>
+<nav class="tags" aria-label="Research areas">{"".join(toc)}</nav>
 <p class="meta">Complete record also on
 <a href="https://scholar.google.ca/citations?hl=en&amp;user=3RI_XdQAAAAJ">Google Scholar</a>.</p>
-
-<h2>Research areas</h2>
-{area_cards}
-
-<h2>All publications</h2>
-{rows}
-
-<h2>Datasets</h2>
-{dataset_cards}
+{"".join(sections)}
 </main>
 </div>
 """
@@ -674,8 +618,19 @@ the methods and datasets used, reported results, and a citation.</p>
         "url": url,
         "description": "Complete list of peer-reviewed publications by Keyhan Najafian in "
                        "precision agriculture and precision health.",
+        "about": [{"@type": "Thing", "name": a["name"]} for a in data["areas"]],
+        "hasPart": [
+            {
+                "@type": "WebPageElement",
+                "name": a["title"],
+                "url": f"{url}#{a['slug']}",
+                "description": a["metaDescription"],
+            }
+            for a in data["areas"]
+        ],
         "mainEntity": {
             "@type": "ItemList",
+            "numberOfItems": len(all_pubs),
             "itemListElement": [
                 {
                     "@type": "ListItem",
@@ -683,7 +638,7 @@ the methods and datasets used, reported results, and a citation.</p>
                     "url": f"{base}/publications/{p['slug']}/",
                     "name": p["title"],
                 }
-                for i, p in enumerate(pubs)
+                for i, p in enumerate(all_pubs)
             ],
         },
     }
@@ -708,10 +663,11 @@ the methods and datasets used, reported results, and a citation.</p>
 
     extra_head = "\n".join([jsonld(ld), jsonld(person), jsonld(breadcrumb_ld(trail))])
     description = ("Peer-reviewed publications by Keyhan Najafian on label-efficient computer "
-                   "vision for precision agriculture and precision health, with abstracts, "
-                   "methods, datasets, and citations.")
+                   "vision, in two areas: precision agriculture and precision health, with "
+                   "abstracts, methods, datasets, code, and citations.")
 
     return page(base, url, "Publications | Keyhan Najafian", description, body, extra_head)
+
 
 
 def render_dataset(dset: Dict[str, Any], data: Dict[str, Any]) -> str:
@@ -815,11 +771,6 @@ def build() -> List[str]:
             shutil.rmtree(target)
 
     write(os.path.join(OUT_ROOT, "publications", "index.html"), render_index(data))
-
-    for area in data["areas"]:
-        write(os.path.join(OUT_ROOT, "publications", area["slug"], "index.html"),
-              render_area(area, data))
-        urls.append(f"{base}/publications/{area['slug']}/")
 
     for pub in data["publications"]:
         area = next(a for a in data["areas"] if a["slug"] == pub["area"])
