@@ -94,16 +94,25 @@ export const PublicationsSection: React.FC = () => {
             </p>
           </div>
 
-          <a
-            href="https://scholar.google.ca/citations?hl=en&user=3RI_XdQAAAAJ"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#0369A1] hover:text-[#025a8b] transition-colors"
-          >
-            <BookOpen className="w-4 h-4" />
-            <span>View Full Google Scholar Record</span>
-            <ExternalLink className="w-3 h-3" />
-          </a>
+          <div className="flex items-center gap-4">
+            <a
+              href="/publications/"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#047857] hover:text-emerald-800 transition-colors"
+            >
+              <Layers className="w-4 h-4" />
+              <span>Browse all publications</span>
+            </a>
+            <a
+              href="https://scholar.google.ca/citations?hl=en&user=3RI_XdQAAAAJ"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#0369A1] hover:text-[#025a8b] transition-colors"
+            >
+              <BookOpen className="w-4 h-4" />
+              <span>View Full Google Scholar Record</span>
+              <ExternalLink className="w-3 h-3" />
+            </a>
+          </div>
         </div>
 
         {/* Filter Controls & Search */}
