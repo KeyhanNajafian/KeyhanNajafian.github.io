@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Predicting phenotypes from novel genomic markers using deep learning | Bioinformatics Advances 2023 | Keyhan Najafian</title>
+<meta name="description" content="Genomic selection usually runs on SNP markers. This work shows that structural variants and transposable elements predict crop phenotypes better, using NovGMDeep, a 1D convolutional network evaluated on Arabidopsis thaliana and Oryza sativa.">
+<link rel="canonical" href="https://keyhannajafian.github.io/publications/predicting-phenotypes-novel-genomic-markers-deep-learning/">
+<meta name="author" content="Keyhan Najafian">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Predicting phenotypes from novel genomic markers using deep learning | Bioinformatics Advances 2023 | Keyhan Najafian">
+<meta property="og:description" content="Genomic selection usually runs on SNP markers. This work shows that structural variants and transposable elements predict crop phenotypes better, using NovGMDeep, a 1D convolutional network evaluated on Arabidopsis thaliana and Oryza sativa.">
+<meta property="og:url" content="https://keyhannajafian.github.io/publications/predicting-phenotypes-novel-genomic-markers-deep-learning/">
+<meta property="og:site_name" content="Keyhan Najafian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Predicting phenotypes from novel genomic markers using deep learning | Bioinformatics Advances 2023 | Keyhan Najafian">
+<meta name="twitter:description" content="Genomic selection usually runs on SNP markers. This work shows that structural variants and transposable elements predict crop phenotypes better, using NovGMDeep, a 1D convolutional network evaluated on Arabidopsis thaliana and Oryza sativa.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0F172A;--muted:#475569;--faint:#64748B;--line:#E2E8F0;--bg:#F8FAFC;
+--card:#FFFFFF;--emerald:#047857;--emerald-bg:#ECFDF5;--sky:#0369A1;--sky-bg:#F0F9FF}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+line-height:1.65;-webkit-font-smoothing:antialiased}
+code,pre,.mono{font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+a{color:var(--sky);text-decoration:none}
+a:hover{text-decoration:underline}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:1rem;top:1rem;position:fixed;background:#fff;padding:.6rem 1rem;
+border-radius:8px;border:1px solid var(--line);z-index:50}
+.wrap{max-width:60rem;margin:0 auto;padding:0 1.25rem}
+header.site{background:rgba(248,250,252,.92);border-bottom:1px solid var(--line);
+position:sticky;top:0;z-index:20;backdrop-filter:blur(8px)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;
+gap:1rem;padding-top:.85rem;padding-bottom:.85rem;flex-wrap:wrap}
+.brand{font-weight:800;color:var(--ink);letter-spacing:-.01em}
+.brand span{display:block;font-size:.72rem;font-weight:500;color:var(--faint);letter-spacing:0}
+header.site nav{display:flex;gap:1rem;font-size:.86rem;font-weight:600}
+header.site nav a{color:var(--muted)}
+header.site nav a[aria-current="page"]{color:var(--emerald)}
+.crumbs{font-size:.78rem;color:var(--faint);padding:1.25rem 0 0}
+.crumbs a{color:var(--faint)}
+main{padding-bottom:4rem}
+h1{font-size:clamp(1.55rem,3.6vw,2.2rem);line-height:1.25;letter-spacing:-.02em;
+margin:.75rem 0 .5rem;font-weight:800}
+h2{font-size:1.15rem;margin:2.25rem 0 .65rem;letter-spacing:-.01em;font-weight:700;
+padding-bottom:.4rem;border-bottom:1px solid var(--line)}
+h3{font-size:1rem;margin:1.5rem 0 .4rem;font-weight:700}
+p{margin:.65rem 0}
+.lede{font-size:1.02rem;color:var(--muted)}
+.meta{color:var(--muted);font-size:.9rem;margin:.35rem 0}
+.meta .me{font-weight:700;color:var(--ink);border-bottom:2px solid #10B981}
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;margin:.9rem 0}
+.tag{font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:.2rem .55rem;
+border-radius:6px;background:#F1F5F9;border:1px solid var(--line);color:var(--muted)}
+.tag.area{background:var(--emerald-bg);border-color:#A7F3D0;color:var(--emerald);font-weight:600}
+.links{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.1rem 0 .25rem}
+.links a{font-size:.82rem;font-weight:600;padding:.45rem .8rem;border-radius:8px;
+border:1px solid var(--line);background:var(--card)}
+.links a.primary{background:var(--sky);border-color:var(--sky);color:#fff}
+blockquote.abstract{margin:0;padding:1rem 1.15rem;background:var(--card);
+border:1px solid var(--line);border-left:3px solid var(--emerald);border-radius:0 12px 12px 0}
+blockquote.abstract p{margin:0;color:#1E293B}
+ul{margin:.5rem 0;padding-left:1.15rem}
+li{margin:.3rem 0;color:#1E293B}
+dl.facts{display:grid;grid-template-columns:auto 1fr;gap:.35rem 1rem;margin:.5rem 0;
+font-size:.9rem}
+dl.facts dt{color:var(--faint);font-weight:600}
+dl.facts dd{margin:0}
+pre.cite{background:#0F172A;color:#E2E8F0;padding:1rem;border-radius:12px;
+overflow-x:auto;font-size:.74rem;line-height:1.55}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+padding:1.1rem 1.15rem;margin:.75rem 0}
+.card h3{margin:0 0 .3rem;font-size:1.02rem}
+.card h3 a{color:var(--ink)}
+.card p{margin:.35rem 0;font-size:.88rem;color:var(--muted)}
+.year{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--faint);margin:.2rem 0}
+.authors{font-size:.85rem;color:var(--muted);margin:.25rem 0}
+h3.sub{margin-top:1.75rem;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;
+color:var(--faint);font-family:'JetBrains Mono',monospace}
+section[id]{scroll-margin-top:5rem;padding-top:.5rem}
+a.tag.area{text-decoration:none}
+a.tag.area:hover{background:#D1FAE5}
+.backtop{font-size:.78rem;margin-top:1.25rem}
+footer.site{border-top:1px solid var(--line);background:#0F172A;color:#94A3B8;
+padding:2rem 0;font-size:.85rem}
+footer.site a{color:#CBD5E1}
+@media(max-width:640px){dl.facts{grid-template-columns:1fr}dl.facts dd{margin-bottom:.5rem}}
+</style>
+<meta name="citation_title" content="Predicting phenotypes from novel genomic markers using deep learning">
+<meta name="citation_author" content="Shivani Sehrawat">
+<meta name="citation_author" content="Keyhan Najafian">
+<meta name="citation_author" content="Lingling Jin">
+<meta name="citation_publication_date" content="2023">
+<meta name="citation_date" content="2023">
+<meta name="citation_journal_title" content="Bioinformatics Advances, volume 3, issue 1, article vbad028">
+<meta name="citation_doi" content="10.1093/bioadv/vbad028">
+<meta name="citation_abstract_html_url" content="https://keyhannajafian.github.io/publications/predicting-phenotypes-novel-genomic-markers-deep-learning/">
+<meta name="DC.title" content="Predicting phenotypes from novel genomic markers using deep learning">
+<meta name="DC.creator" content="Shivani Sehrawat">
+<meta name="DC.creator" content="Keyhan Najafian">
+<meta name="DC.creator" content="Lingling Jin">
+<meta name="DC.date" content="2023">
+<meta name="DC.type" content="Text">
+<meta name="DC.source" content="Bioinformatics Advances, volume 3, issue 1, article vbad028">
+<meta name="DC.identifier" content="https://doi.org/10.1093/bioadv/vbad028">
+<meta name="DC.subject" content="genomic selection">
+<meta name="DC.subject" content="structural variants">
+<meta name="DC.subject" content="transposable elements">
+<meta name="DC.subject" content="SNP markers">
+<meta name="DC.subject" content="phenotype prediction">
+<meta name="DC.subject" content="deep learning">
+<meta name="DC.subject" content="convolutional neural network">
+<meta name="DC.subject" content="Arabidopsis thaliana">
+<meta name="DC.subject" content="Oryza sativa">
+<meta name="DC.subject" content="crop breeding">
+<meta name="DC.subject" content="bioinformatics">
+<meta name="DC.subject" content="genotype to phenotype">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  "headline": "Predicting phenotypes from novel genomic markers using deep learning",
+  "name": "Predicting phenotypes from novel genomic markers using deep learning",
+  "url": "https://keyhannajafian.github.io/publications/predicting-phenotypes-novel-genomic-markers-deep-learning/",
+  "mainEntityOfPage": "https://keyhannajafian.github.io/publications/predicting-phenotypes-novel-genomic-markers-deep-learning/",
+  "datePublished": "2023",
+  "inLanguage": "en",
+  "abstract": "Genomic selection (GS) models use single nucleotide polymorphism (SNP) markers to predict phenotypes. However, these predictive models face challenges due to the high dimensionality of genome-wide SNP marker data. Thanks to recent breakthroughs in DNA sequencing and decreased sequencing cost, the study of novel genomic variants such as structural variations (SVs) and transposable elements (TEs) become increasingly prevalent. In this article, we develop a deep convolutional neural network model, NovGMDeep, to predict phenotypes using SVs and TEs markers for GS. The proposed model is trained and tested on samples of Arabidopsis thaliana and Oryza sativa using k-fold cross-validation. The prediction accuracy is evaluated using Pearson's Correlation Coefficient (PCC), mean absolute error (MAE) and SD of MAE. The predicted results showed higher correlation when the model is trained with SVs and TEs than with SNPs. NovGMDeep also has higher prediction accuracy when comparing with conventional statistical models. This work sheds light on the unappreciated function of SVs and TEs in genotype-to-phenotype associations, as well as their extensive significance and value in crop development.",
+  "about": [
+    {
+      "@type": "Thing",
+      "name": "genomic selection"
+    },
+    {
+      "@type": "Thing",
+      "name": "structural variants"
+    },
+    {
+      "@type": "Thing",
+      "name": "transposable elements"
+    },
+    {
+      "@type": "Thing",
+      "name": "SNP markers"
+    },
+    {
+      "@type": "Thing",
+      "name": "phenotype prediction"
+    },
+    {
+      "@type": "Thing",
+      "name": "deep learning"
+    },
+    {
+      "@type": "Thing",
+      "name": "convolutional neural network"
+    },
+    {
+      "@type": "Thing",
+      "name": "Arabidopsis thaliana"
+    },
+    {
+      "@type": "Thing",
+      "name": "Oryza sativa"
+    },
+    {
+      "@type": "Thing",
+      "name": "crop breeding"
+    },
+    {
+      "@type": "Thing",
+      "name": "bioinformatics"
+    },
+    {
+      "@type": "Thing",
+      "name": "genotype to phenotype"
+    }
+  ],
+  "keywords": "genomic selection, structural variants, transposable elements, SNP markers, phenotype prediction, deep learning, convolutional neural network, Arabidopsis thaliana, Oryza sativa, crop breeding, bioinformatics, genotype to phenotype",
+  "isPartOf": {
+    "@type": "Periodical",
+    "name": "Bioinformatics Advances, volume 3, issue 1, article vbad028"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Bioinformatics Advances, volume 3, issue 1, article vbad028"
+  },
+  "creativeWorkStatus": "Published",
+  "citation": "Bioinformatics Advances, volume 3, issue 1, article vbad028",
+  "genre": "Precision Agriculture",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Shivani Sehrawat"
+    },
+    {
+      "@type": "Person",
+      "name": "Keyhan Najafian"
+    },
+    {
+      "@type": "Person",
+      "name": "Lingling Jin"
+    }
+  ],
+  "identifier": [
+    {
+      "@type": "PropertyValue",
+      "propertyID": "DOI",
+      "value": "10.1093/bioadv/vbad028"
+    }
+  ],
+  "sameAs": "https://doi.org/10.1093/bioadv/vbad028",
+  "license": "CC BY 4.0",
+  "codeRepository": [
+    "https://github.com/shivanisehrawat4/NovGMDeep"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://keyhannajafian.github.io/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Publications",
+      "item": "https://keyhannajafian.github.io/publications/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Genomic selection from structural variants",
+      "item": "https://keyhannajafian.github.io/publications/predicting-phenotypes-novel-genomic-markers-deep-learning/"
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="https://keyhannajafian.github.io/">Dr. Keyhan Najafian<span>Postdoctoral Researcher, Vision Research Lab, University of Calgary</span></a>
+    <nav aria-label="Main"><a href="https://keyhannajafian.github.io/">Home</a><a href="https://keyhannajafian.github.io/publications/" aria-current="page">Publications</a></nav>
+  </div>
+</header>
+
+<div class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="https://keyhannajafian.github.io/">Home</a> / <a href="https://keyhannajafian.github.io/publications/">Publications</a> / Genomic selection from structural variants</nav>
+<main id="main">
+<article>
+  <p><span class="tag area">Precision Agriculture</span> <span class="year">Bioinformatics Advances 2023</span></p>
+  <h1>Predicting phenotypes from novel genomic markers using deep learning</h1>
+  <p class="meta">Shivani Sehrawat, <span class="me">Keyhan Najafian</span>, Lingling Jin</p>
+  
+  <p class="lede">Genomic selection usually runs on SNP markers. This work shows that structural variants and transposable elements predict crop phenotypes better, using NovGMDeep, a 1D convolutional network evaluated on Arabidopsis thaliana and Oryza sativa.</p>
+  <div class="links"><a href="https://github.com/shivanisehrawat4/NovGMDeep" rel="noopener">Code: NovGMDeep</a><a class="primary" href="https://doi.org/10.1093/bioadv/vbad028" rel="noopener">Paper</a></div>
+
+  <h2>Publication details</h2>
+  <dl class="facts"><dt>Venue</dt><dd>Bioinformatics Advances, volume 3, issue 1, article vbad028</dd><dt>Year</dt><dd>2023</dd><dt>DOI</dt><dd><a href="https://doi.org/10.1093/bioadv/vbad028">10.1093/bioadv/vbad028</a></dd><dt>License</dt><dd>CC BY 4.0</dd></dl>
+
+  <h2>Abstract</h2>
+  <blockquote class="abstract"><p>Genomic selection (GS) models use single nucleotide polymorphism (SNP) markers to predict phenotypes. However, these predictive models face challenges due to the high dimensionality of genome-wide SNP marker data. Thanks to recent breakthroughs in DNA sequencing and decreased sequencing cost, the study of novel genomic variants such as structural variations (SVs) and transposable elements (TEs) become increasingly prevalent. In this article, we develop a deep convolutional neural network model, NovGMDeep, to predict phenotypes using SVs and TEs markers for GS. The proposed model is trained and tested on samples of Arabidopsis thaliana and Oryza sativa using k-fold cross-validation. The prediction accuracy is evaluated using Pearson&#x27;s Correlation Coefficient (PCC), mean absolute error (MAE) and SD of MAE. The predicted results showed higher correlation when the model is trained with SVs and TEs than with SNPs. NovGMDeep also has higher prediction accuracy when comparing with conventional statistical models. This work sheds light on the unappreciated function of SVs and TEs in genotype-to-phenotype associations, as well as their extensive significance and value in crop development.</p></blockquote>
+  
+
+  <h2>Key contributions</h2><ul><li>Moves genomic selection beyond SNPs by encoding structural variants and transposable elements as one-hot marker representations.</li><li>Introduces NovGMDeep, a four-layer 1D convolutional network with max pooling and dropout, designed for marker counts far larger than the sample size.</li><li>Outperforms rrBLUP, gBLUP, DeepGS, and G2Pdeep on Arabidopsis thaliana phenotypes.</li><li>Documents where the approach fails: with only 176 rice accessions, deep models lose to statistical baselines.</li></ul>
+  <h2>Methods and techniques</h2><ul><li>1D convolutional neural network</li><li>Genomic selection</li><li>One-hot encoding of structural variants and transposable elements</li><li>3-fold cross-validation</li><li>Pearson correlation and mean absolute error evaluation</li><li>Comparison against rrBLUP, gBLUP, DeepGS, and G2Pdeep</li></ul>
+  <h2>Data and materials</h2><ul><li>Arabidopsis thaliana: 914 accessions with 155,440 structural variant markers, and 923 accessions with SNP markers, from the 1001 Genomes project and the European Variation Archive</li><li>Phenotypes from AraPheno: flowering time, rosette leaf number, cauline axillary branch number, stem length</li><li>Oryza sativa subsp. Japonica: 176 accessions with 6,074 transposable element markers and 493,882 SNP markers</li><li>Rice phenotypes: panicle length, spikelet number, days to heading, plant height</li></ul>
+  <h2>Results</h2><ul><li>Flowering time PCC of 0.788 with structural variants against 0.594 with SNPs</li><li>Structural variants beat SNPs on all four Arabidopsis phenotypes and beat both statistical baselines</li><li>Mean absolute error roughly halved for structural variants relative to SNPs</li><li>Transposable element markers outperformed SNPs in rice, though the small cohort limited deep model performance</li></ul>
+  <h2>Applications</h2><ul><li>Genomic selection and breeding value estimation in crops</li><li>Genotype-to-phenotype association beyond SNP markers</li><li>Trait prediction for Arabidopsis and rice breeding programs</li></ul>
+
+  <h2>Code and implementation</h2><article class="card"><h3><a href="https://github.com/shivanisehrawat4/NovGMDeep" rel="noopener">NovGMDeep</a></h3><p class="mono year">https://github.com/shivanisehrawat4/NovGMDeep</p><p>Keras implementation of the 1D convolutional genomic selection model, with the marker encoding and cross-validation pipeline.</p></article>
+
+  <h2>Research topics and keywords</h2>
+  <div class="tags"><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-agriculture">genomic selection</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-agriculture">structural variants</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-agriculture">transposable elements</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-agriculture">SNP markers</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-agriculture">phenotype prediction</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-agriculture">deep learning</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-agriculture">convolutional neural network</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-agriculture">Arabidopsis thaliana</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-agriculture">Oryza sativa</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-agriculture">crop breeding</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-agriculture">bioinformatics</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-agriculture">genotype to phenotype</a></div>
+
+  <h2>Cite this work</h2>
+  <pre class="cite">@article{sehrawat2023predicting,
+  title   = {Predicting phenotypes from novel genomic markers using deep learning},
+  author  = {Sehrawat, Shivani and Najafian, Keyhan and Jin, Lingling},
+  journal = {Bioinformatics Advances},
+  volume  = {3},
+  number  = {1},
+  pages   = {vbad028},
+  year    = {2023},
+  doi     = {10.1093/bioadv/vbad028}
+}</pre>
+
+  <h2>Related work in Precision Agriculture</h2>
+  <article class="card"><h3><a href="https://keyhannajafian.github.io/publications/wheat-head-detection-limited-labeled-samples/">A Semi-Self-Supervised Learning Approach for Wheat Head Detection Using Extremely Small Number of Labeled Samples</a></h3><p class="year">ICCVW 2021</p><p>Trains a wheat head detector from three contoured images and a few minutes of handheld video. The annotated wheat heads are cut out, augmented, and pasted onto background field footage to simulate a large computationally annotated dataset, and two domain adaptation stages then close the gap to real imagery.</p></article><article class="card"><h3><a href="https://keyhannajafian.github.io/publications/semi-self-supervised-segmentation-dense-patterns/">Semi-Self-Supervised Learning for Semantic Segmentation in Images with Dense Patterns</a></h3><p class="year">Plant Phenomics 2023</p><p>Extends the synthesis-plus-domain-adaptation idea from detection to pixel-level segmentation. Two annotated images and one short video clip are enough to train a customized U-Net that reaches a Dice score of 0.89 internally and generalizes to wheat fields from 18 domains across five countries.</p></article><article class="card"><h3><a href="https://keyhannajafian.github.io/publications/fusarium-damaged-kernel-detection-wheatseedbelt/">Detection of Fusarium Damaged Kernels in Wheat Using Deep Semi-Supervised Learning on a Novel WheatSeedBelt Dataset</a></h3><p class="year">ICCVW 2023</p><p>Introduces WheatSeedBelt, a 40,420-image single-kernel dataset covering 268 wheat varieties with damage annotations, and uses it to train semi-supervised classifiers for Fusarium damaged kernel grading. An inter-rater study shows human experts do not outperform the model.</p></article>
+  <p><a href="https://keyhannajafian.github.io/publications/#precision-agriculture">All Precision Agriculture publications</a> &middot;
+     <a href="https://keyhannajafian.github.io/publications/">Complete publication list</a></p>
+</article>
+</main>
+</div>
+
+<footer class="site">
+  <div class="wrap">
+    <p>Keyhan Najafian, Vision Research Lab, Department of Computer Science, University of Calgary.</p>
+    <p><a href="https://keyhannajafian.github.io/">Homepage</a> &middot; <a href="https://keyhannajafian.github.io/publications/">All publications</a> &middot;
+       <a href="https://scholar.google.ca/citations?hl=en&amp;user=3RI_XdQAAAAJ">Google Scholar</a> &middot;
+       <a href="https://github.com/KeyhanNajafian">GitHub</a></p>
+  </div>
+</footer>
+</body>
+</html>

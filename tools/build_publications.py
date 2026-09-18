@@ -8,6 +8,7 @@
 import html
 import json
 import os
+import re
 import shutil
 from datetime import date
 from typing import Any, Dict, List, Optional
@@ -107,6 +108,36 @@ def esc(text: str) -> str:
     return html.escape(text, quote=True)
 
 
+def clip(text: str, limit: int) -> str:
+    """ Shorten text to whole sentences that fit within the limit.
+
+        Falls back to a word-boundary cut with an ellipsis when the first sentence
+        alone already exceeds the limit.
+
+        Args:
+            text: Source string.
+            limit: Maximum character length.
+
+        Returns:
+            Clipped string ending on a sentence boundary where possible.
+    """
+    if len(text) <= limit:
+        return text
+
+    kept = ""
+    for sentence in re.findall(r".+?[.!?](?=\s|$)", text, re.S):
+        if len(kept) + len(sentence) > limit:
+            break
+        kept += sentence
+
+    if kept:
+        return kept.strip()
+
+    cut = text[:limit].rsplit(" ", 1)[0].rstrip(" ,;:")
+
+    return f"{cut} ..."
+
+
 def jsonld(payload: Dict[str, Any]) -> str:
     """ Serialize a JSON-LD block into a script tag.
 
@@ -148,6 +179,7 @@ def page(
     body: str,
     extra_head: str = "",
     active: str = "publications",
+    og_type: str = "website",
 ) -> str:
     """ Assemble a complete HTML document.
 
@@ -181,7 +213,7 @@ def page(
 <meta name="description" content="{esc(description)}">
 <link rel="canonical" href="{canonical}">
 <meta name="author" content="Keyhan Najafian">
-<meta property="og:type" content="article">
+<meta property="og:type" content="{og_type}">
 <meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="{esc(description)}">
 <meta property="og:url" content="{canonical}">
@@ -339,7 +371,7 @@ def article_ld(pub: Dict[str, Any], base: str, area_name: str) -> Dict[str, Any]
         "datePublished": str(pub["year"]),
         "inLanguage": "en",
         "abstract": pub["abstract"],
-        "author": [{"@type": "Person", "name": name} for name in pub["authors"]],
+
         "about": [{"@type": "Thing", "name": term} for term in pub["keywords"][:12]],
         "keywords": ", ".join(pub["keywords"]),
         "isPartOf": {
@@ -351,6 +383,9 @@ def article_ld(pub: Dict[str, Any], base: str, area_name: str) -> Dict[str, Any]
         "citation": pub["venue"],
         "genre": area_name,
     }
+
+    if pub["authors"]:
+        data["author"] = [{"@type": "Person", "name": name} for name in pub["authors"]]
 
     if pub.get("doi"):
         data["identifier"] = [
@@ -459,6 +494,13 @@ def render_publication(pub: Dict[str, Any], data: Dict[str, Any], area: Dict[str
         for k in pub["keywords"]
     )
 
+    if pub["authors"]:
+        author_line = f'<p class="meta">{author_html(pub["authors"], me)}</p>'
+    elif pub.get("authorsPending"):
+        author_line = '<p class="meta">Full author list to be added.</p>'
+    else:
+        author_line = ""
+
     note = ""
     if pub.get("authorNote"):
         note = f'<p class="meta">{esc(pub["authorNote"])}</p>'
@@ -477,7 +519,7 @@ def render_publication(pub: Dict[str, Any], data: Dict[str, Any], area: Dict[str
 <article>
   <p><span class="tag area">{esc(area["name"])}</span> <span class="year">{esc(pub["venueShort"])}</span></p>
   <h1>{esc(pub["title"])}</h1>
-  <p class="meta">{author_html(pub["authors"], me)}</p>
+  {author_line}
   {note}
   <p class="lede">{esc(pub["summary"])}</p>
   <div class="links">{"".join(links)}</div>
@@ -521,7 +563,8 @@ def render_publication(pub: Dict[str, Any], data: Dict[str, Any], area: Dict[str
     description = pub["summary"][:300]
     title = f"{pub['title']} | {pub['venueShort']} | Keyhan Najafian"
 
-    return page(base, url, title, description, body, extra_head, active="publications")
+    return page(base, url, title, description, body, extra_head, active="publications",
+                og_type="article")
 
 
 def render_index(data: Dict[str, Any]) -> str:
@@ -540,6 +583,15 @@ def render_index(data: Dict[str, Any]) -> str:
     trail = [{"name": "Home", "url": f"{base}/"}, {"name": "Publications", "url": url}]
 
     def card(pub: Dict[str, Any]) -> str:
+        if pub["authors"]:
+            authors_html = (
+                f'<p class="authors">'
+                f'{author_html(pub["authors"][:4], data["site"]["authorName"])}'
+                f'{" et al." if len(pub["authors"]) > 4 else ""}</p>'
+            )
+        else:
+            authors_html = ""
+
         repos = pub.get("repositories") or []
         repo_line = ""
         if repos:
@@ -570,8 +622,7 @@ def render_index(data: Dict[str, Any]) -> str:
         if not pubs:
             continue
 
-        toc.append(f'<a class="tag area" href="#{area["slug"]}">{esc(area["name"])} '
-                   f'({len(pubs)})</a>')
+        toc.append(f'<a class="tag area" href="#{area["slug"]}">{esc(area["name"])}</a>')
 
         intro = "".join(f"<p>{esc(par)}</p>" for par in area["intro"])
         cards = "".join(card(p) for p in pubs)
@@ -581,8 +632,8 @@ def render_index(data: Dict[str, Any]) -> str:
         dataset_html = ""
         if dsets:
             items = "".join(
-                f'<article class="card"><h3><a href="{base}/datasets/{d["slug"]}/">'
-                f'{esc(d["name"])}</a></h3><p>{esc(d["description"][:220])}</p></article>'
+                f'<article class="card"><h4><a href="{base}/datasets/{d["slug"]}/">'
+                f'{esc(d["name"])}</a></h4><p>{esc(clip(d["description"], 320))}</p></article>'
                 for d in dsets
             )
             dataset_html = (f'<h3 class="sub">Datasets from this area</h3>{items}')

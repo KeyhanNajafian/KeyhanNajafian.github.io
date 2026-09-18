@@ -23,10 +23,11 @@
       "slug": "precision-health",
       "name": "Precision Health",
       "title": "Precision Health",
-      "metaDescription": "Machine learning and radiomics for precision health: noninvasive MRI-based biomarkers, brain metastasis invasion pattern prediction, and clinical model validation.",
+      "metaDescription": "Machine learning and medical image analysis for precision health: noninvasive MRI biomarkers, histopathological diagnosis, kidney disease progression, and model development practice for small clinical datasets.",
       "intro": [
-        "In clinical imaging the constraint is different from agriculture but structurally similar: the ground truth is scarce, expensive, and sometimes only obtainable through an invasive procedure. My precision health research develops machine learning models that recover clinically meaningful information from images that are already acquired as part of standard care, so that a biomarker can be estimated before treatment rather than after surgery.",
-        "The work combines hand-crafted radiomic feature extraction with convolution-based deep learning, ensemble aggregation across models and image slices, and careful methodological controls: patient-wise data splits to prevent leakage, feature selection performed only on training data, image-level standardization across scanners, and evaluation on held-out independent test sets.",
+        "In clinical imaging the constraint is different from agriculture but structurally similar: the ground truth is scarce, expensive, and sometimes obtainable only through an invasive procedure. My precision health research builds models that recover clinically meaningful information from images already acquired as part of standard care, so that a decision can be informed before treatment rather than after surgery.",
+        "The work spans three imaging scales. On brain MRI, radiomic features from the peritumoral edema predict how a metastasis is invading the surrounding parenchyma, something an expert neuroradiologist cannot reliably read. On kidney MRI, image features fused with clinical variables identify which patients with polycystic kidney disease will lose function fastest. On histopathology slides, a synthesis pipeline recomposes tissue segments into many training examples so that a celiac disease classifier can be trained from a few hundred biopsies rather than a few thousand.",
+        "Running through all of it is the same methodological discipline, set out in the machine learning review written for Neuroimaging Clinics of North America: patient-wise splits to prevent leakage, feature selection performed only on training data, standardization across scanners, ensembling across models, and evaluation on held-out test sets. Small clinical datasets punish shortcuts, and most of the effort goes into not taking them.",
         "This research is carried out with the Augmented Intelligence and Precision Health Laboratory at the Research Institute of the McGill University Health Centre and the Radiomics and Augmented Intelligence Laboratory at the University of Florida College of Medicine."
       ]
     }
@@ -548,7 +549,7 @@
         "Lingling Jin",
         "Ian Stavness"
       ],
-      "venue": "arXiv preprint arXiv:2506.16563",
+      "venue": "arXiv:2506.16563",
       "venueShort": "Preprint 2025",
       "venueType": "preprint",
       "year": 2025,
@@ -634,10 +635,10 @@
         "Marie Weiss",
         "Afef Marzougui",
         "Lukas Roth",
-        "Sebastien Dandrifosse",
+        "Sébastien Dandrifosse",
         "Alexis Carlier",
         "Benjamin Dumont",
-        "Benoit Mercatoris",
+        "Benoît Mercatoris",
         "Javier Fernandez",
         "Scott Chapman",
         "Keyhan Najafian",
@@ -789,6 +790,346 @@
         "patient stratification"
       ],
       "bibtex": "@article{najafian2024bmip,\n  title   = {Machine learning prediction of brain metastasis invasion pattern on brain magnetic resonance imaging scans},\n  author  = {Najafian, Keyhan and Rehany, Benjamin and Nowakowski, Alexander and Ghazimoghadam, Saba and Pierre, Kevin and Zakarian, Rita and Al-Saadi, Tariq and Reinhold, Caroline and Babajani-Feremi, Abbas and Wong, Joshua K. and Guiot, Marie-Christine and Lacasse, Marie-Constance and Lam, Stephanie and Siegel, Peter M. and Petrecca, Kevin and Dankner, Matthew and Forghani, Reza},\n  journal = {Neuro-Oncology Advances},\n  volume  = {6},\n  number  = {1},\n  pages   = {vdae200},\n  year    = {2024},\n  doi     = {10.1093/noajnl/vdae200}\n}"
+    },
+    {
+      "slug": "celiac-disease-diagnosis-histopathology-deep-learning",
+      "area": "precision-health",
+      "title": "A Deep Learning-Based Pipeline for Celiac Disease Diagnosis Using Histopathological Images",
+      "shortTitle": "Celiac disease diagnosis from histopathology",
+      "authors": [
+        "Farhad Maleki",
+        "Kevin Cote",
+        "Keyhan Najafian",
+        "Katie Ovens",
+        "Yan Miao",
+        "Rita Zakarian",
+        "Caroline Reinhold",
+        "Reza Forghani",
+        "Peter Savadjiev",
+        "Zu-hua Gao"
+      ],
+      "venue": "Computer Analysis of Images and Patterns (CAIP 2021), Lecture Notes in Computer Science volume 13052",
+      "venueShort": "CAIP 2021",
+      "venueType": "conference",
+      "year": 2021,
+      "pages": "206-214",
+      "doi": "10.1007/978-3-030-89128-2_20",
+      "links": {
+        "paper": "https://doi.org/10.1007/978-3-030-89128-2_20"
+      },
+      "summary": "Diagnoses celiac disease from whole slide images of duodenal biopsies using far fewer slides than a conventional pipeline needs. An Image Assembler synthesizes training examples by recomposing tissue segments onto a blank canvas, and patient-level predictions come from a majority vote across 101 synthesized images.",
+      "abstract": "With an increasing number of celiac disease diagnoses and the increasing number of misdiagnoses, automated approaches are valuable to aid pathologists in efficiently diagnosing this disease. Histopathological analysis of intestinal biopsy is considered the gold standard for diagnosis. Convolutional neural networks have achieved promising results for various image processing tasks. A common challenge in medical imaging analysis is obtaining a large number of samples, impeding the full potential of deep learning. In this paper, we propose a classification pipeline to train deep convolutional neural networks to accurately diagnosis celiac disease using models trained with a small number of samples. To show the utility of this approach, we compared it to a typical classification pipeline. The results indicate the superiority of our classification pipeline in distinguishing celiac disease from normal tissue with precision, recall, and accuracy of 0.941, 0.889, and 0.893, respectively. Although we showed the utility of the proposed pipeline for celiac diagnosis, it can also be used for other applications utilizing histopathological imaging.",
+      "contributions": [
+        "Introduces Image Assembler, which segments tissue from a whole slide image and recomposes random subsets of segments onto a blank canvas to synthesize many labeled training examples per patient.",
+        "Aggregates the many per-slide predictions into one patient-level diagnosis through a majority vote, avoiding the mislabeling risk of patch-level training.",
+        "Shows that composing four segments per synthetic image outperforms both single segments and whole slide images on every metric.",
+        "Provides a pipeline that is independent of the underlying architecture and transferable to other whole slide pathology classification tasks."
+      ],
+      "methods": [
+        "Whole slide image analysis",
+        "Image Assembler synthesis",
+        "ResNet-50 pretrained on ImageNet",
+        "OTSU thresholding and foreground segmentation",
+        "Oversampling for class imbalance",
+        "Majority-vote patient-level aggregation",
+        "Albumentations augmentation"
+      ],
+      "data": [
+        "426 digitized duodenal biopsy slides from the McGill University Health Centre Department of Pathology, 2016 to 2019",
+        "Slides graded by Marsh histotype; ambiguous histotype 2 cases excluded",
+        "174 normal and 247 diseased samples after grouping",
+        "Patient-wise split of 60% training, 20% validation, 20% testing"
+      ],
+      "results": [
+        "Precision 0.941, recall 0.889, accuracy 0.893 with four segments per synthetic image",
+        "Precision 0.917, recall 0.815, accuracy 0.831 with single segments",
+        "Whole slide baseline: precision 0.833, recall 0.833, accuracy 0.786"
+      ],
+      "applications": [
+        "Computer-aided celiac disease diagnosis from intestinal biopsy",
+        "Reducing inter-observer variability in histopathological reporting",
+        "Whole slide pathology classification where large annotated datasets are impractical"
+      ],
+      "keywords": [
+        "celiac disease",
+        "histopathology",
+        "whole slide imaging",
+        "digital pathology",
+        "small sample sizes",
+        "convolutional neural networks",
+        "ResNet-50",
+        "image synthesis",
+        "computer-aided diagnosis",
+        "precision health",
+        "intestinal biopsy",
+        "villous atrophy"
+      ],
+      "bibtex": "@inproceedings{maleki2021celiac,\n  title     = {A Deep Learning-Based Pipeline for Celiac Disease Diagnosis Using Histopathological Images},\n  author    = {Maleki, Farhad and Cote, Kevin and Najafian, Keyhan and Ovens, Katie and Miao, Yan and Zakarian, Rita and Reinhold, Caroline and Forghani, Reza and Savadjiev, Peter and Gao, Zu-hua},\n  booktitle = {Computer Analysis of Images and Patterns (CAIP)},\n  series    = {Lecture Notes in Computer Science},\n  volume    = {13052},\n  pages     = {206--214},\n  year      = {2021},\n  publisher = {Springer},\n  doi       = {10.1007/978-3-030-89128-2_20}\n}"
+    },
+    {
+      "slug": "overview-of-machine-learning-fundamentals-classic-approaches",
+      "area": "precision-health",
+      "title": "Overview of Machine Learning Part 1: Fundamentals and Classic Approaches",
+      "shortTitle": "Machine learning fundamentals for medical imaging",
+      "authors": [
+        "Farhad Maleki",
+        "Katie Ovens",
+        "Keyhan Najafian",
+        "Behzad Forghani",
+        "Caroline Reinhold",
+        "Reza Forghani"
+      ],
+      "venue": "Neuroimaging Clinics of North America, volume 30, issue 4, pages e17-e32",
+      "venueShort": "Neuroimaging Clin. N. Am. 2020",
+      "venueType": "journal",
+      "year": 2020,
+      "pages": "e17-e32",
+      "doi": "10.1016/j.nic.2020.08.007",
+      "links": {
+        "paper": "https://doi.org/10.1016/j.nic.2020.08.007"
+      },
+      "license": "CC BY-NC-ND 4.0",
+      "summary": "A review written for clinicians and imaging researchers, covering classic supervised and unsupervised machine learning, the full predictive modeling workflow, and the practices that decide whether a model generalizes. Written around the constraint that defines medical datasets: small sample sizes and missing values.",
+      "abstract": "As health data and computer power become increasingly available, the main challenge is to gain actionable insight from these data. Machine learning methods have proved to be a viable approach for mining valuable insight from data across various fields. This article provides an overview of the classic supervised and unsupervised machine learning methods as well as fundamental concepts required for understanding how to develop generalizable and high-performance machine learning applications. It also describes the important steps for developing a machine learning model and how decisions made in these steps affect model performance and ability to generalize. Key points: small sample sizes and missing values are two common characteristics of medical datasets that make developing predictive models challenging; classic machine learning methods can be used to build predictive models using small datasets; developing a machine learning application requires following a workflow including data acquisition, exploratory data analysis, data cleaning, dimensionality reduction, model building and validation, and model evaluation; understanding model complexity, variance, and bias is required for the successful application of machine learning; and following best practices for model evaluation is necessary for developing generalizable models.",
+      "contributions": [
+        "Lays out the end-to-end predictive modeling workflow: data acquisition, exploratory analysis, cleaning, dimensionality reduction, training and validation, and evaluation.",
+        "Explains the bias-variance tradeoff and its relationship to model complexity in terms usable by clinical researchers.",
+        "Covers class imbalance, a defining feature of health data, and the tradeoffs of oversampling against undersampling.",
+        "Sets out evaluation practice: held-out test sets, nested cross-validation, and choosing performance measures that reflect the clinical question."
+      ],
+      "methods": [
+        "Linear and logistic regression",
+        "Support vector machines and the kernel trick",
+        "K-nearest neighbors",
+        "Naive Bayes",
+        "Decision trees and random forests",
+        "Multilayer perceptrons and backpropagation",
+        "Principal component analysis and t-SNE",
+        "K-means and hierarchical clustering",
+        "Feature selection: filter, wrapper, and embedded methods"
+      ],
+      "applications": [
+        "Teaching machine learning method selection to radiologists and clinical researchers",
+        "Model development practice for small medical datasets",
+        "Reference for evaluation and validation design in clinical machine learning"
+      ],
+      "keywords": [
+        "machine learning",
+        "supervised learning",
+        "unsupervised learning",
+        "classification",
+        "regression",
+        "dimensionality reduction",
+        "clustering",
+        "model evaluation",
+        "bias and variance",
+        "class imbalance",
+        "small sample sizes",
+        "medical imaging",
+        "neuroimaging",
+        "radiology"
+      ],
+      "bibtex": "@article{maleki2020overview,\n  title   = {Overview of Machine Learning Part 1: Fundamentals and Classic Approaches},\n  author  = {Maleki, Farhad and Ovens, Katie and Najafian, Keyhan and Forghani, Behzad and Reinhold, Caroline and Forghani, Reza},\n  journal = {Neuroimaging Clinics of North America},\n  volume  = {30},\n  number  = {4},\n  pages   = {e17--e32},\n  year    = {2020},\n  doi     = {10.1016/j.nic.2020.08.007}\n}"
+    },
+    {
+      "slug": "kidney-function-decline-adpkd-deep-learning",
+      "area": "precision-health",
+      "title": "Using Deep Learning to Determine Kidney Function Decline in Patients with ADPKD",
+      "shortTitle": "Kidney function decline in ADPKD",
+      "authors": [],
+      "authorsPending": true,
+      "venue": "Journal of the American Society of Nephrology, volume 34, issue 11S, page 406",
+      "venueShort": "JASN 2023",
+      "venueType": "conference",
+      "year": 2023,
+      "doi": "10.1681/ASN.20233411S1406f",
+      "links": {
+        "paper": "https://doi.org/10.1681/ASN.20233411S1406f"
+      },
+      "summary": "Predicts which patients with autosomal dominant polycystic kidney disease will lose kidney function rapidly, by fusing MRI features with clinical variables rather than relying on height-adjusted total kidney volume alone.",
+      "abstract": "Autosomal dominant polycystic kidney disease (ADPKD) is associated with progressive kidney cyst growth, eventually leading to kidney failure in many patients. The current risk stratification tool uses height-adjusted total kidney volume (TKV) by age. However, it does not include clinical or other imaging features that may contribute to kidney function decline. In this study, we developed a deep learning classifier that integrates clinical and imaging features to predict rapid estimated GFR (eGFR) decline in patients with ADPKD. We included 120 patients with confirmed ADPKD with at least one MRI scan and at least 3 serial eGFR measures. An eGFR decline of 4 mL/min/1.73 m2 per year or greater was defined as rapid progression. We tripled the sample size by extracting the largest manually segmented 2D MRI slice and its two neighbouring slices for each patient. Pixel-level and spatial-level transformations were applied to the images to enhance our deep model's generalizability and robustness. The model consisted of three components: EfficientNet-b2, FuseNet, and a classifier, with a train:validation:test split of 63:17:20. The EfficientNet-b2 extracted 1000 features from each MRI slice. The FuseNet performed feature fusion on 15 clinically relevant features associated with ADPKD. The feature maps obtained from both models were concatenated and fed into the classifier. Weighted-average F1 and AUC scores and the confusion matrix were used to assess the model's performance.",
+      "abstractTruncated": true,
+      "contributions": [
+        "Combines imaging and clinical information rather than relying on height-adjusted total kidney volume by age, the current risk stratification standard.",
+        "Fuses 1000 image features from EfficientNet-b2 with 15 clinically relevant ADPKD variables through a dedicated fusion network.",
+        "Expands a small cohort by using the largest segmented slice and its two neighbours per patient, with pixel-level and spatial-level augmentation."
+      ],
+      "methods": [
+        "EfficientNet-b2 feature extraction",
+        "FuseNet clinical feature fusion",
+        "Multimodal feature concatenation",
+        "Pixel-level and spatial-level augmentation",
+        "Weighted-average F1 and AUC evaluation"
+      ],
+      "data": [
+        "120 patients with confirmed ADPKD, each with at least one MRI scan and at least three serial eGFR measures",
+        "Rapid progression defined as eGFR decline of 4 mL/min/1.73 m2 per year or greater",
+        "Manually segmented 2D MRI slices plus two neighbouring slices per patient",
+        "Train, validation, and test split of 63:17:20"
+      ],
+      "applications": [
+        "Risk stratification of ADPKD patients before kidney failure",
+        "Multimodal prognostic modeling in nephrology",
+        "Earlier identification of candidates for intervention"
+      ],
+      "keywords": [
+        "autosomal dominant polycystic kidney disease",
+        "ADPKD",
+        "kidney function decline",
+        "eGFR",
+        "kidney MRI",
+        "total kidney volume",
+        "deep learning",
+        "multimodal feature fusion",
+        "EfficientNet",
+        "risk stratification",
+        "nephrology",
+        "precision health"
+      ],
+      "bibtex": "@article{najafian2023adpkd,\n  title   = {Using Deep Learning to Determine Kidney Function Decline in Patients with ADPKD},\n  journal = {Journal of the American Society of Nephrology},\n  volume  = {34},\n  number  = {11S},\n  pages   = {406},\n  year    = {2023},\n  doi     = {10.1681/ASN.20233411S1406f}\n}"
+    },
+    {
+      "slug": "predicting-phenotypes-novel-genomic-markers-deep-learning",
+      "area": "precision-agriculture",
+      "title": "Predicting phenotypes from novel genomic markers using deep learning",
+      "shortTitle": "Genomic selection from structural variants",
+      "authors": [
+        "Shivani Sehrawat",
+        "Keyhan Najafian",
+        "Lingling Jin"
+      ],
+      "venue": "Bioinformatics Advances, volume 3, issue 1, article vbad028",
+      "venueShort": "Bioinformatics Advances 2023",
+      "venueType": "journal",
+      "year": 2023,
+      "doi": "10.1093/bioadv/vbad028",
+      "links": {
+        "paper": "https://doi.org/10.1093/bioadv/vbad028"
+      },
+      "license": "CC BY 4.0",
+      "summary": "Genomic selection usually runs on SNP markers. This work shows that structural variants and transposable elements predict crop phenotypes better, using NovGMDeep, a 1D convolutional network evaluated on Arabidopsis thaliana and Oryza sativa.",
+      "abstract": "Genomic selection (GS) models use single nucleotide polymorphism (SNP) markers to predict phenotypes. However, these predictive models face challenges due to the high dimensionality of genome-wide SNP marker data. Thanks to recent breakthroughs in DNA sequencing and decreased sequencing cost, the study of novel genomic variants such as structural variations (SVs) and transposable elements (TEs) become increasingly prevalent. In this article, we develop a deep convolutional neural network model, NovGMDeep, to predict phenotypes using SVs and TEs markers for GS. The proposed model is trained and tested on samples of Arabidopsis thaliana and Oryza sativa using k-fold cross-validation. The prediction accuracy is evaluated using Pearson's Correlation Coefficient (PCC), mean absolute error (MAE) and SD of MAE. The predicted results showed higher correlation when the model is trained with SVs and TEs than with SNPs. NovGMDeep also has higher prediction accuracy when comparing with conventional statistical models. This work sheds light on the unappreciated function of SVs and TEs in genotype-to-phenotype associations, as well as their extensive significance and value in crop development.",
+      "contributions": [
+        "Moves genomic selection beyond SNPs by encoding structural variants and transposable elements as one-hot marker representations.",
+        "Introduces NovGMDeep, a four-layer 1D convolutional network with max pooling and dropout, designed for marker counts far larger than the sample size.",
+        "Outperforms rrBLUP, gBLUP, DeepGS, and G2Pdeep on Arabidopsis thaliana phenotypes.",
+        "Documents where the approach fails: with only 176 rice accessions, deep models lose to statistical baselines."
+      ],
+      "methods": [
+        "1D convolutional neural network",
+        "Genomic selection",
+        "One-hot encoding of structural variants and transposable elements",
+        "3-fold cross-validation",
+        "Pearson correlation and mean absolute error evaluation",
+        "Comparison against rrBLUP, gBLUP, DeepGS, and G2Pdeep"
+      ],
+      "data": [
+        "Arabidopsis thaliana: 914 accessions with 155,440 structural variant markers, and 923 accessions with SNP markers, from the 1001 Genomes project and the European Variation Archive",
+        "Phenotypes from AraPheno: flowering time, rosette leaf number, cauline axillary branch number, stem length",
+        "Oryza sativa subsp. Japonica: 176 accessions with 6,074 transposable element markers and 493,882 SNP markers",
+        "Rice phenotypes: panicle length, spikelet number, days to heading, plant height"
+      ],
+      "results": [
+        "Flowering time PCC of 0.788 with structural variants against 0.594 with SNPs",
+        "Structural variants beat SNPs on all four Arabidopsis phenotypes and beat both statistical baselines",
+        "Mean absolute error roughly halved for structural variants relative to SNPs",
+        "Transposable element markers outperformed SNPs in rice, though the small cohort limited deep model performance"
+      ],
+      "applications": [
+        "Genomic selection and breeding value estimation in crops",
+        "Genotype-to-phenotype association beyond SNP markers",
+        "Trait prediction for Arabidopsis and rice breeding programs"
+      ],
+      "keywords": [
+        "genomic selection",
+        "structural variants",
+        "transposable elements",
+        "SNP markers",
+        "phenotype prediction",
+        "deep learning",
+        "convolutional neural network",
+        "Arabidopsis thaliana",
+        "Oryza sativa",
+        "crop breeding",
+        "bioinformatics",
+        "genotype to phenotype"
+      ],
+      "repositories": [
+        {
+          "name": "NovGMDeep",
+          "url": "https://github.com/shivanisehrawat4/NovGMDeep",
+          "note": "Keras implementation of the 1D convolutional genomic selection model, with the marker encoding and cross-validation pipeline."
+        }
+      ],
+      "bibtex": "@article{sehrawat2023predicting,\n  title   = {Predicting phenotypes from novel genomic markers using deep learning},\n  author  = {Sehrawat, Shivani and Najafian, Keyhan and Jin, Lingling},\n  journal = {Bioinformatics Advances},\n  volume  = {3},\n  number  = {1},\n  pages   = {vbad028},\n  year    = {2023},\n  doi     = {10.1093/bioadv/vbad028}\n}"
+    },
+    {
+      "slug": "oppia-nitens-integument-colour-soil-toxicity",
+      "area": "precision-agriculture",
+      "title": "Integument colour change: Tracking delayed growth of Oppia nitens as a sub-lethal indicator of soil toxicity",
+      "shortTitle": "Mite colour change as a soil toxicity indicator",
+      "authors": [
+        "Olukayode O. Jegede",
+        "Hamzat O. Fajana",
+        "Adedamola Adedokun",
+        "Keyhan Najafian",
+        "Lingling Jin",
+        "Ian Stavness",
+        "Steven D. Siciliano"
+      ],
+      "venue": "Environmental Pollution, volume 339, article 122772",
+      "venueShort": "Environmental Pollution 2023",
+      "venueType": "journal",
+      "year": 2023,
+      "doi": "10.1016/j.envpol.2023.122772",
+      "links": {
+        "paper": "https://doi.org/10.1016/j.envpol.2023.122772"
+      },
+      "summary": "Turns the colour of a soil mite's shell into a measurable toxicity endpoint. Image analysis of how the integument of Oppia nitens darkens from amber to brown tracks growth, detecting sublethal heavy metal and organic contamination within seven days.",
+      "abstract": "Growth is an important toxicity end-point in ecotoxicology but is rarely used in soil ecotoxicological studies. Here, we assessed the growth change of Oppia nitens when exposed to reference and heavy metal toxicants. To assess mite growth, we developed an image analysis methodology to measure colour spectrum changes of the mite integument at the final developmental stage, as a proxy for growth change. We linked the values of red, green, blue, key-black, and light colour of mites to different growth stages. Our method of mite colour change detected sublethal effects within seven days of exposure at levels close to those that inhibit reproduction. At sublethal concentrations, cadmium, copper, zinc, phenanthrene and boric acid delayed the growth of Oppia nitens. As expected, cadmium was the most toxic metal on the growth of the mites. Assessing mite growth changes with image analytic methods is a step in the right direction in exploring additional toxicity endpoints.",
+      "abstractTruncated": true,
+      "contributions": [
+        "Establishes integument colour change from amber to dark brown as a measurable proxy for growth in Oppia nitens.",
+        "Develops an image analysis method linking red, green, blue, key-black, and lightness values to developmental stage.",
+        "Detects sublethal toxicity within seven days, at concentrations close to those that inhibit reproduction.",
+        "Adds growth to the small set of usable endpoints in soil ecotoxicology, alongside survival and reproduction."
+      ],
+      "methods": [
+        "Colour spectrum image analysis",
+        "RGB and key-black colour quantification",
+        "Soil ecotoxicological bioassay",
+        "Sublethal dose-response assessment"
+      ],
+      "data": [
+        "Oppia nitens exposed to cadmium, copper, zinc, phenanthrene, and boric acid",
+        "Colour measurements of the mite integument at the final developmental stage",
+        "Growth responses compared against published survival and reproduction endpoints"
+      ],
+      "results": [
+        "Sublethal growth delay detected within seven days of exposure",
+        "Growth was as sensitive an endpoint as reproduction",
+        "Cadmium was the most toxic of the metals tested on mite growth"
+      ],
+      "applications": [
+        "Soil contamination assessment and environmental remediation",
+        "Ecotoxicological risk assessment for agricultural soils",
+        "Image-based phenotyping of soil invertebrates"
+      ],
+      "keywords": [
+        "soil toxicity",
+        "ecotoxicology",
+        "Oppia nitens",
+        "oribatid mite",
+        "sublethal endpoint",
+        "integument colour",
+        "image analysis",
+        "heavy metals",
+        "cadmium",
+        "soil health",
+        "environmental remediation",
+        "soil science"
+      ],
+      "bibtex": "@article{jegede2023integument,\n  title   = {Integument colour change: Tracking delayed growth of Oppia nitens as a sub-lethal indicator of soil toxicity},\n  author  = {Jegede, Olukayode O. and Fajana, Hamzat O. and Adedokun, Adedamola and Najafian, Keyhan and Jin, Lingling and Stavness, Ian and Siciliano, Steven D.},\n  journal = {Environmental Pollution},\n  volume  = {339},\n  pages   = {122772},\n  year    = {2023},\n  doi     = {10.1016/j.envpol.2023.122772}\n}"
     }
   ],
   "datasets": [

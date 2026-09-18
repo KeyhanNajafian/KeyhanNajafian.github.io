@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Deep Learning-Based Pipeline for Celiac Disease Diagnosis Using Histopathological Images | CAIP 2021 | Keyhan Najafian</title>
+<meta name="description" content="Diagnoses celiac disease from whole slide images of duodenal biopsies using far fewer slides than a conventional pipeline needs. An Image Assembler synthesizes training examples by recomposing tissue segments onto a blank canvas, and patient-level predictions come from a majority vote across 101 syn">
+<link rel="canonical" href="https://keyhannajafian.github.io/publications/celiac-disease-diagnosis-histopathology-deep-learning/">
+<meta name="author" content="Keyhan Najafian">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Deep Learning-Based Pipeline for Celiac Disease Diagnosis Using Histopathological Images | CAIP 2021 | Keyhan Najafian">
+<meta property="og:description" content="Diagnoses celiac disease from whole slide images of duodenal biopsies using far fewer slides than a conventional pipeline needs. An Image Assembler synthesizes training examples by recomposing tissue segments onto a blank canvas, and patient-level predictions come from a majority vote across 101 syn">
+<meta property="og:url" content="https://keyhannajafian.github.io/publications/celiac-disease-diagnosis-histopathology-deep-learning/">
+<meta property="og:site_name" content="Keyhan Najafian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="A Deep Learning-Based Pipeline for Celiac Disease Diagnosis Using Histopathological Images | CAIP 2021 | Keyhan Najafian">
+<meta name="twitter:description" content="Diagnoses celiac disease from whole slide images of duodenal biopsies using far fewer slides than a conventional pipeline needs. An Image Assembler synthesizes training examples by recomposing tissue segments onto a blank canvas, and patient-level predictions come from a majority vote across 101 syn">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0F172A;--muted:#475569;--faint:#64748B;--line:#E2E8F0;--bg:#F8FAFC;
+--card:#FFFFFF;--emerald:#047857;--emerald-bg:#ECFDF5;--sky:#0369A1;--sky-bg:#F0F9FF}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+line-height:1.65;-webkit-font-smoothing:antialiased}
+code,pre,.mono{font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+a{color:var(--sky);text-decoration:none}
+a:hover{text-decoration:underline}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:1rem;top:1rem;position:fixed;background:#fff;padding:.6rem 1rem;
+border-radius:8px;border:1px solid var(--line);z-index:50}
+.wrap{max-width:60rem;margin:0 auto;padding:0 1.25rem}
+header.site{background:rgba(248,250,252,.92);border-bottom:1px solid var(--line);
+position:sticky;top:0;z-index:20;backdrop-filter:blur(8px)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;
+gap:1rem;padding-top:.85rem;padding-bottom:.85rem;flex-wrap:wrap}
+.brand{font-weight:800;color:var(--ink);letter-spacing:-.01em}
+.brand span{display:block;font-size:.72rem;font-weight:500;color:var(--faint);letter-spacing:0}
+header.site nav{display:flex;gap:1rem;font-size:.86rem;font-weight:600}
+header.site nav a{color:var(--muted)}
+header.site nav a[aria-current="page"]{color:var(--emerald)}
+.crumbs{font-size:.78rem;color:var(--faint);padding:1.25rem 0 0}
+.crumbs a{color:var(--faint)}
+main{padding-bottom:4rem}
+h1{font-size:clamp(1.55rem,3.6vw,2.2rem);line-height:1.25;letter-spacing:-.02em;
+margin:.75rem 0 .5rem;font-weight:800}
+h2{font-size:1.15rem;margin:2.25rem 0 .65rem;letter-spacing:-.01em;font-weight:700;
+padding-bottom:.4rem;border-bottom:1px solid var(--line)}
+h3{font-size:1rem;margin:1.5rem 0 .4rem;font-weight:700}
+p{margin:.65rem 0}
+.lede{font-size:1.02rem;color:var(--muted)}
+.meta{color:var(--muted);font-size:.9rem;margin:.35rem 0}
+.meta .me{font-weight:700;color:var(--ink);border-bottom:2px solid #10B981}
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;margin:.9rem 0}
+.tag{font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:.2rem .55rem;
+border-radius:6px;background:#F1F5F9;border:1px solid var(--line);color:var(--muted)}
+.tag.area{background:var(--emerald-bg);border-color:#A7F3D0;color:var(--emerald);font-weight:600}
+.links{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.1rem 0 .25rem}
+.links a{font-size:.82rem;font-weight:600;padding:.45rem .8rem;border-radius:8px;
+border:1px solid var(--line);background:var(--card)}
+.links a.primary{background:var(--sky);border-color:var(--sky);color:#fff}
+blockquote.abstract{margin:0;padding:1rem 1.15rem;background:var(--card);
+border:1px solid var(--line);border-left:3px solid var(--emerald);border-radius:0 12px 12px 0}
+blockquote.abstract p{margin:0;color:#1E293B}
+ul{margin:.5rem 0;padding-left:1.15rem}
+li{margin:.3rem 0;color:#1E293B}
+dl.facts{display:grid;grid-template-columns:auto 1fr;gap:.35rem 1rem;margin:.5rem 0;
+font-size:.9rem}
+dl.facts dt{color:var(--faint);font-weight:600}
+dl.facts dd{margin:0}
+pre.cite{background:#0F172A;color:#E2E8F0;padding:1rem;border-radius:12px;
+overflow-x:auto;font-size:.74rem;line-height:1.55}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+padding:1.1rem 1.15rem;margin:.75rem 0}
+.card h3{margin:0 0 .3rem;font-size:1.02rem}
+.card h3 a{color:var(--ink)}
+.card p{margin:.35rem 0;font-size:.88rem;color:var(--muted)}
+.year{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--faint);margin:.2rem 0}
+.authors{font-size:.85rem;color:var(--muted);margin:.25rem 0}
+h3.sub{margin-top:1.75rem;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;
+color:var(--faint);font-family:'JetBrains Mono',monospace}
+section[id]{scroll-margin-top:5rem;padding-top:.5rem}
+a.tag.area{text-decoration:none}
+a.tag.area:hover{background:#D1FAE5}
+.backtop{font-size:.78rem;margin-top:1.25rem}
+footer.site{border-top:1px solid var(--line);background:#0F172A;color:#94A3B8;
+padding:2rem 0;font-size:.85rem}
+footer.site a{color:#CBD5E1}
+@media(max-width:640px){dl.facts{grid-template-columns:1fr}dl.facts dd{margin-bottom:.5rem}}
+</style>
+<meta name="citation_title" content="A Deep Learning-Based Pipeline for Celiac Disease Diagnosis Using Histopathological Images">
+<meta name="citation_author" content="Farhad Maleki">
+<meta name="citation_author" content="Kevin Cote">
+<meta name="citation_author" content="Keyhan Najafian">
+<meta name="citation_author" content="Katie Ovens">
+<meta name="citation_author" content="Yan Miao">
+<meta name="citation_author" content="Rita Zakarian">
+<meta name="citation_author" content="Caroline Reinhold">
+<meta name="citation_author" content="Reza Forghani">
+<meta name="citation_author" content="Peter Savadjiev">
+<meta name="citation_author" content="Zu-hua Gao">
+<meta name="citation_publication_date" content="2021">
+<meta name="citation_date" content="2021">
+<meta name="citation_conference_title" content="Computer Analysis of Images and Patterns (CAIP 2021), Lecture Notes in Computer Science volume 13052">
+<meta name="citation_firstpage" content="206">
+<meta name="citation_lastpage" content="214">
+<meta name="citation_doi" content="10.1007/978-3-030-89128-2_20">
+<meta name="citation_abstract_html_url" content="https://keyhannajafian.github.io/publications/celiac-disease-diagnosis-histopathology-deep-learning/">
+<meta name="DC.title" content="A Deep Learning-Based Pipeline for Celiac Disease Diagnosis Using Histopathological Images">
+<meta name="DC.creator" content="Farhad Maleki">
+<meta name="DC.creator" content="Kevin Cote">
+<meta name="DC.creator" content="Keyhan Najafian">
+<meta name="DC.creator" content="Katie Ovens">
+<meta name="DC.creator" content="Yan Miao">
+<meta name="DC.creator" content="Rita Zakarian">
+<meta name="DC.creator" content="Caroline Reinhold">
+<meta name="DC.creator" content="Reza Forghani">
+<meta name="DC.creator" content="Peter Savadjiev">
+<meta name="DC.creator" content="Zu-hua Gao">
+<meta name="DC.date" content="2021">
+<meta name="DC.type" content="Text">
+<meta name="DC.source" content="Computer Analysis of Images and Patterns (CAIP 2021), Lecture Notes in Computer Science volume 13052">
+<meta name="DC.identifier" content="https://doi.org/10.1007/978-3-030-89128-2_20">
+<meta name="DC.subject" content="celiac disease">
+<meta name="DC.subject" content="histopathology">
+<meta name="DC.subject" content="whole slide imaging">
+<meta name="DC.subject" content="digital pathology">
+<meta name="DC.subject" content="small sample sizes">
+<meta name="DC.subject" content="convolutional neural networks">
+<meta name="DC.subject" content="ResNet-50">
+<meta name="DC.subject" content="image synthesis">
+<meta name="DC.subject" content="computer-aided diagnosis">
+<meta name="DC.subject" content="precision health">
+<meta name="DC.subject" content="intestinal biopsy">
+<meta name="DC.subject" content="villous atrophy">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  "headline": "A Deep Learning-Based Pipeline for Celiac Disease Diagnosis Using Histopathological Images",
+  "name": "A Deep Learning-Based Pipeline for Celiac Disease Diagnosis Using Histopathological Images",
+  "url": "https://keyhannajafian.github.io/publications/celiac-disease-diagnosis-histopathology-deep-learning/",
+  "mainEntityOfPage": "https://keyhannajafian.github.io/publications/celiac-disease-diagnosis-histopathology-deep-learning/",
+  "datePublished": "2021",
+  "inLanguage": "en",
+  "abstract": "With an increasing number of celiac disease diagnoses and the increasing number of misdiagnoses, automated approaches are valuable to aid pathologists in efficiently diagnosing this disease. Histopathological analysis of intestinal biopsy is considered the gold standard for diagnosis. Convolutional neural networks have achieved promising results for various image processing tasks. A common challenge in medical imaging analysis is obtaining a large number of samples, impeding the full potential of deep learning. In this paper, we propose a classification pipeline to train deep convolutional neural networks to accurately diagnosis celiac disease using models trained with a small number of samples. To show the utility of this approach, we compared it to a typical classification pipeline. The results indicate the superiority of our classification pipeline in distinguishing celiac disease from normal tissue with precision, recall, and accuracy of 0.941, 0.889, and 0.893, respectively. Although we showed the utility of the proposed pipeline for celiac diagnosis, it can also be used for other applications utilizing histopathological imaging.",
+  "about": [
+    {
+      "@type": "Thing",
+      "name": "celiac disease"
+    },
+    {
+      "@type": "Thing",
+      "name": "histopathology"
+    },
+    {
+      "@type": "Thing",
+      "name": "whole slide imaging"
+    },
+    {
+      "@type": "Thing",
+      "name": "digital pathology"
+    },
+    {
+      "@type": "Thing",
+      "name": "small sample sizes"
+    },
+    {
+      "@type": "Thing",
+      "name": "convolutional neural networks"
+    },
+    {
+      "@type": "Thing",
+      "name": "ResNet-50"
+    },
+    {
+      "@type": "Thing",
+      "name": "image synthesis"
+    },
+    {
+      "@type": "Thing",
+      "name": "computer-aided diagnosis"
+    },
+    {
+      "@type": "Thing",
+      "name": "precision health"
+    },
+    {
+      "@type": "Thing",
+      "name": "intestinal biopsy"
+    },
+    {
+      "@type": "Thing",
+      "name": "villous atrophy"
+    }
+  ],
+  "keywords": "celiac disease, histopathology, whole slide imaging, digital pathology, small sample sizes, convolutional neural networks, ResNet-50, image synthesis, computer-aided diagnosis, precision health, intestinal biopsy, villous atrophy",
+  "isPartOf": {
+    "@type": "PublicationEvent",
+    "name": "Computer Analysis of Images and Patterns (CAIP 2021), Lecture Notes in Computer Science volume 13052"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Computer Analysis of Images and Patterns (CAIP 2021), Lecture Notes in Computer Science volume 13052"
+  },
+  "creativeWorkStatus": "Published",
+  "citation": "Computer Analysis of Images and Patterns (CAIP 2021), Lecture Notes in Computer Science volume 13052",
+  "genre": "Precision Health",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Farhad Maleki"
+    },
+    {
+      "@type": "Person",
+      "name": "Kevin Cote"
+    },
+    {
+      "@type": "Person",
+      "name": "Keyhan Najafian"
+    },
+    {
+      "@type": "Person",
+      "name": "Katie Ovens"
+    },
+    {
+      "@type": "Person",
+      "name": "Yan Miao"
+    },
+    {
+      "@type": "Person",
+      "name": "Rita Zakarian"
+    },
+    {
+      "@type": "Person",
+      "name": "Caroline Reinhold"
+    },
+    {
+      "@type": "Person",
+      "name": "Reza Forghani"
+    },
+    {
+      "@type": "Person",
+      "name": "Peter Savadjiev"
+    },
+    {
+      "@type": "Person",
+      "name": "Zu-hua Gao"
+    }
+  ],
+  "identifier": [
+    {
+      "@type": "PropertyValue",
+      "propertyID": "DOI",
+      "value": "10.1007/978-3-030-89128-2_20"
+    }
+  ],
+  "sameAs": "https://doi.org/10.1007/978-3-030-89128-2_20"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://keyhannajafian.github.io/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Publications",
+      "item": "https://keyhannajafian.github.io/publications/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Celiac disease diagnosis from histopathology",
+      "item": "https://keyhannajafian.github.io/publications/celiac-disease-diagnosis-histopathology-deep-learning/"
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="https://keyhannajafian.github.io/">Dr. Keyhan Najafian<span>Postdoctoral Researcher, Vision Research Lab, University of Calgary</span></a>
+    <nav aria-label="Main"><a href="https://keyhannajafian.github.io/">Home</a><a href="https://keyhannajafian.github.io/publications/" aria-current="page">Publications</a></nav>
+  </div>
+</header>
+
+<div class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="https://keyhannajafian.github.io/">Home</a> / <a href="https://keyhannajafian.github.io/publications/">Publications</a> / Celiac disease diagnosis from histopathology</nav>
+<main id="main">
+<article>
+  <p><span class="tag area">Precision Health</span> <span class="year">CAIP 2021</span></p>
+  <h1>A Deep Learning-Based Pipeline for Celiac Disease Diagnosis Using Histopathological Images</h1>
+  <p class="meta">Farhad Maleki, Kevin Cote, <span class="me">Keyhan Najafian</span>, Katie Ovens, Yan Miao, Rita Zakarian, Caroline Reinhold, Reza Forghani, Peter Savadjiev, Zu-hua Gao</p>
+  
+  <p class="lede">Diagnoses celiac disease from whole slide images of duodenal biopsies using far fewer slides than a conventional pipeline needs. An Image Assembler synthesizes training examples by recomposing tissue segments onto a blank canvas, and patient-level predictions come from a majority vote across 101 synthesized images.</p>
+  <div class="links"><a class="primary" href="https://doi.org/10.1007/978-3-030-89128-2_20" rel="noopener">Paper</a></div>
+
+  <h2>Publication details</h2>
+  <dl class="facts"><dt>Venue</dt><dd>Computer Analysis of Images and Patterns (CAIP 2021), Lecture Notes in Computer Science volume 13052</dd><dt>Year</dt><dd>2021</dd><dt>Pages</dt><dd>206-214</dd><dt>DOI</dt><dd><a href="https://doi.org/10.1007/978-3-030-89128-2_20">10.1007/978-3-030-89128-2_20</a></dd></dl>
+
+  <h2>Abstract</h2>
+  <blockquote class="abstract"><p>With an increasing number of celiac disease diagnoses and the increasing number of misdiagnoses, automated approaches are valuable to aid pathologists in efficiently diagnosing this disease. Histopathological analysis of intestinal biopsy is considered the gold standard for diagnosis. Convolutional neural networks have achieved promising results for various image processing tasks. A common challenge in medical imaging analysis is obtaining a large number of samples, impeding the full potential of deep learning. In this paper, we propose a classification pipeline to train deep convolutional neural networks to accurately diagnosis celiac disease using models trained with a small number of samples. To show the utility of this approach, we compared it to a typical classification pipeline. The results indicate the superiority of our classification pipeline in distinguishing celiac disease from normal tissue with precision, recall, and accuracy of 0.941, 0.889, and 0.893, respectively. Although we showed the utility of the proposed pipeline for celiac diagnosis, it can also be used for other applications utilizing histopathological imaging.</p></blockquote>
+  
+
+  <h2>Key contributions</h2><ul><li>Introduces Image Assembler, which segments tissue from a whole slide image and recomposes random subsets of segments onto a blank canvas to synthesize many labeled training examples per patient.</li><li>Aggregates the many per-slide predictions into one patient-level diagnosis through a majority vote, avoiding the mislabeling risk of patch-level training.</li><li>Shows that composing four segments per synthetic image outperforms both single segments and whole slide images on every metric.</li><li>Provides a pipeline that is independent of the underlying architecture and transferable to other whole slide pathology classification tasks.</li></ul>
+  <h2>Methods and techniques</h2><ul><li>Whole slide image analysis</li><li>Image Assembler synthesis</li><li>ResNet-50 pretrained on ImageNet</li><li>OTSU thresholding and foreground segmentation</li><li>Oversampling for class imbalance</li><li>Majority-vote patient-level aggregation</li><li>Albumentations augmentation</li></ul>
+  <h2>Data and materials</h2><ul><li>426 digitized duodenal biopsy slides from the McGill University Health Centre Department of Pathology, 2016 to 2019</li><li>Slides graded by Marsh histotype; ambiguous histotype 2 cases excluded</li><li>174 normal and 247 diseased samples after grouping</li><li>Patient-wise split of 60% training, 20% validation, 20% testing</li></ul>
+  <h2>Results</h2><ul><li>Precision 0.941, recall 0.889, accuracy 0.893 with four segments per synthetic image</li><li>Precision 0.917, recall 0.815, accuracy 0.831 with single segments</li><li>Whole slide baseline: precision 0.833, recall 0.833, accuracy 0.786</li></ul>
+  <h2>Applications</h2><ul><li>Computer-aided celiac disease diagnosis from intestinal biopsy</li><li>Reducing inter-observer variability in histopathological reporting</li><li>Whole slide pathology classification where large annotated datasets are impractical</li></ul>
+
+  
+
+  <h2>Research topics and keywords</h2>
+  <div class="tags"><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">celiac disease</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">histopathology</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">whole slide imaging</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">digital pathology</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">small sample sizes</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">convolutional neural networks</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">ResNet-50</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">image synthesis</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">computer-aided diagnosis</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">precision health</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">intestinal biopsy</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">villous atrophy</a></div>
+
+  <h2>Cite this work</h2>
+  <pre class="cite">@inproceedings{maleki2021celiac,
+  title     = {A Deep Learning-Based Pipeline for Celiac Disease Diagnosis Using Histopathological Images},
+  author    = {Maleki, Farhad and Cote, Kevin and Najafian, Keyhan and Ovens, Katie and Miao, Yan and Zakarian, Rita and Reinhold, Caroline and Forghani, Reza and Savadjiev, Peter and Gao, Zu-hua},
+  booktitle = {Computer Analysis of Images and Patterns (CAIP)},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {13052},
+  pages     = {206--214},
+  year      = {2021},
+  publisher = {Springer},
+  doi       = {10.1007/978-3-030-89128-2_20}
+}</pre>
+
+  <h2>Related work in Precision Health</h2>
+  <article class="card"><h3><a href="https://keyhannajafian.github.io/publications/brain-metastasis-invasion-pattern-mri-machine-learning/">Machine learning prediction of brain metastasis invasion pattern on brain magnetic resonance imaging scans</a></h3><p class="year">Neuro-Oncology Advances 2024</p><p>Brain metastasis invasion pattern is prognostic but can currently only be read from resected tissue. This study shows it can be predicted from preoperative MRI with 85% accuracy, using radiomic features from the peritumoral edema, in a task where expert neuroradiologists reach only 44 to 59%.</p></article><article class="card"><h3><a href="https://keyhannajafian.github.io/publications/overview-of-machine-learning-fundamentals-classic-approaches/">Overview of Machine Learning Part 1: Fundamentals and Classic Approaches</a></h3><p class="year">Neuroimaging Clin. N. Am. 2020</p><p>A review written for clinicians and imaging researchers, covering classic supervised and unsupervised machine learning, the full predictive modeling workflow, and the practices that decide whether a model generalizes. Written around the constraint that defines medical datasets: small sample sizes and missing values.</p></article><article class="card"><h3><a href="https://keyhannajafian.github.io/publications/kidney-function-decline-adpkd-deep-learning/">Using Deep Learning to Determine Kidney Function Decline in Patients with ADPKD</a></h3><p class="year">JASN 2023</p><p>Predicts which patients with autosomal dominant polycystic kidney disease will lose kidney function rapidly, by fusing MRI features with clinical variables rather than relying on height-adjusted total kidney volume alone.</p></article>
+  <p><a href="https://keyhannajafian.github.io/publications/#precision-health">All Precision Health publications</a> &middot;
+     <a href="https://keyhannajafian.github.io/publications/">Complete publication list</a></p>
+</article>
+</main>
+</div>
+
+<footer class="site">
+  <div class="wrap">
+    <p>Keyhan Najafian, Vision Research Lab, Department of Computer Science, University of Calgary.</p>
+    <p><a href="https://keyhannajafian.github.io/">Homepage</a> &middot; <a href="https://keyhannajafian.github.io/publications/">All publications</a> &middot;
+       <a href="https://scholar.google.ca/citations?hl=en&amp;user=3RI_XdQAAAAJ">Google Scholar</a> &middot;
+       <a href="https://github.com/KeyhanNajafian">GitHub</a></p>
+  </div>
+</footer>
+</body>
+</html>

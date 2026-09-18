@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Overview of Machine Learning Part 1: Fundamentals and Classic Approaches | Neuroimaging Clin. N. Am. 2020 | Keyhan Najafian</title>
+<meta name="description" content="A review written for clinicians and imaging researchers, covering classic supervised and unsupervised machine learning, the full predictive modeling workflow, and the practices that decide whether a model generalizes. Written around the constraint that defines medical datasets: small sample sizes an">
+<link rel="canonical" href="https://keyhannajafian.github.io/publications/overview-of-machine-learning-fundamentals-classic-approaches/">
+<meta name="author" content="Keyhan Najafian">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Overview of Machine Learning Part 1: Fundamentals and Classic Approaches | Neuroimaging Clin. N. Am. 2020 | Keyhan Najafian">
+<meta property="og:description" content="A review written for clinicians and imaging researchers, covering classic supervised and unsupervised machine learning, the full predictive modeling workflow, and the practices that decide whether a model generalizes. Written around the constraint that defines medical datasets: small sample sizes an">
+<meta property="og:url" content="https://keyhannajafian.github.io/publications/overview-of-machine-learning-fundamentals-classic-approaches/">
+<meta property="og:site_name" content="Keyhan Najafian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Overview of Machine Learning Part 1: Fundamentals and Classic Approaches | Neuroimaging Clin. N. Am. 2020 | Keyhan Najafian">
+<meta name="twitter:description" content="A review written for clinicians and imaging researchers, covering classic supervised and unsupervised machine learning, the full predictive modeling workflow, and the practices that decide whether a model generalizes. Written around the constraint that defines medical datasets: small sample sizes an">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0F172A;--muted:#475569;--faint:#64748B;--line:#E2E8F0;--bg:#F8FAFC;
+--card:#FFFFFF;--emerald:#047857;--emerald-bg:#ECFDF5;--sky:#0369A1;--sky-bg:#F0F9FF}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+line-height:1.65;-webkit-font-smoothing:antialiased}
+code,pre,.mono{font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+a{color:var(--sky);text-decoration:none}
+a:hover{text-decoration:underline}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:1rem;top:1rem;position:fixed;background:#fff;padding:.6rem 1rem;
+border-radius:8px;border:1px solid var(--line);z-index:50}
+.wrap{max-width:60rem;margin:0 auto;padding:0 1.25rem}
+header.site{background:rgba(248,250,252,.92);border-bottom:1px solid var(--line);
+position:sticky;top:0;z-index:20;backdrop-filter:blur(8px)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;
+gap:1rem;padding-top:.85rem;padding-bottom:.85rem;flex-wrap:wrap}
+.brand{font-weight:800;color:var(--ink);letter-spacing:-.01em}
+.brand span{display:block;font-size:.72rem;font-weight:500;color:var(--faint);letter-spacing:0}
+header.site nav{display:flex;gap:1rem;font-size:.86rem;font-weight:600}
+header.site nav a{color:var(--muted)}
+header.site nav a[aria-current="page"]{color:var(--emerald)}
+.crumbs{font-size:.78rem;color:var(--faint);padding:1.25rem 0 0}
+.crumbs a{color:var(--faint)}
+main{padding-bottom:4rem}
+h1{font-size:clamp(1.55rem,3.6vw,2.2rem);line-height:1.25;letter-spacing:-.02em;
+margin:.75rem 0 .5rem;font-weight:800}
+h2{font-size:1.15rem;margin:2.25rem 0 .65rem;letter-spacing:-.01em;font-weight:700;
+padding-bottom:.4rem;border-bottom:1px solid var(--line)}
+h3{font-size:1rem;margin:1.5rem 0 .4rem;font-weight:700}
+p{margin:.65rem 0}
+.lede{font-size:1.02rem;color:var(--muted)}
+.meta{color:var(--muted);font-size:.9rem;margin:.35rem 0}
+.meta .me{font-weight:700;color:var(--ink);border-bottom:2px solid #10B981}
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;margin:.9rem 0}
+.tag{font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:.2rem .55rem;
+border-radius:6px;background:#F1F5F9;border:1px solid var(--line);color:var(--muted)}
+.tag.area{background:var(--emerald-bg);border-color:#A7F3D0;color:var(--emerald);font-weight:600}
+.links{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.1rem 0 .25rem}
+.links a{font-size:.82rem;font-weight:600;padding:.45rem .8rem;border-radius:8px;
+border:1px solid var(--line);background:var(--card)}
+.links a.primary{background:var(--sky);border-color:var(--sky);color:#fff}
+blockquote.abstract{margin:0;padding:1rem 1.15rem;background:var(--card);
+border:1px solid var(--line);border-left:3px solid var(--emerald);border-radius:0 12px 12px 0}
+blockquote.abstract p{margin:0;color:#1E293B}
+ul{margin:.5rem 0;padding-left:1.15rem}
+li{margin:.3rem 0;color:#1E293B}
+dl.facts{display:grid;grid-template-columns:auto 1fr;gap:.35rem 1rem;margin:.5rem 0;
+font-size:.9rem}
+dl.facts dt{color:var(--faint);font-weight:600}
+dl.facts dd{margin:0}
+pre.cite{background:#0F172A;color:#E2E8F0;padding:1rem;border-radius:12px;
+overflow-x:auto;font-size:.74rem;line-height:1.55}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+padding:1.1rem 1.15rem;margin:.75rem 0}
+.card h3{margin:0 0 .3rem;font-size:1.02rem}
+.card h3 a{color:var(--ink)}
+.card p{margin:.35rem 0;font-size:.88rem;color:var(--muted)}
+.year{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--faint);margin:.2rem 0}
+.authors{font-size:.85rem;color:var(--muted);margin:.25rem 0}
+h3.sub{margin-top:1.75rem;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;
+color:var(--faint);font-family:'JetBrains Mono',monospace}
+section[id]{scroll-margin-top:5rem;padding-top:.5rem}
+a.tag.area{text-decoration:none}
+a.tag.area:hover{background:#D1FAE5}
+.backtop{font-size:.78rem;margin-top:1.25rem}
+footer.site{border-top:1px solid var(--line);background:#0F172A;color:#94A3B8;
+padding:2rem 0;font-size:.85rem}
+footer.site a{color:#CBD5E1}
+@media(max-width:640px){dl.facts{grid-template-columns:1fr}dl.facts dd{margin-bottom:.5rem}}
+</style>
+<meta name="citation_title" content="Overview of Machine Learning Part 1: Fundamentals and Classic Approaches">
+<meta name="citation_author" content="Farhad Maleki">
+<meta name="citation_author" content="Katie Ovens">
+<meta name="citation_author" content="Keyhan Najafian">
+<meta name="citation_author" content="Behzad Forghani">
+<meta name="citation_author" content="Caroline Reinhold">
+<meta name="citation_author" content="Reza Forghani">
+<meta name="citation_publication_date" content="2020">
+<meta name="citation_date" content="2020">
+<meta name="citation_journal_title" content="Neuroimaging Clinics of North America, volume 30, issue 4, pages e17-e32">
+<meta name="citation_firstpage" content="e17">
+<meta name="citation_lastpage" content="e32">
+<meta name="citation_doi" content="10.1016/j.nic.2020.08.007">
+<meta name="citation_abstract_html_url" content="https://keyhannajafian.github.io/publications/overview-of-machine-learning-fundamentals-classic-approaches/">
+<meta name="DC.title" content="Overview of Machine Learning Part 1: Fundamentals and Classic Approaches">
+<meta name="DC.creator" content="Farhad Maleki">
+<meta name="DC.creator" content="Katie Ovens">
+<meta name="DC.creator" content="Keyhan Najafian">
+<meta name="DC.creator" content="Behzad Forghani">
+<meta name="DC.creator" content="Caroline Reinhold">
+<meta name="DC.creator" content="Reza Forghani">
+<meta name="DC.date" content="2020">
+<meta name="DC.type" content="Text">
+<meta name="DC.source" content="Neuroimaging Clinics of North America, volume 30, issue 4, pages e17-e32">
+<meta name="DC.identifier" content="https://doi.org/10.1016/j.nic.2020.08.007">
+<meta name="DC.subject" content="machine learning">
+<meta name="DC.subject" content="supervised learning">
+<meta name="DC.subject" content="unsupervised learning">
+<meta name="DC.subject" content="classification">
+<meta name="DC.subject" content="regression">
+<meta name="DC.subject" content="dimensionality reduction">
+<meta name="DC.subject" content="clustering">
+<meta name="DC.subject" content="model evaluation">
+<meta name="DC.subject" content="bias and variance">
+<meta name="DC.subject" content="class imbalance">
+<meta name="DC.subject" content="small sample sizes">
+<meta name="DC.subject" content="medical imaging">
+<meta name="DC.subject" content="neuroimaging">
+<meta name="DC.subject" content="radiology">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  "headline": "Overview of Machine Learning Part 1: Fundamentals and Classic Approaches",
+  "name": "Overview of Machine Learning Part 1: Fundamentals and Classic Approaches",
+  "url": "https://keyhannajafian.github.io/publications/overview-of-machine-learning-fundamentals-classic-approaches/",
+  "mainEntityOfPage": "https://keyhannajafian.github.io/publications/overview-of-machine-learning-fundamentals-classic-approaches/",
+  "datePublished": "2020",
+  "inLanguage": "en",
+  "abstract": "As health data and computer power become increasingly available, the main challenge is to gain actionable insight from these data. Machine learning methods have proved to be a viable approach for mining valuable insight from data across various fields. This article provides an overview of the classic supervised and unsupervised machine learning methods as well as fundamental concepts required for understanding how to develop generalizable and high-performance machine learning applications. It also describes the important steps for developing a machine learning model and how decisions made in these steps affect model performance and ability to generalize. Key points: small sample sizes and missing values are two common characteristics of medical datasets that make developing predictive models challenging; classic machine learning methods can be used to build predictive models using small datasets; developing a machine learning application requires following a workflow including data acquisition, exploratory data analysis, data cleaning, dimensionality reduction, model building and validation, and model evaluation; understanding model complexity, variance, and bias is required for the successful application of machine learning; and following best practices for model evaluation is necessary for developing generalizable models.",
+  "about": [
+    {
+      "@type": "Thing",
+      "name": "machine learning"
+    },
+    {
+      "@type": "Thing",
+      "name": "supervised learning"
+    },
+    {
+      "@type": "Thing",
+      "name": "unsupervised learning"
+    },
+    {
+      "@type": "Thing",
+      "name": "classification"
+    },
+    {
+      "@type": "Thing",
+      "name": "regression"
+    },
+    {
+      "@type": "Thing",
+      "name": "dimensionality reduction"
+    },
+    {
+      "@type": "Thing",
+      "name": "clustering"
+    },
+    {
+      "@type": "Thing",
+      "name": "model evaluation"
+    },
+    {
+      "@type": "Thing",
+      "name": "bias and variance"
+    },
+    {
+      "@type": "Thing",
+      "name": "class imbalance"
+    },
+    {
+      "@type": "Thing",
+      "name": "small sample sizes"
+    },
+    {
+      "@type": "Thing",
+      "name": "medical imaging"
+    }
+  ],
+  "keywords": "machine learning, supervised learning, unsupervised learning, classification, regression, dimensionality reduction, clustering, model evaluation, bias and variance, class imbalance, small sample sizes, medical imaging, neuroimaging, radiology",
+  "isPartOf": {
+    "@type": "Periodical",
+    "name": "Neuroimaging Clinics of North America, volume 30, issue 4, pages e17-e32"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Neuroimaging Clinics of North America, volume 30, issue 4, pages e17-e32"
+  },
+  "creativeWorkStatus": "Published",
+  "citation": "Neuroimaging Clinics of North America, volume 30, issue 4, pages e17-e32",
+  "genre": "Precision Health",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Farhad Maleki"
+    },
+    {
+      "@type": "Person",
+      "name": "Katie Ovens"
+    },
+    {
+      "@type": "Person",
+      "name": "Keyhan Najafian"
+    },
+    {
+      "@type": "Person",
+      "name": "Behzad Forghani"
+    },
+    {
+      "@type": "Person",
+      "name": "Caroline Reinhold"
+    },
+    {
+      "@type": "Person",
+      "name": "Reza Forghani"
+    }
+  ],
+  "identifier": [
+    {
+      "@type": "PropertyValue",
+      "propertyID": "DOI",
+      "value": "10.1016/j.nic.2020.08.007"
+    }
+  ],
+  "sameAs": "https://doi.org/10.1016/j.nic.2020.08.007",
+  "license": "CC BY-NC-ND 4.0"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://keyhannajafian.github.io/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Publications",
+      "item": "https://keyhannajafian.github.io/publications/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Machine learning fundamentals for medical imaging",
+      "item": "https://keyhannajafian.github.io/publications/overview-of-machine-learning-fundamentals-classic-approaches/"
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="https://keyhannajafian.github.io/">Dr. Keyhan Najafian<span>Postdoctoral Researcher, Vision Research Lab, University of Calgary</span></a>
+    <nav aria-label="Main"><a href="https://keyhannajafian.github.io/">Home</a><a href="https://keyhannajafian.github.io/publications/" aria-current="page">Publications</a></nav>
+  </div>
+</header>
+
+<div class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="https://keyhannajafian.github.io/">Home</a> / <a href="https://keyhannajafian.github.io/publications/">Publications</a> / Machine learning fundamentals for medical imaging</nav>
+<main id="main">
+<article>
+  <p><span class="tag area">Precision Health</span> <span class="year">Neuroimaging Clin. N. Am. 2020</span></p>
+  <h1>Overview of Machine Learning Part 1: Fundamentals and Classic Approaches</h1>
+  <p class="meta">Farhad Maleki, Katie Ovens, <span class="me">Keyhan Najafian</span>, Behzad Forghani, Caroline Reinhold, Reza Forghani</p>
+  
+  <p class="lede">A review written for clinicians and imaging researchers, covering classic supervised and unsupervised machine learning, the full predictive modeling workflow, and the practices that decide whether a model generalizes. Written around the constraint that defines medical datasets: small sample sizes and missing values.</p>
+  <div class="links"><a class="primary" href="https://doi.org/10.1016/j.nic.2020.08.007" rel="noopener">Paper</a></div>
+
+  <h2>Publication details</h2>
+  <dl class="facts"><dt>Venue</dt><dd>Neuroimaging Clinics of North America, volume 30, issue 4, pages e17-e32</dd><dt>Year</dt><dd>2020</dd><dt>Pages</dt><dd>e17-e32</dd><dt>DOI</dt><dd><a href="https://doi.org/10.1016/j.nic.2020.08.007">10.1016/j.nic.2020.08.007</a></dd><dt>License</dt><dd>CC BY-NC-ND 4.0</dd></dl>
+
+  <h2>Abstract</h2>
+  <blockquote class="abstract"><p>As health data and computer power become increasingly available, the main challenge is to gain actionable insight from these data. Machine learning methods have proved to be a viable approach for mining valuable insight from data across various fields. This article provides an overview of the classic supervised and unsupervised machine learning methods as well as fundamental concepts required for understanding how to develop generalizable and high-performance machine learning applications. It also describes the important steps for developing a machine learning model and how decisions made in these steps affect model performance and ability to generalize. Key points: small sample sizes and missing values are two common characteristics of medical datasets that make developing predictive models challenging; classic machine learning methods can be used to build predictive models using small datasets; developing a machine learning application requires following a workflow including data acquisition, exploratory data analysis, data cleaning, dimensionality reduction, model building and validation, and model evaluation; understanding model complexity, variance, and bias is required for the successful application of machine learning; and following best practices for model evaluation is necessary for developing generalizable models.</p></blockquote>
+  
+
+  <h2>Key contributions</h2><ul><li>Lays out the end-to-end predictive modeling workflow: data acquisition, exploratory analysis, cleaning, dimensionality reduction, training and validation, and evaluation.</li><li>Explains the bias-variance tradeoff and its relationship to model complexity in terms usable by clinical researchers.</li><li>Covers class imbalance, a defining feature of health data, and the tradeoffs of oversampling against undersampling.</li><li>Sets out evaluation practice: held-out test sets, nested cross-validation, and choosing performance measures that reflect the clinical question.</li></ul>
+  <h2>Methods and techniques</h2><ul><li>Linear and logistic regression</li><li>Support vector machines and the kernel trick</li><li>K-nearest neighbors</li><li>Naive Bayes</li><li>Decision trees and random forests</li><li>Multilayer perceptrons and backpropagation</li><li>Principal component analysis and t-SNE</li><li>K-means and hierarchical clustering</li><li>Feature selection: filter, wrapper, and embedded methods</li></ul>
+  
+  
+  <h2>Applications</h2><ul><li>Teaching machine learning method selection to radiologists and clinical researchers</li><li>Model development practice for small medical datasets</li><li>Reference for evaluation and validation design in clinical machine learning</li></ul>
+
+  
+
+  <h2>Research topics and keywords</h2>
+  <div class="tags"><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">machine learning</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">supervised learning</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">unsupervised learning</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">classification</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">regression</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">dimensionality reduction</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">clustering</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">model evaluation</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">bias and variance</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">class imbalance</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">small sample sizes</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">medical imaging</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">neuroimaging</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">radiology</a></div>
+
+  <h2>Cite this work</h2>
+  <pre class="cite">@article{maleki2020overview,
+  title   = {Overview of Machine Learning Part 1: Fundamentals and Classic Approaches},
+  author  = {Maleki, Farhad and Ovens, Katie and Najafian, Keyhan and Forghani, Behzad and Reinhold, Caroline and Forghani, Reza},
+  journal = {Neuroimaging Clinics of North America},
+  volume  = {30},
+  number  = {4},
+  pages   = {e17--e32},
+  year    = {2020},
+  doi     = {10.1016/j.nic.2020.08.007}
+}</pre>
+
+  <h2>Related work in Precision Health</h2>
+  <article class="card"><h3><a href="https://keyhannajafian.github.io/publications/brain-metastasis-invasion-pattern-mri-machine-learning/">Machine learning prediction of brain metastasis invasion pattern on brain magnetic resonance imaging scans</a></h3><p class="year">Neuro-Oncology Advances 2024</p><p>Brain metastasis invasion pattern is prognostic but can currently only be read from resected tissue. This study shows it can be predicted from preoperative MRI with 85% accuracy, using radiomic features from the peritumoral edema, in a task where expert neuroradiologists reach only 44 to 59%.</p></article><article class="card"><h3><a href="https://keyhannajafian.github.io/publications/celiac-disease-diagnosis-histopathology-deep-learning/">A Deep Learning-Based Pipeline for Celiac Disease Diagnosis Using Histopathological Images</a></h3><p class="year">CAIP 2021</p><p>Diagnoses celiac disease from whole slide images of duodenal biopsies using far fewer slides than a conventional pipeline needs. An Image Assembler synthesizes training examples by recomposing tissue segments onto a blank canvas, and patient-level predictions come from a majority vote across 101 synthesized images.</p></article><article class="card"><h3><a href="https://keyhannajafian.github.io/publications/kidney-function-decline-adpkd-deep-learning/">Using Deep Learning to Determine Kidney Function Decline in Patients with ADPKD</a></h3><p class="year">JASN 2023</p><p>Predicts which patients with autosomal dominant polycystic kidney disease will lose kidney function rapidly, by fusing MRI features with clinical variables rather than relying on height-adjusted total kidney volume alone.</p></article>
+  <p><a href="https://keyhannajafian.github.io/publications/#precision-health">All Precision Health publications</a> &middot;
+     <a href="https://keyhannajafian.github.io/publications/">Complete publication list</a></p>
+</article>
+</main>
+</div>
+
+<footer class="site">
+  <div class="wrap">
+    <p>Keyhan Najafian, Vision Research Lab, Department of Computer Science, University of Calgary.</p>
+    <p><a href="https://keyhannajafian.github.io/">Homepage</a> &middot; <a href="https://keyhannajafian.github.io/publications/">All publications</a> &middot;
+       <a href="https://scholar.google.ca/citations?hl=en&amp;user=3RI_XdQAAAAJ">Google Scholar</a> &middot;
+       <a href="https://github.com/KeyhanNajafian">GitHub</a></p>
+  </div>
+</footer>
+</body>
+</html>
