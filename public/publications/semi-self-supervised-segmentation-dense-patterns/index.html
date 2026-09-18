@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Semi-Self-Supervised Learning for Semantic Segmentation in Images with Dense Patterns | Plant Phenomics 2023 | Keyhan Najafian</title>
+<meta name="description" content="Extends the synthesis-plus-domain-adaptation idea from detection to pixel-level segmentation. Two annotated images and one short video clip are enough to train a customized U-Net that reaches a Dice score of 0.89 internally and generalizes to wheat fields from 18 domains across five countries.">
+<link rel="canonical" href="https://keyhannajafian.github.io/publications/semi-self-supervised-segmentation-dense-patterns/">
+<meta name="author" content="Keyhan Najafian">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Semi-Self-Supervised Learning for Semantic Segmentation in Images with Dense Patterns | Plant Phenomics 2023 | Keyhan Najafian">
+<meta property="og:description" content="Extends the synthesis-plus-domain-adaptation idea from detection to pixel-level segmentation. Two annotated images and one short video clip are enough to train a customized U-Net that reaches a Dice score of 0.89 internally and generalizes to wheat fields from 18 domains across five countries.">
+<meta property="og:url" content="https://keyhannajafian.github.io/publications/semi-self-supervised-segmentation-dense-patterns/">
+<meta property="og:site_name" content="Keyhan Najafian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Semi-Self-Supervised Learning for Semantic Segmentation in Images with Dense Patterns | Plant Phenomics 2023 | Keyhan Najafian">
+<meta name="twitter:description" content="Extends the synthesis-plus-domain-adaptation idea from detection to pixel-level segmentation. Two annotated images and one short video clip are enough to train a customized U-Net that reaches a Dice score of 0.89 internally and generalizes to wheat fields from 18 domains across five countries.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0F172A;--muted:#475569;--faint:#64748B;--line:#E2E8F0;--bg:#F8FAFC;
+--card:#FFFFFF;--emerald:#047857;--emerald-bg:#ECFDF5;--sky:#0369A1;--sky-bg:#F0F9FF}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+line-height:1.65;-webkit-font-smoothing:antialiased}
+code,pre,.mono{font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+a{color:var(--sky);text-decoration:none}
+a:hover{text-decoration:underline}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:1rem;top:1rem;position:fixed;background:#fff;padding:.6rem 1rem;
+border-radius:8px;border:1px solid var(--line);z-index:50}
+.wrap{max-width:60rem;margin:0 auto;padding:0 1.25rem}
+header.site{background:rgba(248,250,252,.92);border-bottom:1px solid var(--line);
+position:sticky;top:0;z-index:20;backdrop-filter:blur(8px)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;
+gap:1rem;padding-top:.85rem;padding-bottom:.85rem;flex-wrap:wrap}
+.brand{font-weight:800;color:var(--ink);letter-spacing:-.01em}
+.brand span{display:block;font-size:.72rem;font-weight:500;color:var(--faint);letter-spacing:0}
+header.site nav{display:flex;gap:1rem;font-size:.86rem;font-weight:600}
+header.site nav a{color:var(--muted)}
+header.site nav a[aria-current="page"]{color:var(--emerald)}
+.crumbs{font-size:.78rem;color:var(--faint);padding:1.25rem 0 0}
+.crumbs a{color:var(--faint)}
+main{padding-bottom:4rem}
+h1{font-size:clamp(1.55rem,3.6vw,2.2rem);line-height:1.25;letter-spacing:-.02em;
+margin:.75rem 0 .5rem;font-weight:800}
+h2{font-size:1.15rem;margin:2.25rem 0 .65rem;letter-spacing:-.01em;font-weight:700;
+padding-bottom:.4rem;border-bottom:1px solid var(--line)}
+h3{font-size:1rem;margin:1.5rem 0 .4rem;font-weight:700}
+p{margin:.65rem 0}
+.lede{font-size:1.02rem;color:var(--muted)}
+.meta{color:var(--muted);font-size:.9rem;margin:.35rem 0}
+.meta .me{font-weight:700;color:var(--ink);border-bottom:2px solid #10B981}
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;margin:.9rem 0}
+.tag{font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:.2rem .55rem;
+border-radius:6px;background:#F1F5F9;border:1px solid var(--line);color:var(--muted)}
+.tag.area{background:var(--emerald-bg);border-color:#A7F3D0;color:var(--emerald);font-weight:600}
+.links{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.1rem 0 .25rem}
+.links a{font-size:.82rem;font-weight:600;padding:.45rem .8rem;border-radius:8px;
+border:1px solid var(--line);background:var(--card)}
+.links a.primary{background:var(--sky);border-color:var(--sky);color:#fff}
+blockquote.abstract{margin:0;padding:1rem 1.15rem;background:var(--card);
+border:1px solid var(--line);border-left:3px solid var(--emerald);border-radius:0 12px 12px 0}
+blockquote.abstract p{margin:0;color:#1E293B}
+ul{margin:.5rem 0;padding-left:1.15rem}
+li{margin:.3rem 0;color:#1E293B}
+dl.facts{display:grid;grid-template-columns:auto 1fr;gap:.35rem 1rem;margin:.5rem 0;
+font-size:.9rem}
+dl.facts dt{color:var(--faint);font-weight:600}
+dl.facts dd{margin:0}
+pre.cite{background:#0F172A;color:#E2E8F0;padding:1rem;border-radius:12px;
+overflow-x:auto;font-size:.74rem;line-height:1.55}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+padding:1.1rem 1.15rem;margin:.75rem 0}
+.card h3{margin:0 0 .3rem;font-size:1.02rem}
+.card h3 a{color:var(--ink)}
+.card p{margin:.35rem 0;font-size:.88rem;color:var(--muted)}
+.year{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--faint)}
+footer.site{border-top:1px solid var(--line);background:#0F172A;color:#94A3B8;
+padding:2rem 0;font-size:.85rem}
+footer.site a{color:#CBD5E1}
+@media(max-width:640px){dl.facts{grid-template-columns:1fr}dl.facts dd{margin-bottom:.5rem}}
+</style>
+<meta name="citation_title" content="Semi-Self-Supervised Learning for Semantic Segmentation in Images with Dense Patterns">
+<meta name="citation_author" content="Keyhan Najafian">
+<meta name="citation_author" content="Alireza Ghanbari">
+<meta name="citation_author" content="Mahdi Sabet Kish">
+<meta name="citation_author" content="Mark Eramian">
+<meta name="citation_author" content="Gholam Hassan Shirdel">
+<meta name="citation_author" content="Ian Stavness">
+<meta name="citation_author" content="Lingling Jin">
+<meta name="citation_author" content="Farhad Maleki">
+<meta name="citation_publication_date" content="2023">
+<meta name="citation_date" content="2023">
+<meta name="citation_journal_title" content="Plant Phenomics, volume 5, article 0025">
+<meta name="citation_doi" content="10.34133/plantphenomics.0025">
+<meta name="citation_abstract_html_url" content="https://keyhannajafian.github.io/publications/semi-self-supervised-segmentation-dense-patterns/">
+<meta name="DC.title" content="Semi-Self-Supervised Learning for Semantic Segmentation in Images with Dense Patterns">
+<meta name="DC.creator" content="Keyhan Najafian">
+<meta name="DC.creator" content="Alireza Ghanbari">
+<meta name="DC.creator" content="Mahdi Sabet Kish">
+<meta name="DC.creator" content="Mark Eramian">
+<meta name="DC.creator" content="Gholam Hassan Shirdel">
+<meta name="DC.creator" content="Ian Stavness">
+<meta name="DC.creator" content="Lingling Jin">
+<meta name="DC.creator" content="Farhad Maleki">
+<meta name="DC.date" content="2023">
+<meta name="DC.type" content="Text">
+<meta name="DC.source" content="Plant Phenomics, volume 5, article 0025">
+<meta name="DC.identifier" content="https://doi.org/10.34133/plantphenomics.0025">
+<meta name="DC.subject" content="semantic segmentation">
+<meta name="DC.subject" content="dense patterns">
+<meta name="DC.subject" content="wheat head segmentation">
+<meta name="DC.subject" content="semi-self-supervised learning">
+<meta name="DC.subject" content="domain adaptation">
+<meta name="DC.subject" content="U-Net">
+<meta name="DC.subject" content="synthetic data">
+<meta name="DC.subject" content="label-efficient deep learning">
+<meta name="DC.subject" content="plant phenomics">
+<meta name="DC.subject" content="precision agriculture">
+<meta name="DC.subject" content="generalization across domains">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  "headline": "Semi-Self-Supervised Learning for Semantic Segmentation in Images with Dense Patterns",
+  "name": "Semi-Self-Supervised Learning for Semantic Segmentation in Images with Dense Patterns",
+  "url": "https://keyhannajafian.github.io/publications/semi-self-supervised-segmentation-dense-patterns/",
+  "mainEntityOfPage": "https://keyhannajafian.github.io/publications/semi-self-supervised-segmentation-dense-patterns/",
+  "datePublished": "2023",
+  "inLanguage": "en",
+  "abstract": "Deep learning has shown potential in domains with large-scale annotated datasets. However, manual annotation is expensive, time-consuming, and tedious. Pixel-level annotations are particularly costly for semantic segmentation in images with dense irregular patterns of object instances, such as in plant images. In this work, we propose a method for developing high-performing deep learning models for semantic segmentation of such images utilizing little manual annotation. As a use case, we focus on wheat head segmentation. We synthesize a computationally annotated dataset - using a few annotated images, a short unannotated video clip of a wheat field, and several video clips with no wheat - to train a customized U-Net model. Considering the distribution shift between the synthesized and real images, we apply three domain adaptation steps to gradually bridge the domain gap. Only using two annotated images, we achieved a Dice score of 0.89 on the internal test set. When further evaluated on a diverse external dataset collected from 18 different domains across five countries, this model achieved a Dice score of 0.73.",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Keyhan Najafian"
+    },
+    {
+      "@type": "Person",
+      "name": "Alireza Ghanbari"
+    },
+    {
+      "@type": "Person",
+      "name": "Mahdi Sabet Kish"
+    },
+    {
+      "@type": "Person",
+      "name": "Mark Eramian"
+    },
+    {
+      "@type": "Person",
+      "name": "Gholam Hassan Shirdel"
+    },
+    {
+      "@type": "Person",
+      "name": "Ian Stavness"
+    },
+    {
+      "@type": "Person",
+      "name": "Lingling Jin"
+    },
+    {
+      "@type": "Person",
+      "name": "Farhad Maleki"
+    }
+  ],
+  "about": [
+    {
+      "@type": "Thing",
+      "name": "semantic segmentation"
+    },
+    {
+      "@type": "Thing",
+      "name": "dense patterns"
+    },
+    {
+      "@type": "Thing",
+      "name": "wheat head segmentation"
+    },
+    {
+      "@type": "Thing",
+      "name": "semi-self-supervised learning"
+    },
+    {
+      "@type": "Thing",
+      "name": "domain adaptation"
+    },
+    {
+      "@type": "Thing",
+      "name": "U-Net"
+    },
+    {
+      "@type": "Thing",
+      "name": "synthetic data"
+    },
+    {
+      "@type": "Thing",
+      "name": "label-efficient deep learning"
+    },
+    {
+      "@type": "Thing",
+      "name": "plant phenomics"
+    },
+    {
+      "@type": "Thing",
+      "name": "precision agriculture"
+    },
+    {
+      "@type": "Thing",
+      "name": "generalization across domains"
+    }
+  ],
+  "keywords": "semantic segmentation, dense patterns, wheat head segmentation, semi-self-supervised learning, domain adaptation, U-Net, synthetic data, label-efficient deep learning, plant phenomics, precision agriculture, generalization across domains",
+  "isPartOf": {
+    "@type": "Periodical",
+    "name": "Plant Phenomics, volume 5, article 0025"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Plant Phenomics, volume 5, article 0025"
+  },
+  "creativeWorkStatus": "Published",
+  "citation": "Plant Phenomics, volume 5, article 0025",
+  "genre": "Precision Agriculture",
+  "identifier": [
+    {
+      "@type": "PropertyValue",
+      "propertyID": "DOI",
+      "value": "10.34133/plantphenomics.0025"
+    }
+  ],
+  "sameAs": "https://doi.org/10.34133/plantphenomics.0025",
+  "license": "CC BY 4.0",
+  "codeRepository": [
+    "https://github.com/KeyhanNajafian/ImageSimulatorPipeline",
+    "https://github.com/USask-BINFO/glmask-semantic2instance"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://keyhannajafian.github.io/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Publications",
+      "item": "https://keyhannajafian.github.io/publications/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Precision Agriculture",
+      "item": "https://keyhannajafian.github.io/publications/precision-agriculture/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "Dense-pattern semantic segmentation",
+      "item": "https://keyhannajafian.github.io/publications/semi-self-supervised-segmentation-dense-patterns/"
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="https://keyhannajafian.github.io/">Dr. Keyhan Najafian<span>Postdoctoral Researcher, Vision Research Lab, University of Calgary</span></a>
+    <nav aria-label="Main"><a href="https://keyhannajafian.github.io/">Home</a><a href="https://keyhannajafian.github.io/publications/" aria-current="page">Publications</a><a href="https://keyhannajafian.github.io/publications/precision-agriculture/">Precision Agriculture</a><a href="https://keyhannajafian.github.io/publications/precision-health/">Precision Health</a></nav>
+  </div>
+</header>
+
+<div class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="https://keyhannajafian.github.io/">Home</a> / <a href="https://keyhannajafian.github.io/publications/">Publications</a> / <a href="https://keyhannajafian.github.io/publications/precision-agriculture/">Precision Agriculture</a> / Dense-pattern semantic segmentation</nav>
+<main id="main">
+<article>
+  <p><span class="tag area">Precision Agriculture</span> <span class="year">Plant Phenomics 2023</span></p>
+  <h1>Semi-Self-Supervised Learning for Semantic Segmentation in Images with Dense Patterns</h1>
+  <p class="meta"><span class="me">Keyhan Najafian</span>, Alireza Ghanbari, Mahdi Sabet Kish, Mark Eramian, Gholam Hassan Shirdel, Ian Stavness, Lingling Jin, Farhad Maleki</p>
+  
+  <p class="lede">Extends the synthesis-plus-domain-adaptation idea from detection to pixel-level segmentation. Two annotated images and one short video clip are enough to train a customized U-Net that reaches a Dice score of 0.89 internally and generalizes to wheat fields from 18 domains across five countries.</p>
+  <div class="links"><a href="https://github.com/KeyhanNajafian/ImageSimulatorPipeline" rel="noopener">Code: ImageSimulatorPipeline</a><a href="https://github.com/USask-BINFO/glmask-semantic2instance" rel="noopener">Code: glmask-semantic2instance</a><a class="primary" href="https://doi.org/10.34133/plantphenomics.0025" rel="noopener">Paper</a><a href="https://spj.science.org/doi/full/10.34133/plantphenomics.0025" rel="noopener">PDF</a><a href="https://doi.org/10.1101/2022.08.09.503251" rel="noopener">Preprint</a></div>
+
+  <h2>Publication details</h2>
+  <dl class="facts"><dt>Venue</dt><dd>Plant Phenomics, volume 5, article 0025</dd><dt>Year</dt><dd>2023</dd><dt>DOI</dt><dd><a href="https://doi.org/10.34133/plantphenomics.0025">10.34133/plantphenomics.0025</a></dd><dt>License</dt><dd>CC BY 4.0</dd></dl>
+
+  <h2>Abstract</h2>
+  <blockquote class="abstract"><p>Deep learning has shown potential in domains with large-scale annotated datasets. However, manual annotation is expensive, time-consuming, and tedious. Pixel-level annotations are particularly costly for semantic segmentation in images with dense irregular patterns of object instances, such as in plant images. In this work, we propose a method for developing high-performing deep learning models for semantic segmentation of such images utilizing little manual annotation. As a use case, we focus on wheat head segmentation. We synthesize a computationally annotated dataset - using a few annotated images, a short unannotated video clip of a wheat field, and several video clips with no wheat - to train a customized U-Net model. Considering the distribution shift between the synthesized and real images, we apply three domain adaptation steps to gradually bridge the domain gap. Only using two annotated images, we achieved a Dice score of 0.89 on the internal test set. When further evaluated on a diverse external dataset collected from 18 different domains across five countries, this model achieved a Dice score of 0.73.</p></blockquote>
+  <p class="meta">Abstract shown as published; see the publisher page for the complete text.</p>
+
+  <h2>Key contributions</h2><ul><li>Adapts semi-self-supervised data synthesis from bounding-box detection to pixel-level semantic segmentation of dense irregular object patterns.</li><li>Uses a three-step domain adaptation schedule to move a model trained on synthetic composites toward real field imagery.</li><li>Demonstrates cross-country, cross-domain generalization by evaluating on wheat imagery from 18 distinct domains in five countries.</li><li>Shows that two manually annotated images can support a segmentation model competitive with supervised training.</li></ul>
+  <h2>Methods and techniques</h2><ul><li>Semi-self-supervised learning</li><li>Computational data synthesis from video</li><li>Three-stage domain adaptation</li><li>Customized U-Net semantic segmentation</li><li>Pseudo-labeling</li><li>Dice score evaluation</li></ul>
+  <h2>Data and materials</h2><ul><li>Two manually annotated wheat field images</li><li>One short unannotated wheat field video clip and several no-wheat background clips</li><li>External evaluation set spanning 18 domains across five countries</li></ul>
+  <h2>Results</h2><ul><li>Dice score 0.89 on the internal test set using only two annotated images</li><li>Dice score 0.73 on the diverse external multi-domain test set</li></ul>
+  <h2>Applications</h2><ul><li>Wheat head area and density estimation</li><li>Field phenomics and breeding trial analysis</li><li>Any segmentation task with dense, self-occluding, repeating object instances</li></ul>
+
+  <h2>Code and implementation</h2><article class="card"><h3><a href="https://github.com/KeyhanNajafian/ImageSimulatorPipeline" rel="noopener">ImageSimulatorPipeline</a></h3><p class="mono year">https://github.com/KeyhanNajafian/ImageSimulatorPipeline</p><p>Cut-and-paste image synthesis pipeline: frame extraction from field video, object extraction from a segmented representative image, and composition of computationally annotated image-mask pairs.</p></article><article class="card"><h3><a href="https://github.com/USask-BINFO/glmask-semantic2instance" rel="noopener">glmask-semantic2instance</a></h3><p class="mono year">https://github.com/USask-BINFO/glmask-semantic2instance</p><p>Official GLMask implementation: grayscale, CIELAB lightness, and semantic mask channels, cut-and-paste synthesis, rotation-based domain adaptation, and YOLOv9 instance segmentation.</p></article>
+
+  <h2>Research topics and keywords</h2>
+  <div class="tags"><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">semantic segmentation</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">dense patterns</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">wheat head segmentation</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">semi-self-supervised learning</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">domain adaptation</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">U-Net</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">synthetic data</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">label-efficient deep learning</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">plant phenomics</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">precision agriculture</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">generalization across domains</a></div>
+
+  <h2>Cite this work</h2>
+  <pre class="cite">@article{najafian2023semiselfsupervised,
+  title     = {Semi-Self-Supervised Learning for Semantic Segmentation in Images with Dense Patterns},
+  author    = {Najafian, Keyhan and Ghanbari, Alireza and Sabet Kish, Mahdi and Eramian, Mark and Shirdel, Gholam Hassan and Stavness, Ian and Jin, Lingling and Maleki, Farhad},
+  journal   = {Plant Phenomics},
+  volume    = {5},
+  pages     = {0025},
+  year      = {2023},
+  doi       = {10.34133/plantphenomics.0025}
+}</pre>
+
+  <h2>Related work in Precision Agriculture</h2>
+  <article class="card"><h3><a href="https://keyhannajafian.github.io/publications/wheat-head-detection-limited-labeled-samples/">A Semi-Self-Supervised Learning Approach for Wheat Head Detection Using Extremely Small Number of Labeled Samples</a></h3><p class="year">ICCVW 2021</p><p>Trains a wheat head detector from three contoured images and a few minutes of handheld video. The annotated wheat heads are cut out, augmented, and pasted onto background field footage to simulate a large computationally annotated dataset, and two domain adaptation stages then close the gap to real imagery.</p></article><article class="card"><h3><a href="https://keyhannajafian.github.io/publications/fusarium-damaged-kernel-detection-wheatseedbelt/">Detection of Fusarium Damaged Kernels in Wheat Using Deep Semi-Supervised Learning on a Novel WheatSeedBelt Dataset</a></h3><p class="year">ICCVW 2023</p><p>Introduces WheatSeedBelt, a 40,420-image single-kernel dataset covering 268 wheat varieties with damage annotations, and uses it to train semi-supervised classifiers for Fusarium damaged kernel grading. An inter-rater study shows human experts do not outperform the model.</p></article><article class="card"><h3><a href="https://keyhannajafian.github.io/publications/efficient-wheat-head-segmentation-generative/">Efficient Wheat Head Segmentation with Minimal Annotation: A Generative Approach</a></h3><p class="year">J. Imaging 2024</p><p>Closes the simulation-to-reality gap with a modified CycleGAN. A large computationally simulated annotated dataset is translated into realistic field imagery, and the resulting model is refined through pseudo-labeling without additional manual annotation.</p></article>
+  <p><a href="https://keyhannajafian.github.io/publications/precision-agriculture/">All Precision Agriculture publications</a> &middot;
+     <a href="https://keyhannajafian.github.io/publications/">Complete publication list</a></p>
+</article>
+</main>
+</div>
+
+<footer class="site">
+  <div class="wrap">
+    <p>Keyhan Najafian, Vision Research Lab, Department of Computer Science, University of Calgary.</p>
+    <p><a href="https://keyhannajafian.github.io/">Homepage</a> &middot; <a href="https://keyhannajafian.github.io/publications/">All publications</a> &middot;
+       <a href="https://scholar.google.ca/citations?hl=en&amp;user=3RI_XdQAAAAJ">Google Scholar</a> &middot;
+       <a href="https://github.com/KeyhanNajafian">GitHub</a></p>
+  </div>
+</footer>
+</body>
+</html>

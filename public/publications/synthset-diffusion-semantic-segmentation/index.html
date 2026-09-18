@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SynthSet: Generative Diffusion Model for Semantic Segmentation in Precision Agriculture | ECCVW 2024 | Keyhan Najafian</title>
+<meta name="description" content="Generates image and mask pairs from noise. A dual diffusion architecture synthesizes agricultural imagery together with its own pixel-level annotation, with no human labeling at any stage, and super-resolution sharpens the phenotypic detail and image-mask coherence.">
+<link rel="canonical" href="https://keyhannajafian.github.io/publications/synthset-diffusion-semantic-segmentation/">
+<meta name="author" content="Keyhan Najafian">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SynthSet: Generative Diffusion Model for Semantic Segmentation in Precision Agriculture | ECCVW 2024 | Keyhan Najafian">
+<meta property="og:description" content="Generates image and mask pairs from noise. A dual diffusion architecture synthesizes agricultural imagery together with its own pixel-level annotation, with no human labeling at any stage, and super-resolution sharpens the phenotypic detail and image-mask coherence.">
+<meta property="og:url" content="https://keyhannajafian.github.io/publications/synthset-diffusion-semantic-segmentation/">
+<meta property="og:site_name" content="Keyhan Najafian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SynthSet: Generative Diffusion Model for Semantic Segmentation in Precision Agriculture | ECCVW 2024 | Keyhan Najafian">
+<meta name="twitter:description" content="Generates image and mask pairs from noise. A dual diffusion architecture synthesizes agricultural imagery together with its own pixel-level annotation, with no human labeling at any stage, and super-resolution sharpens the phenotypic detail and image-mask coherence.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0F172A;--muted:#475569;--faint:#64748B;--line:#E2E8F0;--bg:#F8FAFC;
+--card:#FFFFFF;--emerald:#047857;--emerald-bg:#ECFDF5;--sky:#0369A1;--sky-bg:#F0F9FF}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+line-height:1.65;-webkit-font-smoothing:antialiased}
+code,pre,.mono{font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+a{color:var(--sky);text-decoration:none}
+a:hover{text-decoration:underline}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:1rem;top:1rem;position:fixed;background:#fff;padding:.6rem 1rem;
+border-radius:8px;border:1px solid var(--line);z-index:50}
+.wrap{max-width:60rem;margin:0 auto;padding:0 1.25rem}
+header.site{background:rgba(248,250,252,.92);border-bottom:1px solid var(--line);
+position:sticky;top:0;z-index:20;backdrop-filter:blur(8px)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;
+gap:1rem;padding-top:.85rem;padding-bottom:.85rem;flex-wrap:wrap}
+.brand{font-weight:800;color:var(--ink);letter-spacing:-.01em}
+.brand span{display:block;font-size:.72rem;font-weight:500;color:var(--faint);letter-spacing:0}
+header.site nav{display:flex;gap:1rem;font-size:.86rem;font-weight:600}
+header.site nav a{color:var(--muted)}
+header.site nav a[aria-current="page"]{color:var(--emerald)}
+.crumbs{font-size:.78rem;color:var(--faint);padding:1.25rem 0 0}
+.crumbs a{color:var(--faint)}
+main{padding-bottom:4rem}
+h1{font-size:clamp(1.55rem,3.6vw,2.2rem);line-height:1.25;letter-spacing:-.02em;
+margin:.75rem 0 .5rem;font-weight:800}
+h2{font-size:1.15rem;margin:2.25rem 0 .65rem;letter-spacing:-.01em;font-weight:700;
+padding-bottom:.4rem;border-bottom:1px solid var(--line)}
+h3{font-size:1rem;margin:1.5rem 0 .4rem;font-weight:700}
+p{margin:.65rem 0}
+.lede{font-size:1.02rem;color:var(--muted)}
+.meta{color:var(--muted);font-size:.9rem;margin:.35rem 0}
+.meta .me{font-weight:700;color:var(--ink);border-bottom:2px solid #10B981}
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;margin:.9rem 0}
+.tag{font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:.2rem .55rem;
+border-radius:6px;background:#F1F5F9;border:1px solid var(--line);color:var(--muted)}
+.tag.area{background:var(--emerald-bg);border-color:#A7F3D0;color:var(--emerald);font-weight:600}
+.links{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.1rem 0 .25rem}
+.links a{font-size:.82rem;font-weight:600;padding:.45rem .8rem;border-radius:8px;
+border:1px solid var(--line);background:var(--card)}
+.links a.primary{background:var(--sky);border-color:var(--sky);color:#fff}
+blockquote.abstract{margin:0;padding:1rem 1.15rem;background:var(--card);
+border:1px solid var(--line);border-left:3px solid var(--emerald);border-radius:0 12px 12px 0}
+blockquote.abstract p{margin:0;color:#1E293B}
+ul{margin:.5rem 0;padding-left:1.15rem}
+li{margin:.3rem 0;color:#1E293B}
+dl.facts{display:grid;grid-template-columns:auto 1fr;gap:.35rem 1rem;margin:.5rem 0;
+font-size:.9rem}
+dl.facts dt{color:var(--faint);font-weight:600}
+dl.facts dd{margin:0}
+pre.cite{background:#0F172A;color:#E2E8F0;padding:1rem;border-radius:12px;
+overflow-x:auto;font-size:.74rem;line-height:1.55}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+padding:1.1rem 1.15rem;margin:.75rem 0}
+.card h3{margin:0 0 .3rem;font-size:1.02rem}
+.card h3 a{color:var(--ink)}
+.card p{margin:.35rem 0;font-size:.88rem;color:var(--muted)}
+.year{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--faint)}
+footer.site{border-top:1px solid var(--line);background:#0F172A;color:#94A3B8;
+padding:2rem 0;font-size:.85rem}
+footer.site a{color:#CBD5E1}
+@media(max-width:640px){dl.facts{grid-template-columns:1fr}dl.facts dd{margin-bottom:.5rem}}
+</style>
+<meta name="citation_title" content="SynthSet: Generative Diffusion Model for Semantic Segmentation in Precision Agriculture">
+<meta name="citation_author" content="Andrew Heschl">
+<meta name="citation_author" content="Mauricio Murillo">
+<meta name="citation_author" content="Keyhan Najafian">
+<meta name="citation_author" content="Farhad Maleki">
+<meta name="citation_publication_date" content="2024">
+<meta name="citation_date" content="2024">
+<meta name="citation_conference_title" content="Computer Vision - ECCV 2024 Workshops, Lecture Notes in Computer Science volume 15625">
+<meta name="citation_firstpage" content="267">
+<meta name="citation_lastpage" content="283">
+<meta name="citation_doi" content="10.1007/978-3-031-91835-3_18">
+<meta name="citation_abstract_html_url" content="https://keyhannajafian.github.io/publications/synthset-diffusion-semantic-segmentation/">
+<meta name="DC.title" content="SynthSet: Generative Diffusion Model for Semantic Segmentation in Precision Agriculture">
+<meta name="DC.creator" content="Andrew Heschl">
+<meta name="DC.creator" content="Mauricio Murillo">
+<meta name="DC.creator" content="Keyhan Najafian">
+<meta name="DC.creator" content="Farhad Maleki">
+<meta name="DC.date" content="2024">
+<meta name="DC.type" content="Text">
+<meta name="DC.source" content="Computer Vision - ECCV 2024 Workshops, Lecture Notes in Computer Science volume 15625">
+<meta name="DC.identifier" content="https://doi.org/10.1007/978-3-031-91835-3_18">
+<meta name="DC.subject" content="diffusion models">
+<meta name="DC.subject" content="DDPM">
+<meta name="DC.subject" content="generative data synthesis">
+<meta name="DC.subject" content="image-mask pairs">
+<meta name="DC.subject" content="super-resolution">
+<meta name="DC.subject" content="semantic segmentation">
+<meta name="DC.subject" content="precision agriculture">
+<meta name="DC.subject" content="wheat head segmentation">
+<meta name="DC.subject" content="annotation-free learning">
+<meta name="DC.subject" content="synthetic datasets">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  "headline": "SynthSet: Generative Diffusion Model for Semantic Segmentation in Precision Agriculture",
+  "name": "SynthSet: Generative Diffusion Model for Semantic Segmentation in Precision Agriculture",
+  "url": "https://keyhannajafian.github.io/publications/synthset-diffusion-semantic-segmentation/",
+  "mainEntityOfPage": "https://keyhannajafian.github.io/publications/synthset-diffusion-semantic-segmentation/",
+  "datePublished": "2024",
+  "inLanguage": "en",
+  "abstract": "This paper introduces a methodology for generating synthetic annotated data to address data scarcity in semantic segmentation tasks within the precision agriculture domain. Utilizing Denoising Diffusion Probabilistic Models (DDPMs) and Generative Adversarial Networks (GANs), we propose a dual diffusion model architecture for synthesizing realistic annotated agricultural data, without any human intervention. We employ super-resolution to enhance the phenotypic characteristics of the synthesized images and their coherence with the corresponding generated masks. We showcase the utility of the proposed method for wheat head segmentation. The high quality of synthesized data underscores the effectiveness of the proposed methodology in generating image-mask pairs. Furthermore, models trained on our generated data exhibit promising performance when tested on an external, diverse dataset of real wheat fields.",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Andrew Heschl"
+    },
+    {
+      "@type": "Person",
+      "name": "Mauricio Murillo"
+    },
+    {
+      "@type": "Person",
+      "name": "Keyhan Najafian"
+    },
+    {
+      "@type": "Person",
+      "name": "Farhad Maleki"
+    }
+  ],
+  "about": [
+    {
+      "@type": "Thing",
+      "name": "diffusion models"
+    },
+    {
+      "@type": "Thing",
+      "name": "DDPM"
+    },
+    {
+      "@type": "Thing",
+      "name": "generative data synthesis"
+    },
+    {
+      "@type": "Thing",
+      "name": "image-mask pairs"
+    },
+    {
+      "@type": "Thing",
+      "name": "super-resolution"
+    },
+    {
+      "@type": "Thing",
+      "name": "semantic segmentation"
+    },
+    {
+      "@type": "Thing",
+      "name": "precision agriculture"
+    },
+    {
+      "@type": "Thing",
+      "name": "wheat head segmentation"
+    },
+    {
+      "@type": "Thing",
+      "name": "annotation-free learning"
+    },
+    {
+      "@type": "Thing",
+      "name": "synthetic datasets"
+    }
+  ],
+  "keywords": "diffusion models, DDPM, generative data synthesis, image-mask pairs, super-resolution, semantic segmentation, precision agriculture, wheat head segmentation, annotation-free learning, synthetic datasets",
+  "isPartOf": {
+    "@type": "PublicationEvent",
+    "name": "Computer Vision - ECCV 2024 Workshops, Lecture Notes in Computer Science volume 15625"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Computer Vision - ECCV 2024 Workshops, Lecture Notes in Computer Science volume 15625"
+  },
+  "creativeWorkStatus": "Published",
+  "citation": "Computer Vision - ECCV 2024 Workshops, Lecture Notes in Computer Science volume 15625",
+  "genre": "Precision Agriculture",
+  "identifier": [
+    {
+      "@type": "PropertyValue",
+      "propertyID": "DOI",
+      "value": "10.1007/978-3-031-91835-3_18"
+    }
+  ],
+  "sameAs": "https://doi.org/10.1007/978-3-031-91835-3_18",
+  "codeRepository": [
+    "https://github.com/VisionResearchLab/SynthSet"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://keyhannajafian.github.io/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Publications",
+      "item": "https://keyhannajafian.github.io/publications/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Precision Agriculture",
+      "item": "https://keyhannajafian.github.io/publications/precision-agriculture/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "SynthSet diffusion data generation",
+      "item": "https://keyhannajafian.github.io/publications/synthset-diffusion-semantic-segmentation/"
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="https://keyhannajafian.github.io/">Dr. Keyhan Najafian<span>Postdoctoral Researcher, Vision Research Lab, University of Calgary</span></a>
+    <nav aria-label="Main"><a href="https://keyhannajafian.github.io/">Home</a><a href="https://keyhannajafian.github.io/publications/" aria-current="page">Publications</a><a href="https://keyhannajafian.github.io/publications/precision-agriculture/">Precision Agriculture</a><a href="https://keyhannajafian.github.io/publications/precision-health/">Precision Health</a></nav>
+  </div>
+</header>
+
+<div class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="https://keyhannajafian.github.io/">Home</a> / <a href="https://keyhannajafian.github.io/publications/">Publications</a> / <a href="https://keyhannajafian.github.io/publications/precision-agriculture/">Precision Agriculture</a> / SynthSet diffusion data generation</nav>
+<main id="main">
+<article>
+  <p><span class="tag area">Precision Agriculture</span> <span class="year">ECCVW 2024</span></p>
+  <h1>SynthSet: Generative Diffusion Model for Semantic Segmentation in Precision Agriculture</h1>
+  <p class="meta">Andrew Heschl, Mauricio Murillo, <span class="me">Keyhan Najafian</span>, Farhad Maleki</p>
+  
+  <p class="lede">Generates image and mask pairs from noise. A dual diffusion architecture synthesizes agricultural imagery together with its own pixel-level annotation, with no human labeling at any stage, and super-resolution sharpens the phenotypic detail and image-mask coherence.</p>
+  <div class="links"><a href="https://github.com/VisionResearchLab/SynthSet" rel="noopener">Code: SynthSet</a><a class="primary" href="https://doi.org/10.1007/978-3-031-91835-3_18" rel="noopener">Paper</a><a href="https://arxiv.org/abs/2411.03505" rel="noopener">Preprint</a></div>
+
+  <h2>Publication details</h2>
+  <dl class="facts"><dt>Venue</dt><dd>Computer Vision - ECCV 2024 Workshops, Lecture Notes in Computer Science volume 15625</dd><dt>Year</dt><dd>2024</dd><dt>Pages</dt><dd>267-283</dd><dt>DOI</dt><dd><a href="https://doi.org/10.1007/978-3-031-91835-3_18">10.1007/978-3-031-91835-3_18</a></dd></dl>
+
+  <h2>Abstract</h2>
+  <blockquote class="abstract"><p>This paper introduces a methodology for generating synthetic annotated data to address data scarcity in semantic segmentation tasks within the precision agriculture domain. Utilizing Denoising Diffusion Probabilistic Models (DDPMs) and Generative Adversarial Networks (GANs), we propose a dual diffusion model architecture for synthesizing realistic annotated agricultural data, without any human intervention. We employ super-resolution to enhance the phenotypic characteristics of the synthesized images and their coherence with the corresponding generated masks. We showcase the utility of the proposed method for wheat head segmentation. The high quality of synthesized data underscores the effectiveness of the proposed methodology in generating image-mask pairs. Furthermore, models trained on our generated data exhibit promising performance when tested on an external, diverse dataset of real wheat fields.</p></blockquote>
+  
+
+  <h2>Key contributions</h2><ul><li>Proposes a dual diffusion architecture that generates an image and its segmentation mask jointly rather than labeling generated images afterwards.</li><li>Removes human intervention entirely from the training data creation loop.</li><li>Adds a super-resolution stage to improve fine phenotypic structure and image-mask alignment.</li><li>Validates the synthetic data by training segmentation models and testing on external real wheat field imagery.</li></ul>
+  <h2>Methods and techniques</h2><ul><li>Denoising diffusion probabilistic models (DDPM)</li><li>Dual diffusion architecture</li><li>Generative adversarial networks</li><li>Super-resolution</li><li>Annotation-free dataset synthesis</li><li>Semantic segmentation</li></ul>
+  <h2>Data and materials</h2><ul><li>Fully synthetic wheat image and mask pairs generated by the model</li><li>External diverse real wheat field dataset used for evaluation</li></ul>
+  
+  <h2>Applications</h2><ul><li>Training data generation where annotation is infeasible</li><li>Benchmark augmentation for crop segmentation models</li><li>Transferable synthesis methodology for other dense-canopy crops</li></ul>
+
+  <h2>Code and implementation</h2><article class="card"><h3><a href="https://github.com/VisionResearchLab/SynthSet" rel="noopener">SynthSet</a></h3><p class="mono year">https://github.com/VisionResearchLab/SynthSet</p><p>Pipeline package for the dual diffusion synthesis method, built on the ClasSeg pipeline with super-resolution and unstable-diffusion extensions.</p></article>
+
+  <h2>Research topics and keywords</h2>
+  <div class="tags"><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">diffusion models</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">DDPM</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">generative data synthesis</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">image-mask pairs</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">super-resolution</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">semantic segmentation</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">precision agriculture</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">wheat head segmentation</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">annotation-free learning</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">synthetic datasets</a></div>
+
+  <h2>Cite this work</h2>
+  <pre class="cite">@inproceedings{heschl2024synthset,
+  title     = {SynthSet: Generative Diffusion Model for Semantic Segmentation in Precision Agriculture},
+  author    = {Heschl, Andrew and Murillo, Mauricio and Najafian, Keyhan and Maleki, Farhad},
+  booktitle = {Computer Vision -- ECCV 2024 Workshops},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {15625},
+  pages     = {267--283},
+  year      = {2024},
+  publisher = {Springer},
+  doi       = {10.1007/978-3-031-91835-3_18}
+}</pre>
+
+  <h2>Related work in Precision Agriculture</h2>
+  <article class="card"><h3><a href="https://keyhannajafian.github.io/publications/wheat-head-detection-limited-labeled-samples/">A Semi-Self-Supervised Learning Approach for Wheat Head Detection Using Extremely Small Number of Labeled Samples</a></h3><p class="year">ICCVW 2021</p><p>Trains a wheat head detector from three contoured images and a few minutes of handheld video. The annotated wheat heads are cut out, augmented, and pasted onto background field footage to simulate a large computationally annotated dataset, and two domain adaptation stages then close the gap to real imagery.</p></article><article class="card"><h3><a href="https://keyhannajafian.github.io/publications/semi-self-supervised-segmentation-dense-patterns/">Semi-Self-Supervised Learning for Semantic Segmentation in Images with Dense Patterns</a></h3><p class="year">Plant Phenomics 2023</p><p>Extends the synthesis-plus-domain-adaptation idea from detection to pixel-level segmentation. Two annotated images and one short video clip are enough to train a customized U-Net that reaches a Dice score of 0.89 internally and generalizes to wheat fields from 18 domains across five countries.</p></article><article class="card"><h3><a href="https://keyhannajafian.github.io/publications/fusarium-damaged-kernel-detection-wheatseedbelt/">Detection of Fusarium Damaged Kernels in Wheat Using Deep Semi-Supervised Learning on a Novel WheatSeedBelt Dataset</a></h3><p class="year">ICCVW 2023</p><p>Introduces WheatSeedBelt, a 40,420-image single-kernel dataset covering 268 wheat varieties with damage annotations, and uses it to train semi-supervised classifiers for Fusarium damaged kernel grading. An inter-rater study shows human experts do not outperform the model.</p></article>
+  <p><a href="https://keyhannajafian.github.io/publications/precision-agriculture/">All Precision Agriculture publications</a> &middot;
+     <a href="https://keyhannajafian.github.io/publications/">Complete publication list</a></p>
+</article>
+</main>
+</div>
+
+<footer class="site">
+  <div class="wrap">
+    <p>Keyhan Najafian, Vision Research Lab, Department of Computer Science, University of Calgary.</p>
+    <p><a href="https://keyhannajafian.github.io/">Homepage</a> &middot; <a href="https://keyhannajafian.github.io/publications/">All publications</a> &middot;
+       <a href="https://scholar.google.ca/citations?hl=en&amp;user=3RI_XdQAAAAJ">Google Scholar</a> &middot;
+       <a href="https://github.com/KeyhanNajafian">GitHub</a></p>
+  </div>
+</footer>
+</body>
+</html>

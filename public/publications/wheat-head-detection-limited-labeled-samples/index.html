@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Semi-Self-Supervised Learning Approach for Wheat Head Detection Using Extremely Small Number of Labeled Samples | ICCVW 2021 | Keyhan Najafian</title>
+<meta name="description" content="Trains a wheat head detector from three contoured images and a few minutes of handheld video. The annotated wheat heads are cut out, augmented, and pasted onto background field footage to simulate a large computationally annotated dataset, and two domain adaptation stages then close the gap to real ">
+<link rel="canonical" href="https://keyhannajafian.github.io/publications/wheat-head-detection-limited-labeled-samples/">
+<meta name="author" content="Keyhan Najafian">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Semi-Self-Supervised Learning Approach for Wheat Head Detection Using Extremely Small Number of Labeled Samples | ICCVW 2021 | Keyhan Najafian">
+<meta property="og:description" content="Trains a wheat head detector from three contoured images and a few minutes of handheld video. The annotated wheat heads are cut out, augmented, and pasted onto background field footage to simulate a large computationally annotated dataset, and two domain adaptation stages then close the gap to real ">
+<meta property="og:url" content="https://keyhannajafian.github.io/publications/wheat-head-detection-limited-labeled-samples/">
+<meta property="og:site_name" content="Keyhan Najafian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="A Semi-Self-Supervised Learning Approach for Wheat Head Detection Using Extremely Small Number of Labeled Samples | ICCVW 2021 | Keyhan Najafian">
+<meta name="twitter:description" content="Trains a wheat head detector from three contoured images and a few minutes of handheld video. The annotated wheat heads are cut out, augmented, and pasted onto background field footage to simulate a large computationally annotated dataset, and two domain adaptation stages then close the gap to real ">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0F172A;--muted:#475569;--faint:#64748B;--line:#E2E8F0;--bg:#F8FAFC;
+--card:#FFFFFF;--emerald:#047857;--emerald-bg:#ECFDF5;--sky:#0369A1;--sky-bg:#F0F9FF}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+line-height:1.65;-webkit-font-smoothing:antialiased}
+code,pre,.mono{font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+a{color:var(--sky);text-decoration:none}
+a:hover{text-decoration:underline}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:1rem;top:1rem;position:fixed;background:#fff;padding:.6rem 1rem;
+border-radius:8px;border:1px solid var(--line);z-index:50}
+.wrap{max-width:60rem;margin:0 auto;padding:0 1.25rem}
+header.site{background:rgba(248,250,252,.92);border-bottom:1px solid var(--line);
+position:sticky;top:0;z-index:20;backdrop-filter:blur(8px)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;
+gap:1rem;padding-top:.85rem;padding-bottom:.85rem;flex-wrap:wrap}
+.brand{font-weight:800;color:var(--ink);letter-spacing:-.01em}
+.brand span{display:block;font-size:.72rem;font-weight:500;color:var(--faint);letter-spacing:0}
+header.site nav{display:flex;gap:1rem;font-size:.86rem;font-weight:600}
+header.site nav a{color:var(--muted)}
+header.site nav a[aria-current="page"]{color:var(--emerald)}
+.crumbs{font-size:.78rem;color:var(--faint);padding:1.25rem 0 0}
+.crumbs a{color:var(--faint)}
+main{padding-bottom:4rem}
+h1{font-size:clamp(1.55rem,3.6vw,2.2rem);line-height:1.25;letter-spacing:-.02em;
+margin:.75rem 0 .5rem;font-weight:800}
+h2{font-size:1.15rem;margin:2.25rem 0 .65rem;letter-spacing:-.01em;font-weight:700;
+padding-bottom:.4rem;border-bottom:1px solid var(--line)}
+h3{font-size:1rem;margin:1.5rem 0 .4rem;font-weight:700}
+p{margin:.65rem 0}
+.lede{font-size:1.02rem;color:var(--muted)}
+.meta{color:var(--muted);font-size:.9rem;margin:.35rem 0}
+.meta .me{font-weight:700;color:var(--ink);border-bottom:2px solid #10B981}
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;margin:.9rem 0}
+.tag{font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:.2rem .55rem;
+border-radius:6px;background:#F1F5F9;border:1px solid var(--line);color:var(--muted)}
+.tag.area{background:var(--emerald-bg);border-color:#A7F3D0;color:var(--emerald);font-weight:600}
+.links{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.1rem 0 .25rem}
+.links a{font-size:.82rem;font-weight:600;padding:.45rem .8rem;border-radius:8px;
+border:1px solid var(--line);background:var(--card)}
+.links a.primary{background:var(--sky);border-color:var(--sky);color:#fff}
+blockquote.abstract{margin:0;padding:1rem 1.15rem;background:var(--card);
+border:1px solid var(--line);border-left:3px solid var(--emerald);border-radius:0 12px 12px 0}
+blockquote.abstract p{margin:0;color:#1E293B}
+ul{margin:.5rem 0;padding-left:1.15rem}
+li{margin:.3rem 0;color:#1E293B}
+dl.facts{display:grid;grid-template-columns:auto 1fr;gap:.35rem 1rem;margin:.5rem 0;
+font-size:.9rem}
+dl.facts dt{color:var(--faint);font-weight:600}
+dl.facts dd{margin:0}
+pre.cite{background:#0F172A;color:#E2E8F0;padding:1rem;border-radius:12px;
+overflow-x:auto;font-size:.74rem;line-height:1.55}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+padding:1.1rem 1.15rem;margin:.75rem 0}
+.card h3{margin:0 0 .3rem;font-size:1.02rem}
+.card h3 a{color:var(--ink)}
+.card p{margin:.35rem 0;font-size:.88rem;color:var(--muted)}
+.year{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--faint)}
+footer.site{border-top:1px solid var(--line);background:#0F172A;color:#94A3B8;
+padding:2rem 0;font-size:.85rem}
+footer.site a{color:#CBD5E1}
+@media(max-width:640px){dl.facts{grid-template-columns:1fr}dl.facts dd{margin-bottom:.5rem}}
+</style>
+<meta name="citation_title" content="A Semi-Self-Supervised Learning Approach for Wheat Head Detection Using Extremely Small Number of Labeled Samples">
+<meta name="citation_author" content="Keyhan Najafian">
+<meta name="citation_author" content="Alireza Ghanbari">
+<meta name="citation_author" content="Ian Stavness">
+<meta name="citation_author" content="Lingling Jin">
+<meta name="citation_author" content="Gholam Hassan Shirdel">
+<meta name="citation_author" content="Farhad Maleki">
+<meta name="citation_publication_date" content="2021">
+<meta name="citation_date" content="2021">
+<meta name="citation_conference_title" content="IEEE/CVF International Conference on Computer Vision Workshops (ICCVW), CVPPA">
+<meta name="citation_firstpage" content="1342">
+<meta name="citation_lastpage" content="1350">
+<meta name="citation_pdf_url" content="https://openaccess.thecvf.com/content/ICCV2021W/CVPPA/papers/Najafian_A_Semi-Self-Supervised_Learning_Approach_for_Wheat_Head_Detection_Using_Extremely_ICCVW_2021_paper.pdf">
+<meta name="citation_abstract_html_url" content="https://keyhannajafian.github.io/publications/wheat-head-detection-limited-labeled-samples/">
+<meta name="DC.title" content="A Semi-Self-Supervised Learning Approach for Wheat Head Detection Using Extremely Small Number of Labeled Samples">
+<meta name="DC.creator" content="Keyhan Najafian">
+<meta name="DC.creator" content="Alireza Ghanbari">
+<meta name="DC.creator" content="Ian Stavness">
+<meta name="DC.creator" content="Lingling Jin">
+<meta name="DC.creator" content="Gholam Hassan Shirdel">
+<meta name="DC.creator" content="Farhad Maleki">
+<meta name="DC.date" content="2021">
+<meta name="DC.type" content="Text">
+<meta name="DC.source" content="IEEE/CVF International Conference on Computer Vision Workshops (ICCVW), CVPPA">
+<meta name="DC.subject" content="wheat head detection">
+<meta name="DC.subject" content="semi-self-supervised learning">
+<meta name="DC.subject" content="limited annotated data">
+<meta name="DC.subject" content="synthetic training data">
+<meta name="DC.subject" content="domain adaptation">
+<meta name="DC.subject" content="pseudo-labeling">
+<meta name="DC.subject" content="object detection">
+<meta name="DC.subject" content="YOLO">
+<meta name="DC.subject" content="precision agriculture">
+<meta name="DC.subject" content="plant phenotyping">
+<meta name="DC.subject" content="Global Wheat Head Detection dataset">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  "headline": "A Semi-Self-Supervised Learning Approach for Wheat Head Detection Using Extremely Small Number of Labeled Samples",
+  "name": "A Semi-Self-Supervised Learning Approach for Wheat Head Detection Using Extremely Small Number of Labeled Samples",
+  "url": "https://keyhannajafian.github.io/publications/wheat-head-detection-limited-labeled-samples/",
+  "mainEntityOfPage": "https://keyhannajafian.github.io/publications/wheat-head-detection-limited-labeled-samples/",
+  "datePublished": "2021",
+  "inLanguage": "en",
+  "abstract": "Most of the success of deep learning is owed to supervised learning, where a large-scale annotated dataset is used for model training. However, developing such datasets is challenging. In this paper, we develop a semi-self-supervised learning approach for wheat head detection. The proposed method utilized a few short video clips and only one annotated image from each video clip of wheat fields to simulate a large computationally annotated dataset used for model building. Considering the domain gap between the simulated and real images, we applied two domain adaptation steps to alleviate the challenge of distributional shift. The resulting model achieved high performance when applied to real unannotated datasets. When fine-tuned on the dataset from the Global Wheat Head Detection Challenge, the performance was further improved. The model achieved a mean average precision of 0.827, where an overlap of 50% or more between a predicted bounding box and ground truth was considered as a correct prediction. Although the utility of the proposed methodology was shown by applying it to wheat head detection, the proposed method is not limited to this application and could be used for other domains, such as detecting different crop types, alleviating the barrier of lack of large-scale annotated datasets in those domains.",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Keyhan Najafian"
+    },
+    {
+      "@type": "Person",
+      "name": "Alireza Ghanbari"
+    },
+    {
+      "@type": "Person",
+      "name": "Ian Stavness"
+    },
+    {
+      "@type": "Person",
+      "name": "Lingling Jin"
+    },
+    {
+      "@type": "Person",
+      "name": "Gholam Hassan Shirdel"
+    },
+    {
+      "@type": "Person",
+      "name": "Farhad Maleki"
+    }
+  ],
+  "about": [
+    {
+      "@type": "Thing",
+      "name": "wheat head detection"
+    },
+    {
+      "@type": "Thing",
+      "name": "semi-self-supervised learning"
+    },
+    {
+      "@type": "Thing",
+      "name": "limited annotated data"
+    },
+    {
+      "@type": "Thing",
+      "name": "synthetic training data"
+    },
+    {
+      "@type": "Thing",
+      "name": "domain adaptation"
+    },
+    {
+      "@type": "Thing",
+      "name": "pseudo-labeling"
+    },
+    {
+      "@type": "Thing",
+      "name": "object detection"
+    },
+    {
+      "@type": "Thing",
+      "name": "YOLO"
+    },
+    {
+      "@type": "Thing",
+      "name": "precision agriculture"
+    },
+    {
+      "@type": "Thing",
+      "name": "plant phenotyping"
+    },
+    {
+      "@type": "Thing",
+      "name": "Global Wheat Head Detection dataset"
+    }
+  ],
+  "keywords": "wheat head detection, semi-self-supervised learning, limited annotated data, synthetic training data, domain adaptation, pseudo-labeling, object detection, YOLO, precision agriculture, plant phenotyping, Global Wheat Head Detection dataset",
+  "isPartOf": {
+    "@type": "PublicationEvent",
+    "name": "IEEE/CVF International Conference on Computer Vision Workshops (ICCVW), CVPPA"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "IEEE/CVF International Conference on Computer Vision Workshops (ICCVW), CVPPA"
+  },
+  "creativeWorkStatus": "Published",
+  "citation": "IEEE/CVF International Conference on Computer Vision Workshops (ICCVW), CVPPA",
+  "genre": "Precision Agriculture",
+  "codeRepository": [
+    "https://github.com/KeyhanNajafian/ImageSimulatorPipeline"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://keyhannajafian.github.io/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Publications",
+      "item": "https://keyhannajafian.github.io/publications/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Precision Agriculture",
+      "item": "https://keyhannajafian.github.io/publications/precision-agriculture/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "Wheat head detection from very few labels",
+      "item": "https://keyhannajafian.github.io/publications/wheat-head-detection-limited-labeled-samples/"
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="https://keyhannajafian.github.io/">Dr. Keyhan Najafian<span>Postdoctoral Researcher, Vision Research Lab, University of Calgary</span></a>
+    <nav aria-label="Main"><a href="https://keyhannajafian.github.io/">Home</a><a href="https://keyhannajafian.github.io/publications/" aria-current="page">Publications</a><a href="https://keyhannajafian.github.io/publications/precision-agriculture/">Precision Agriculture</a><a href="https://keyhannajafian.github.io/publications/precision-health/">Precision Health</a></nav>
+  </div>
+</header>
+
+<div class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="https://keyhannajafian.github.io/">Home</a> / <a href="https://keyhannajafian.github.io/publications/">Publications</a> / <a href="https://keyhannajafian.github.io/publications/precision-agriculture/">Precision Agriculture</a> / Wheat head detection from very few labels</nav>
+<main id="main">
+<article>
+  <p><span class="tag area">Precision Agriculture</span> <span class="year">ICCVW 2021</span></p>
+  <h1>A Semi-Self-Supervised Learning Approach for Wheat Head Detection Using Extremely Small Number of Labeled Samples</h1>
+  <p class="meta"><span class="me">Keyhan Najafian</span>, Alireza Ghanbari, Ian Stavness, Lingling Jin, Gholam Hassan Shirdel, Farhad Maleki</p>
+  
+  <p class="lede">Trains a wheat head detector from three contoured images and a few minutes of handheld video. The annotated wheat heads are cut out, augmented, and pasted onto background field footage to simulate a large computationally annotated dataset, and two domain adaptation stages then close the gap to real imagery.</p>
+  <div class="links"><a href="https://github.com/KeyhanNajafian/ImageSimulatorPipeline" rel="noopener">Code: ImageSimulatorPipeline</a><a class="primary" href="https://openaccess.thecvf.com/content/ICCV2021W/CVPPA/papers/Najafian_A_Semi-Self-Supervised_Learning_Approach_for_Wheat_Head_Detection_Using_Extremely_ICCVW_2021_paper.pdf" rel="noopener">Paper</a></div>
+
+  <h2>Publication details</h2>
+  <dl class="facts"><dt>Venue</dt><dd>IEEE/CVF International Conference on Computer Vision Workshops (ICCVW), CVPPA</dd><dt>Year</dt><dd>2021</dd><dt>Pages</dt><dd>1342-1350</dd></dl>
+
+  <h2>Abstract</h2>
+  <blockquote class="abstract"><p>Most of the success of deep learning is owed to supervised learning, where a large-scale annotated dataset is used for model training. However, developing such datasets is challenging. In this paper, we develop a semi-self-supervised learning approach for wheat head detection. The proposed method utilized a few short video clips and only one annotated image from each video clip of wheat fields to simulate a large computationally annotated dataset used for model building. Considering the domain gap between the simulated and real images, we applied two domain adaptation steps to alleviate the challenge of distributional shift. The resulting model achieved high performance when applied to real unannotated datasets. When fine-tuned on the dataset from the Global Wheat Head Detection Challenge, the performance was further improved. The model achieved a mean average precision of 0.827, where an overlap of 50% or more between a predicted bounding box and ground truth was considered as a correct prediction. Although the utility of the proposed methodology was shown by applying it to wheat head detection, the proposed method is not limited to this application and could be used for other domains, such as detecting different crop types, alleviating the barrier of lack of large-scale annotated datasets in those domains.</p></blockquote>
+  
+
+  <h2>Key contributions</h2><ul><li>Introduces a semi-self-supervised pipeline that generates labeled training data for the target task itself, rather than for an unrelated pretext task.</li><li>Uses short video clips of wheat fields and of empty background scenes as the raw data source, making data collection nearly free compared with building an annotated image dataset.</li><li>Applies two sequential domain adaptation stages: strong augmentation of rotated representative images, then pseudo-labeling of real unannotated video frames.</li><li>Reaches mAP@50 of 0.827 after fine-tuning on the Global Wheat Head Detection dataset, above the 0.741 supervised baseline trained on the same dataset.</li></ul>
+  <h2>Methods and techniques</h2><ul><li>Semi-self-supervised learning</li><li>Cut-and-paste image synthesis</li><li>Two-stage domain adaptation</li><li>Pseudo-labeling</li><li>YOLO object detection with CIoU loss</li><li>Stochastic augmentation pipelines (Albumentations)</li><li>External model evaluation</li></ul>
+  <h2>Data and materials</h2><ul><li>3 wheat field video clips and 17 background video clips (roughly 11 and 41 minutes)</li><li>294,511 extracted background frames; 17,979 wheat field frames; 3 contoured representative images</li><li>36,000 computationally annotated synthetic samples</li><li>Global Wheat Head Detection (GWHD) 2021 dataset, 1,381-image test subset</li></ul>
+  <h2>Results</h2><ul><li>mAP@50 of 0.090 from synthetic data alone, exposing the domain gap</li><li>mAP@50 of 0.601 after both domain adaptation stages without seeing GWHD</li><li>mAP@50 of 0.827 after GWHD fine-tuning, versus 0.741 for the supervised baseline</li></ul>
+  <h2>Applications</h2><ul><li>Wheat yield component estimation and spike counting</li><li>High-throughput plant phenotyping for breeding programs</li><li>Bootstrapping annotation for other crops and dense-object domains</li></ul>
+
+  <h2>Code and implementation</h2><article class="card"><h3><a href="https://github.com/KeyhanNajafian/ImageSimulatorPipeline" rel="noopener">ImageSimulatorPipeline</a></h3><p class="mono year">https://github.com/KeyhanNajafian/ImageSimulatorPipeline</p><p>Cut-and-paste image synthesis pipeline: frame extraction from field video, object extraction from a segmented representative image, and composition of computationally annotated image-mask pairs.</p></article>
+
+  <h2>Research topics and keywords</h2>
+  <div class="tags"><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">wheat head detection</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">semi-self-supervised learning</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">limited annotated data</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">synthetic training data</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">domain adaptation</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">pseudo-labeling</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">object detection</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">YOLO</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">precision agriculture</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">plant phenotyping</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">Global Wheat Head Detection dataset</a></div>
+
+  <h2>Cite this work</h2>
+  <pre class="cite">@inproceedings{najafian2021semiselfsupervised,
+  title     = {A Semi-Self-Supervised Learning Approach for Wheat Head Detection Using Extremely Small Number of Labeled Samples},
+  author    = {Najafian, Keyhan and Ghanbari, Alireza and Stavness, Ian and Jin, Lingling and Shirdel, Gholam Hassan and Maleki, Farhad},
+  booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision Workshops (ICCVW)},
+  pages     = {1342--1350},
+  year      = {2021}
+}</pre>
+
+  <h2>Related work in Precision Agriculture</h2>
+  <article class="card"><h3><a href="https://keyhannajafian.github.io/publications/semi-self-supervised-segmentation-dense-patterns/">Semi-Self-Supervised Learning for Semantic Segmentation in Images with Dense Patterns</a></h3><p class="year">Plant Phenomics 2023</p><p>Extends the synthesis-plus-domain-adaptation idea from detection to pixel-level segmentation. Two annotated images and one short video clip are enough to train a customized U-Net that reaches a Dice score of 0.89 internally and generalizes to wheat fields from 18 domains across five countries.</p></article><article class="card"><h3><a href="https://keyhannajafian.github.io/publications/fusarium-damaged-kernel-detection-wheatseedbelt/">Detection of Fusarium Damaged Kernels in Wheat Using Deep Semi-Supervised Learning on a Novel WheatSeedBelt Dataset</a></h3><p class="year">ICCVW 2023</p><p>Introduces WheatSeedBelt, a 40,420-image single-kernel dataset covering 268 wheat varieties with damage annotations, and uses it to train semi-supervised classifiers for Fusarium damaged kernel grading. An inter-rater study shows human experts do not outperform the model.</p></article><article class="card"><h3><a href="https://keyhannajafian.github.io/publications/efficient-wheat-head-segmentation-generative/">Efficient Wheat Head Segmentation with Minimal Annotation: A Generative Approach</a></h3><p class="year">J. Imaging 2024</p><p>Closes the simulation-to-reality gap with a modified CycleGAN. A large computationally simulated annotated dataset is translated into realistic field imagery, and the resulting model is refined through pseudo-labeling without additional manual annotation.</p></article>
+  <p><a href="https://keyhannajafian.github.io/publications/precision-agriculture/">All Precision Agriculture publications</a> &middot;
+     <a href="https://keyhannajafian.github.io/publications/">Complete publication list</a></p>
+</article>
+</main>
+</div>
+
+<footer class="site">
+  <div class="wrap">
+    <p>Keyhan Najafian, Vision Research Lab, Department of Computer Science, University of Calgary.</p>
+    <p><a href="https://keyhannajafian.github.io/">Homepage</a> &middot; <a href="https://keyhannajafian.github.io/publications/">All publications</a> &middot;
+       <a href="https://scholar.google.ca/citations?hl=en&amp;user=3RI_XdQAAAAJ">Google Scholar</a> &middot;
+       <a href="https://github.com/KeyhanNajafian">GitHub</a></p>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Semi-Self-Supervised Approach for Dense-Pattern Video Object Segmentation | CVPRW 2025 | Keyhan Najafian</title>
+<meta name="description" content="Extends dense-pattern segmentation from still images to video. Synthetic clips that mimic real camera and object motion are used for pretraining, then pseudo-labeled real video refines the model, which holds up on drone footage across growth stages from boot stage to harvest.">
+<link rel="canonical" href="https://keyhannajafian.github.io/publications/dense-pattern-video-object-segmentation/">
+<meta name="author" content="Keyhan Najafian">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Semi-Self-Supervised Approach for Dense-Pattern Video Object Segmentation | CVPRW 2025 | Keyhan Najafian">
+<meta property="og:description" content="Extends dense-pattern segmentation from still images to video. Synthetic clips that mimic real camera and object motion are used for pretraining, then pseudo-labeled real video refines the model, which holds up on drone footage across growth stages from boot stage to harvest.">
+<meta property="og:url" content="https://keyhannajafian.github.io/publications/dense-pattern-video-object-segmentation/">
+<meta property="og:site_name" content="Keyhan Najafian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="A Semi-Self-Supervised Approach for Dense-Pattern Video Object Segmentation | CVPRW 2025 | Keyhan Najafian">
+<meta name="twitter:description" content="Extends dense-pattern segmentation from still images to video. Synthetic clips that mimic real camera and object motion are used for pretraining, then pseudo-labeled real video refines the model, which holds up on drone footage across growth stages from boot stage to harvest.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0F172A;--muted:#475569;--faint:#64748B;--line:#E2E8F0;--bg:#F8FAFC;
+--card:#FFFFFF;--emerald:#047857;--emerald-bg:#ECFDF5;--sky:#0369A1;--sky-bg:#F0F9FF}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+line-height:1.65;-webkit-font-smoothing:antialiased}
+code,pre,.mono{font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+a{color:var(--sky);text-decoration:none}
+a:hover{text-decoration:underline}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:1rem;top:1rem;position:fixed;background:#fff;padding:.6rem 1rem;
+border-radius:8px;border:1px solid var(--line);z-index:50}
+.wrap{max-width:60rem;margin:0 auto;padding:0 1.25rem}
+header.site{background:rgba(248,250,252,.92);border-bottom:1px solid var(--line);
+position:sticky;top:0;z-index:20;backdrop-filter:blur(8px)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;
+gap:1rem;padding-top:.85rem;padding-bottom:.85rem;flex-wrap:wrap}
+.brand{font-weight:800;color:var(--ink);letter-spacing:-.01em}
+.brand span{display:block;font-size:.72rem;font-weight:500;color:var(--faint);letter-spacing:0}
+header.site nav{display:flex;gap:1rem;font-size:.86rem;font-weight:600}
+header.site nav a{color:var(--muted)}
+header.site nav a[aria-current="page"]{color:var(--emerald)}
+.crumbs{font-size:.78rem;color:var(--faint);padding:1.25rem 0 0}
+.crumbs a{color:var(--faint)}
+main{padding-bottom:4rem}
+h1{font-size:clamp(1.55rem,3.6vw,2.2rem);line-height:1.25;letter-spacing:-.02em;
+margin:.75rem 0 .5rem;font-weight:800}
+h2{font-size:1.15rem;margin:2.25rem 0 .65rem;letter-spacing:-.01em;font-weight:700;
+padding-bottom:.4rem;border-bottom:1px solid var(--line)}
+h3{font-size:1rem;margin:1.5rem 0 .4rem;font-weight:700}
+p{margin:.65rem 0}
+.lede{font-size:1.02rem;color:var(--muted)}
+.meta{color:var(--muted);font-size:.9rem;margin:.35rem 0}
+.meta .me{font-weight:700;color:var(--ink);border-bottom:2px solid #10B981}
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;margin:.9rem 0}
+.tag{font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:.2rem .55rem;
+border-radius:6px;background:#F1F5F9;border:1px solid var(--line);color:var(--muted)}
+.tag.area{background:var(--emerald-bg);border-color:#A7F3D0;color:var(--emerald);font-weight:600}
+.links{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.1rem 0 .25rem}
+.links a{font-size:.82rem;font-weight:600;padding:.45rem .8rem;border-radius:8px;
+border:1px solid var(--line);background:var(--card)}
+.links a.primary{background:var(--sky);border-color:var(--sky);color:#fff}
+blockquote.abstract{margin:0;padding:1rem 1.15rem;background:var(--card);
+border:1px solid var(--line);border-left:3px solid var(--emerald);border-radius:0 12px 12px 0}
+blockquote.abstract p{margin:0;color:#1E293B}
+ul{margin:.5rem 0;padding-left:1.15rem}
+li{margin:.3rem 0;color:#1E293B}
+dl.facts{display:grid;grid-template-columns:auto 1fr;gap:.35rem 1rem;margin:.5rem 0;
+font-size:.9rem}
+dl.facts dt{color:var(--faint);font-weight:600}
+dl.facts dd{margin:0}
+pre.cite{background:#0F172A;color:#E2E8F0;padding:1rem;border-radius:12px;
+overflow-x:auto;font-size:.74rem;line-height:1.55}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+padding:1.1rem 1.15rem;margin:.75rem 0}
+.card h3{margin:0 0 .3rem;font-size:1.02rem}
+.card h3 a{color:var(--ink)}
+.card p{margin:.35rem 0;font-size:.88rem;color:var(--muted)}
+.year{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--faint)}
+footer.site{border-top:1px solid var(--line);background:#0F172A;color:#94A3B8;
+padding:2rem 0;font-size:.85rem}
+footer.site a{color:#CBD5E1}
+@media(max-width:640px){dl.facts{grid-template-columns:1fr}dl.facts dd{margin-bottom:.5rem}}
+</style>
+<meta name="citation_title" content="A Semi-Self-Supervised Approach for Dense-Pattern Video Object Segmentation">
+<meta name="citation_author" content="Keyhan Najafian">
+<meta name="citation_author" content="Farhad Maleki">
+<meta name="citation_author" content="Lingling Jin">
+<meta name="citation_author" content="Ian Stavness">
+<meta name="citation_publication_date" content="2025">
+<meta name="citation_date" content="2025">
+<meta name="citation_conference_title" content="IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)">
+<meta name="citation_firstpage" content="5451">
+<meta name="citation_lastpage" content="5460">
+<meta name="citation_abstract_html_url" content="https://keyhannajafian.github.io/publications/dense-pattern-video-object-segmentation/">
+<meta name="DC.title" content="A Semi-Self-Supervised Approach for Dense-Pattern Video Object Segmentation">
+<meta name="DC.creator" content="Keyhan Najafian">
+<meta name="DC.creator" content="Farhad Maleki">
+<meta name="DC.creator" content="Lingling Jin">
+<meta name="DC.creator" content="Ian Stavness">
+<meta name="DC.date" content="2025">
+<meta name="DC.type" content="Text">
+<meta name="DC.source" content="IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)">
+<meta name="DC.subject" content="video object segmentation">
+<meta name="DC.subject" content="dense video object segmentation">
+<meta name="DC.subject" content="DVOS">
+<meta name="DC.subject" content="wheat head segmentation">
+<meta name="DC.subject" content="semi-self-supervised learning">
+<meta name="DC.subject" content="synthetic video">
+<meta name="DC.subject" content="pseudo-labeling">
+<meta name="DC.subject" content="drone imagery">
+<meta name="DC.subject" content="UAV crop monitoring">
+<meta name="DC.subject" content="temporal segmentation">
+<meta name="DC.subject" content="precision agriculture">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  "headline": "A Semi-Self-Supervised Approach for Dense-Pattern Video Object Segmentation",
+  "name": "A Semi-Self-Supervised Approach for Dense-Pattern Video Object Segmentation",
+  "url": "https://keyhannajafian.github.io/publications/dense-pattern-video-object-segmentation/",
+  "mainEntityOfPage": "https://keyhannajafian.github.io/publications/dense-pattern-video-object-segmentation/",
+  "datePublished": "2025",
+  "inLanguage": "en",
+  "abstract": "Video object segmentation (VOS), predicting pixel-level regions for objects within each frame of a video, is particularly challenging in agricultural scenarios, where videos of crops include hundreds of small, dense, and occluded objects (stems, leaves, flowers, pods) that sway and move unpredictably in the wind. Supervised training is the state-of-the-art for VOS, but it requires large, pixel-accurate, human-annotated videos, which are costly to produce for videos with many densely packed objects in each frame. We train the model first with synthetic data that mimics the camera and object motion of real videos and then with pseudo-labeled videos. We evaluate our DVOS method for wheat head segmentation from a diverse set of videos (handheld, drone-captured, different field locations, and different growth stages, spanning from boot stage to wheat mature and harvest ready). Despite using only a few manually annotated video frames, the proposed approach yielded a high-performing model, achieving a Dice score of 0.79 when tested on a drone-captured external test set. While our method was evaluated on wheat head segmentation, it can be extended to other crops and domains, such as crowd analysis or microscopic image analysis.",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Keyhan Najafian"
+    },
+    {
+      "@type": "Person",
+      "name": "Farhad Maleki"
+    },
+    {
+      "@type": "Person",
+      "name": "Lingling Jin"
+    },
+    {
+      "@type": "Person",
+      "name": "Ian Stavness"
+    }
+  ],
+  "about": [
+    {
+      "@type": "Thing",
+      "name": "video object segmentation"
+    },
+    {
+      "@type": "Thing",
+      "name": "dense video object segmentation"
+    },
+    {
+      "@type": "Thing",
+      "name": "DVOS"
+    },
+    {
+      "@type": "Thing",
+      "name": "wheat head segmentation"
+    },
+    {
+      "@type": "Thing",
+      "name": "semi-self-supervised learning"
+    },
+    {
+      "@type": "Thing",
+      "name": "synthetic video"
+    },
+    {
+      "@type": "Thing",
+      "name": "pseudo-labeling"
+    },
+    {
+      "@type": "Thing",
+      "name": "drone imagery"
+    },
+    {
+      "@type": "Thing",
+      "name": "UAV crop monitoring"
+    },
+    {
+      "@type": "Thing",
+      "name": "temporal segmentation"
+    },
+    {
+      "@type": "Thing",
+      "name": "precision agriculture"
+    }
+  ],
+  "keywords": "video object segmentation, dense video object segmentation, DVOS, wheat head segmentation, semi-self-supervised learning, synthetic video, pseudo-labeling, drone imagery, UAV crop monitoring, temporal segmentation, precision agriculture",
+  "isPartOf": {
+    "@type": "PublicationEvent",
+    "name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)"
+  },
+  "creativeWorkStatus": "Published",
+  "citation": "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+  "genre": "Precision Agriculture",
+  "codeRepository": [
+    "https://github.com/USask-BINFO/DVOS"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://keyhannajafian.github.io/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Publications",
+      "item": "https://keyhannajafian.github.io/publications/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Precision Agriculture",
+      "item": "https://keyhannajafian.github.io/publications/precision-agriculture/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "Dense-pattern video object segmentation",
+      "item": "https://keyhannajafian.github.io/publications/dense-pattern-video-object-segmentation/"
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="https://keyhannajafian.github.io/">Dr. Keyhan Najafian<span>Postdoctoral Researcher, Vision Research Lab, University of Calgary</span></a>
+    <nav aria-label="Main"><a href="https://keyhannajafian.github.io/">Home</a><a href="https://keyhannajafian.github.io/publications/" aria-current="page">Publications</a><a href="https://keyhannajafian.github.io/publications/precision-agriculture/">Precision Agriculture</a><a href="https://keyhannajafian.github.io/publications/precision-health/">Precision Health</a></nav>
+  </div>
+</header>
+
+<div class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="https://keyhannajafian.github.io/">Home</a> / <a href="https://keyhannajafian.github.io/publications/">Publications</a> / <a href="https://keyhannajafian.github.io/publications/precision-agriculture/">Precision Agriculture</a> / Dense-pattern video object segmentation</nav>
+<main id="main">
+<article>
+  <p><span class="tag area">Precision Agriculture</span> <span class="year">CVPRW 2025</span></p>
+  <h1>A Semi-Self-Supervised Approach for Dense-Pattern Video Object Segmentation</h1>
+  <p class="meta"><span class="me">Keyhan Najafian</span>, Farhad Maleki, Lingling Jin, Ian Stavness</p>
+  
+  <p class="lede">Extends dense-pattern segmentation from still images to video. Synthetic clips that mimic real camera and object motion are used for pretraining, then pseudo-labeled real video refines the model, which holds up on drone footage across growth stages from boot stage to harvest.</p>
+  <div class="links"><a href="https://github.com/USask-BINFO/DVOS" rel="noopener">Code: DVOS</a><a class="primary" href="https://openaccess.thecvf.com/content/CVPR2025W/V4A/html/Najafian_A_Semi-Self-Supervised_Approach_for_Dense-Pattern_Video_Object_Segmentation_CVPRW_2025_paper.html" rel="noopener">Paper</a><a href="https://arxiv.org/abs/2406.05131" rel="noopener">Preprint</a></div>
+
+  <h2>Publication details</h2>
+  <dl class="facts"><dt>Venue</dt><dd>IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)</dd><dt>Year</dt><dd>2025</dd><dt>Pages</dt><dd>5451-5460</dd></dl>
+
+  <h2>Abstract</h2>
+  <blockquote class="abstract"><p>Video object segmentation (VOS), predicting pixel-level regions for objects within each frame of a video, is particularly challenging in agricultural scenarios, where videos of crops include hundreds of small, dense, and occluded objects (stems, leaves, flowers, pods) that sway and move unpredictably in the wind. Supervised training is the state-of-the-art for VOS, but it requires large, pixel-accurate, human-annotated videos, which are costly to produce for videos with many densely packed objects in each frame. We train the model first with synthetic data that mimics the camera and object motion of real videos and then with pseudo-labeled videos. We evaluate our DVOS method for wheat head segmentation from a diverse set of videos (handheld, drone-captured, different field locations, and different growth stages, spanning from boot stage to wheat mature and harvest ready). Despite using only a few manually annotated video frames, the proposed approach yielded a high-performing model, achieving a Dice score of 0.79 when tested on a drone-captured external test set. While our method was evaluated on wheat head segmentation, it can be extended to other crops and domains, such as crowd analysis or microscopic image analysis.</p></blockquote>
+  
+
+  <h2>Key contributions</h2><ul><li>Defines dense video object segmentation (DVOS) as a distinct problem: hundreds of small, occluded, wind-moved objects per frame.</li><li>Synthesizes training video that reproduces both camera motion and object motion, not just static appearance.</li><li>Uses pseudo-labeled real video as the second training stage, requiring only a few annotated frames.</li><li>Validates across handheld and drone capture, multiple field locations, and growth stages from boot stage to harvest.</li></ul>
+  <h2>Methods and techniques</h2><ul><li>Dense video object segmentation (DVOS)</li><li>Semi-self-supervised learning</li><li>Synthetic video generation with motion simulation</li><li>Pseudo-labeling</li><li>Spatiotemporal attention</li><li>Multi-task UNet-style architecture</li><li>Diffusion-based and temporal modeling of frame sequences</li><li>External test set evaluation</li></ul>
+  <h2>Data and materials</h2><ul><li>Handheld and drone-captured wheat field video</li><li>Multiple field locations and growth stages (boot stage through harvest ready)</li><li>A small number of manually annotated video frames</li></ul>
+  <h2>Results</h2><ul><li>Dice score of 0.79 on a drone-captured external test set</li></ul>
+  <h2>Applications</h2><ul><li>Drone and handheld crop monitoring over time</li><li>Temporal plant phenotyping and growth-stage tracking</li><li>Transferable to crowd analysis and microscopy with similar density characteristics</li></ul>
+
+  <h2>Code and implementation</h2><article class="card"><h3><a href="https://github.com/USask-BINFO/DVOS" rel="noopener">DVOS</a></h3><p class="mono year">https://github.com/USask-BINFO/DVOS</p><p>Official implementation: multi-task UNet-style architecture with diffusion and spatiotemporal attention, trained on synthetic video and pseudo-labeled real video.</p></article>
+
+  <h2>Research topics and keywords</h2>
+  <div class="tags"><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">video object segmentation</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">dense video object segmentation</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">DVOS</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">wheat head segmentation</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">semi-self-supervised learning</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">synthetic video</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">pseudo-labeling</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">drone imagery</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">UAV crop monitoring</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">temporal segmentation</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-agriculture/">precision agriculture</a></div>
+
+  <h2>Cite this work</h2>
+  <pre class="cite">@inproceedings{najafian2025dvos,
+  title     = {A Semi-Self-Supervised Approach for Dense-Pattern Video Object Segmentation},
+  author    = {Najafian, Keyhan and Maleki, Farhad and Jin, Lingling and Stavness, Ian},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)},
+  pages     = {5451--5460},
+  year      = {2025}
+}</pre>
+
+  <h2>Related work in Precision Agriculture</h2>
+  <article class="card"><h3><a href="https://keyhannajafian.github.io/publications/wheat-head-detection-limited-labeled-samples/">A Semi-Self-Supervised Learning Approach for Wheat Head Detection Using Extremely Small Number of Labeled Samples</a></h3><p class="year">ICCVW 2021</p><p>Trains a wheat head detector from three contoured images and a few minutes of handheld video. The annotated wheat heads are cut out, augmented, and pasted onto background field footage to simulate a large computationally annotated dataset, and two domain adaptation stages then close the gap to real imagery.</p></article><article class="card"><h3><a href="https://keyhannajafian.github.io/publications/semi-self-supervised-segmentation-dense-patterns/">Semi-Self-Supervised Learning for Semantic Segmentation in Images with Dense Patterns</a></h3><p class="year">Plant Phenomics 2023</p><p>Extends the synthesis-plus-domain-adaptation idea from detection to pixel-level segmentation. Two annotated images and one short video clip are enough to train a customized U-Net that reaches a Dice score of 0.89 internally and generalizes to wheat fields from 18 domains across five countries.</p></article><article class="card"><h3><a href="https://keyhannajafian.github.io/publications/fusarium-damaged-kernel-detection-wheatseedbelt/">Detection of Fusarium Damaged Kernels in Wheat Using Deep Semi-Supervised Learning on a Novel WheatSeedBelt Dataset</a></h3><p class="year">ICCVW 2023</p><p>Introduces WheatSeedBelt, a 40,420-image single-kernel dataset covering 268 wheat varieties with damage annotations, and uses it to train semi-supervised classifiers for Fusarium damaged kernel grading. An inter-rater study shows human experts do not outperform the model.</p></article>
+  <p><a href="https://keyhannajafian.github.io/publications/precision-agriculture/">All Precision Agriculture publications</a> &middot;
+     <a href="https://keyhannajafian.github.io/publications/">Complete publication list</a></p>
+</article>
+</main>
+</div>
+
+<footer class="site">
+  <div class="wrap">
+    <p>Keyhan Najafian, Vision Research Lab, Department of Computer Science, University of Calgary.</p>
+    <p><a href="https://keyhannajafian.github.io/">Homepage</a> &middot; <a href="https://keyhannajafian.github.io/publications/">All publications</a> &middot;
+       <a href="https://scholar.google.ca/citations?hl=en&amp;user=3RI_XdQAAAAJ">Google Scholar</a> &middot;
+       <a href="https://github.com/KeyhanNajafian">GitHub</a></p>
+  </div>
+</footer>
+</body>
+</html>

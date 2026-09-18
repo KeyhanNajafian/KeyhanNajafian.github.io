@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Precision Agriculture Research | Keyhan Najafian</title>
+<meta name="description" content="Label-efficient computer vision for precision agriculture: wheat head detection and segmentation, Fusarium damaged kernel phenotyping, synthetic data generation, and video object segmentation in dense crop canopies.">
+<link rel="canonical" href="https://keyhannajafian.github.io/publications/precision-agriculture/">
+<meta name="author" content="Keyhan Najafian">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Precision Agriculture Research | Keyhan Najafian">
+<meta property="og:description" content="Label-efficient computer vision for precision agriculture: wheat head detection and segmentation, Fusarium damaged kernel phenotyping, synthetic data generation, and video object segmentation in dense crop canopies.">
+<meta property="og:url" content="https://keyhannajafian.github.io/publications/precision-agriculture/">
+<meta property="og:site_name" content="Keyhan Najafian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Precision Agriculture Research | Keyhan Najafian">
+<meta name="twitter:description" content="Label-efficient computer vision for precision agriculture: wheat head detection and segmentation, Fusarium damaged kernel phenotyping, synthetic data generation, and video object segmentation in dense crop canopies.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0F172A;--muted:#475569;--faint:#64748B;--line:#E2E8F0;--bg:#F8FAFC;
+--card:#FFFFFF;--emerald:#047857;--emerald-bg:#ECFDF5;--sky:#0369A1;--sky-bg:#F0F9FF}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+line-height:1.65;-webkit-font-smoothing:antialiased}
+code,pre,.mono{font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+a{color:var(--sky);text-decoration:none}
+a:hover{text-decoration:underline}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:1rem;top:1rem;position:fixed;background:#fff;padding:.6rem 1rem;
+border-radius:8px;border:1px solid var(--line);z-index:50}
+.wrap{max-width:60rem;margin:0 auto;padding:0 1.25rem}
+header.site{background:rgba(248,250,252,.92);border-bottom:1px solid var(--line);
+position:sticky;top:0;z-index:20;backdrop-filter:blur(8px)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;
+gap:1rem;padding-top:.85rem;padding-bottom:.85rem;flex-wrap:wrap}
+.brand{font-weight:800;color:var(--ink);letter-spacing:-.01em}
+.brand span{display:block;font-size:.72rem;font-weight:500;color:var(--faint);letter-spacing:0}
+header.site nav{display:flex;gap:1rem;font-size:.86rem;font-weight:600}
+header.site nav a{color:var(--muted)}
+header.site nav a[aria-current="page"]{color:var(--emerald)}
+.crumbs{font-size:.78rem;color:var(--faint);padding:1.25rem 0 0}
+.crumbs a{color:var(--faint)}
+main{padding-bottom:4rem}
+h1{font-size:clamp(1.55rem,3.6vw,2.2rem);line-height:1.25;letter-spacing:-.02em;
+margin:.75rem 0 .5rem;font-weight:800}
+h2{font-size:1.15rem;margin:2.25rem 0 .65rem;letter-spacing:-.01em;font-weight:700;
+padding-bottom:.4rem;border-bottom:1px solid var(--line)}
+h3{font-size:1rem;margin:1.5rem 0 .4rem;font-weight:700}
+p{margin:.65rem 0}
+.lede{font-size:1.02rem;color:var(--muted)}
+.meta{color:var(--muted);font-size:.9rem;margin:.35rem 0}
+.meta .me{font-weight:700;color:var(--ink);border-bottom:2px solid #10B981}
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;margin:.9rem 0}
+.tag{font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:.2rem .55rem;
+border-radius:6px;background:#F1F5F9;border:1px solid var(--line);color:var(--muted)}
+.tag.area{background:var(--emerald-bg);border-color:#A7F3D0;color:var(--emerald);font-weight:600}
+.links{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.1rem 0 .25rem}
+.links a{font-size:.82rem;font-weight:600;padding:.45rem .8rem;border-radius:8px;
+border:1px solid var(--line);background:var(--card)}
+.links a.primary{background:var(--sky);border-color:var(--sky);color:#fff}
+blockquote.abstract{margin:0;padding:1rem 1.15rem;background:var(--card);
+border:1px solid var(--line);border-left:3px solid var(--emerald);border-radius:0 12px 12px 0}
+blockquote.abstract p{margin:0;color:#1E293B}
+ul{margin:.5rem 0;padding-left:1.15rem}
+li{margin:.3rem 0;color:#1E293B}
+dl.facts{display:grid;grid-template-columns:auto 1fr;gap:.35rem 1rem;margin:.5rem 0;
+font-size:.9rem}
+dl.facts dt{color:var(--faint);font-weight:600}
+dl.facts dd{margin:0}
+pre.cite{background:#0F172A;color:#E2E8F0;padding:1rem;border-radius:12px;
+overflow-x:auto;font-size:.74rem;line-height:1.55}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+padding:1.1rem 1.15rem;margin:.75rem 0}
+.card h3{margin:0 0 .3rem;font-size:1.02rem}
+.card h3 a{color:var(--ink)}
+.card p{margin:.35rem 0;font-size:.88rem;color:var(--muted)}
+.year{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--faint)}
+footer.site{border-top:1px solid var(--line);background:#0F172A;color:#94A3B8;
+padding:2rem 0;font-size:.85rem}
+footer.site a{color:#CBD5E1}
+@media(max-width:640px){dl.facts{grid-template-columns:1fr}dl.facts dd{margin-bottom:.5rem}}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Precision Agriculture Research",
+  "url": "https://keyhannajafian.github.io/publications/precision-agriculture/",
+  "description": "Label-efficient computer vision for precision agriculture: wheat head detection and segmentation, Fusarium damaged kernel phenotyping, synthetic data generation, and video object segmentation in dense crop canopies.",
+  "about": [
+    {
+      "@type": "Thing",
+      "name": "Precision Agriculture"
+    }
+  ],
+  "mainEntity": {
+    "@type": "ItemList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "url": "https://keyhannajafian.github.io/publications/dense-pattern-video-object-segmentation/",
+        "name": "A Semi-Self-Supervised Approach for Dense-Pattern Video Object Segmentation"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "url": "https://keyhannajafian.github.io/publications/semantic-to-instance-segmentation-glmask/",
+        "name": "From Semantic To Instance: A Semi-Self-Supervised Learning Approach"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "url": "https://keyhannajafian.github.io/publications/global-wheat-full-semantic-organ-segmentation-dataset/",
+        "name": "The Global Wheat Full Semantic Organ Segmentation (GWFSS) Dataset"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "url": "https://keyhannajafian.github.io/publications/wheat-head-segmentation-l-systems-game-engines/",
+        "name": "Beyond Annotations: Efficient Wheat Head Segmentation Using L-Systems, Game Engines, and Student-Teacher Models"
+      },
+      {
+        "@type": "ListItem",
+        "position": 5,
+        "url": "https://keyhannajafian.github.io/publications/efficient-wheat-head-segmentation-generative/",
+        "name": "Efficient Wheat Head Segmentation with Minimal Annotation: A Generative Approach"
+      },
+      {
+        "@type": "ListItem",
+        "position": 6,
+        "url": "https://keyhannajafian.github.io/publications/synthset-diffusion-semantic-segmentation/",
+        "name": "SynthSet: Generative Diffusion Model for Semantic Segmentation in Precision Agriculture"
+      },
+      {
+        "@type": "ListItem",
+        "position": 7,
+        "url": "https://keyhannajafian.github.io/publications/fusarium-damaged-kernel-detection-wheatseedbelt/",
+        "name": "Detection of Fusarium Damaged Kernels in Wheat Using Deep Semi-Supervised Learning on a Novel WheatSeedBelt Dataset"
+      },
+      {
+        "@type": "ListItem",
+        "position": 8,
+        "url": "https://keyhannajafian.github.io/publications/semi-self-supervised-segmentation-dense-patterns/",
+        "name": "Semi-Self-Supervised Learning for Semantic Segmentation in Images with Dense Patterns"
+      },
+      {
+        "@type": "ListItem",
+        "position": 9,
+        "url": "https://keyhannajafian.github.io/publications/wheat-head-detection-limited-labeled-samples/",
+        "name": "A Semi-Self-Supervised Learning Approach for Wheat Head Detection Using Extremely Small Number of Labeled Samples"
+      }
+    ]
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://keyhannajafian.github.io/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Publications",
+      "item": "https://keyhannajafian.github.io/publications/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Precision Agriculture",
+      "item": "https://keyhannajafian.github.io/publications/precision-agriculture/"
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="https://keyhannajafian.github.io/">Dr. Keyhan Najafian<span>Postdoctoral Researcher, Vision Research Lab, University of Calgary</span></a>
+    <nav aria-label="Main"><a href="https://keyhannajafian.github.io/">Home</a><a href="https://keyhannajafian.github.io/publications/">Publications</a><a href="https://keyhannajafian.github.io/publications/precision-agriculture/" aria-current="page">Precision Agriculture</a><a href="https://keyhannajafian.github.io/publications/precision-health/">Precision Health</a></nav>
+  </div>
+</header>
+
+<div class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="https://keyhannajafian.github.io/">Home</a> / <a href="https://keyhannajafian.github.io/publications/">Publications</a> / Precision Agriculture</nav>
+<main id="main">
+<h1>Precision Agriculture Research</h1>
+<p>Deep learning for crop phenotyping is limited less by model capacity than by annotation cost. Field images of cereal canopies contain hundreds of small, densely packed, self-occluded objects per frame, and pixel-accurate labels for those objects are slow and expensive to produce. Most of my precision agriculture research asks the same question in different forms: how far can a high-performing vision model be pushed when only a handful of human-annotated images exist?</p><p>The answer developed across these papers is a family of semi-self-supervised pipelines. A small number of manually annotated images is used to synthesize a large computationally annotated dataset, either by cut-and-paste composition, by generative models such as CycleGAN and denoising diffusion, or by procedural plant models built with L-systems and rendered in a game engine. A model trained on that synthetic data is then moved toward the real data distribution through staged domain adaptation, strong augmentation, and pseudo-labeling with student-teacher refinement.</p><p>The tasks span object detection, semantic segmentation, instance segmentation, and video object segmentation, and the crops and sensing setups vary from handheld video to drone flights to controlled seed-belt imaging. Alongside the methods, this work contributes public benchmark data: the WheatSeedBelt single-kernel damage dataset, and, through the Global Wheat Dataset Consortium, the GWFSS wheat organ segmentation dataset.</p>
+<h2>Publications</h2>
+<article class="card"><h3><a href="https://keyhannajafian.github.io/publications/dense-pattern-video-object-segmentation/">A Semi-Self-Supervised Approach for Dense-Pattern Video Object Segmentation</a></h3><p class="year">CVPRW 2025 &middot; Keyhan Najafian, Farhad Maleki, Lingling Jin et al.</p><p>Extends dense-pattern segmentation from still images to video. Synthetic clips that mimic real camera and object motion are used for pretraining, then pseudo-labeled real video refines the model, which holds up on drone footage across growth stages from boot stage to harvest.</p></article><article class="card"><h3><a href="https://keyhannajafian.github.io/publications/semantic-to-instance-segmentation-glmask/">From Semantic To Instance: A Semi-Self-Supervised Learning Approach</a></h3><p class="year">Preprint 2025 &middot; Keyhan Najafian, Farhad Maleki, Lingling Jin et al.</p><p>Introduces GLMask, an image-mask representation that pushes the model toward shape, texture, and pattern rather than color, and a pipeline that converts semantic segmentation into instance segmentation. Reaches mAP@50 of 98.5% on wheat head instance segmentation and improves COCO by over 12.6 mAP@50.</p></article><article class="card"><h3><a href="https://keyhannajafian.github.io/publications/global-wheat-full-semantic-organ-segmentation-dataset/">The Global Wheat Full Semantic Organ Segmentation (GWFSS) Dataset</a></h3><p class="year">Plant Phenomics 2025 &middot; Zijian Wang, Radek Zenkl, Latifa Greche et al.</p><p>The Global Wheat Dataset Consortium&#x27;s successor to GWHD. Where GWHD provided bounding boxes for wheat heads, GWFSS provides full semantic segmentation of leaves, stems, and spikes across all developmental stages, assembled from 11 institutions and many different imaging setups.</p></article><article class="card"><h3><a href="https://keyhannajafian.github.io/publications/wheat-head-segmentation-l-systems-game-engines/">Beyond Annotations: Efficient Wheat Head Segmentation Using L-Systems, Game Engines, and Student-Teacher Models</a></h3><p class="year">ECCVW 2024 &middot; Hosein Beheshtifard, Elijah Mickelson, Keyhan Najafian et al.</p><p>Builds the training set from a plant growth model instead of from photographs. Lindenmayer systems describe wheat morphology, a game engine renders the scenes with perfect masks, and a student-teacher loop adapts the resulting model to real fields, reaching a Dice score of 0.87 with no manual annotation.</p></article><article class="card"><h3><a href="https://keyhannajafian.github.io/publications/efficient-wheat-head-segmentation-generative/">Efficient Wheat Head Segmentation with Minimal Annotation: A Generative Approach</a></h3><p class="year">J. Imaging 2024 &middot; Jaden Myers, Keyhan Najafian, Farhad Maleki et al.</p><p>Closes the simulation-to-reality gap with a modified CycleGAN. A large computationally simulated annotated dataset is translated into realistic field imagery, and the resulting model is refined through pseudo-labeling without additional manual annotation.</p></article><article class="card"><h3><a href="https://keyhannajafian.github.io/publications/synthset-diffusion-semantic-segmentation/">SynthSet: Generative Diffusion Model for Semantic Segmentation in Precision Agriculture</a></h3><p class="year">ECCVW 2024 &middot; Andrew Heschl, Mauricio Murillo, Keyhan Najafian et al.</p><p>Generates image and mask pairs from noise. A dual diffusion architecture synthesizes agricultural imagery together with its own pixel-level annotation, with no human labeling at any stage, and super-resolution sharpens the phenotypic detail and image-mask coherence.</p></article><article class="card"><h3><a href="https://keyhannajafian.github.io/publications/fusarium-damaged-kernel-detection-wheatseedbelt/">Detection of Fusarium Damaged Kernels in Wheat Using Deep Semi-Supervised Learning on a Novel WheatSeedBelt Dataset</a></h3><p class="year">ICCVW 2023 &middot; Keyhan Najafian, Lingling Jin, H. Randy Kutcher et al.</p><p>Introduces WheatSeedBelt, a 40,420-image single-kernel dataset covering 268 wheat varieties with damage annotations, and uses it to train semi-supervised classifiers for Fusarium damaged kernel grading. An inter-rater study shows human experts do not outperform the model.</p></article><article class="card"><h3><a href="https://keyhannajafian.github.io/publications/semi-self-supervised-segmentation-dense-patterns/">Semi-Self-Supervised Learning for Semantic Segmentation in Images with Dense Patterns</a></h3><p class="year">Plant Phenomics 2023 &middot; Keyhan Najafian, Alireza Ghanbari, Mahdi Sabet Kish et al.</p><p>Extends the synthesis-plus-domain-adaptation idea from detection to pixel-level segmentation. Two annotated images and one short video clip are enough to train a customized U-Net that reaches a Dice score of 0.89 internally and generalizes to wheat fields from 18 domains across five countries.</p></article><article class="card"><h3><a href="https://keyhannajafian.github.io/publications/wheat-head-detection-limited-labeled-samples/">A Semi-Self-Supervised Learning Approach for Wheat Head Detection Using Extremely Small Number of Labeled Samples</a></h3><p class="year">ICCVW 2021 &middot; Keyhan Najafian, Alireza Ghanbari, Ian Stavness et al.</p><p>Trains a wheat head detector from three contoured images and a few minutes of handheld video. The annotated wheat heads are cut out, augmented, and pasted onto background field footage to simulate a large computationally annotated dataset, and two domain adaptation stages then close the gap to real imagery.</p></article>
+<h2>Datasets</h2><article class="card"><h3><a href="https://keyhannajafian.github.io/datasets/wheatseedbelt/">WheatSeedBelt</a></h3><p>A high-resolution, large-scale dataset of 40,420 close-up top- and side-view single-kernel images covering 268 wheat varieties, annotated for kernel damage including Fusarium damaged kernels. Introduc</p></article><article class="card"><h3><a href="https://keyhannajafian.github.io/datasets/gwfss/">GWFSS</a></h3><p>A multi-institutional benchmark for full semantic segmentation of wheat organs (leaves, stems, spikes) across all developmental stages, assembled by the Global Wheat Dataset Consortium from 11 institu</p></article>
+<p><a href="https://keyhannajafian.github.io/publications/">All publications</a></p>
+</main>
+</div>
+
+<footer class="site">
+  <div class="wrap">
+    <p>Keyhan Najafian, Vision Research Lab, Department of Computer Science, University of Calgary.</p>
+    <p><a href="https://keyhannajafian.github.io/">Homepage</a> &middot; <a href="https://keyhannajafian.github.io/publications/">All publications</a> &middot;
+       <a href="https://scholar.google.ca/citations?hl=en&amp;user=3RI_XdQAAAAJ">Google Scholar</a> &middot;
+       <a href="https://github.com/KeyhanNajafian">GitHub</a></p>
+  </div>
+</footer>
+</body>
+</html>
