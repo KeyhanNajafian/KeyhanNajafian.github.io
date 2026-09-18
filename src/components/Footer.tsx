@@ -38,6 +38,15 @@ export const Footer: React.FC = () => {
               <GraduationCap className="w-4 h-4" />
             </a>
             <a
+              href="https://www.semanticscholar.org/author/Keyhan-Najafian/1994693921"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Semantic Scholar"
+              className="w-9 h-9 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-colors"
+            >
+              <GraduationCap className="w-4 h-4" />
+            </a>
+            <a
               href={PERSONAL_INFO.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
