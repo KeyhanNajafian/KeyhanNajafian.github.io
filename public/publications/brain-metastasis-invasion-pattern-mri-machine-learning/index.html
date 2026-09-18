@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Machine learning prediction of brain metastasis invasion pattern on brain magnetic resonance imaging scans | Neuro-Oncology Advances 2024 | Keyhan Najafian</title>
+<meta name="description" content="Brain metastasis invasion pattern is prognostic but can currently only be read from resected tissue. This study shows it can be predicted from preoperative MRI with 85% accuracy, using radiomic features from the peritumoral edema, in a task where expert neuroradiologists reach only 44 to 59%.">
+<link rel="canonical" href="https://keyhannajafian.github.io/publications/brain-metastasis-invasion-pattern-mri-machine-learning/">
+<meta name="author" content="Keyhan Najafian">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Machine learning prediction of brain metastasis invasion pattern on brain magnetic resonance imaging scans | Neuro-Oncology Advances 2024 | Keyhan Najafian">
+<meta property="og:description" content="Brain metastasis invasion pattern is prognostic but can currently only be read from resected tissue. This study shows it can be predicted from preoperative MRI with 85% accuracy, using radiomic features from the peritumoral edema, in a task where expert neuroradiologists reach only 44 to 59%.">
+<meta property="og:url" content="https://keyhannajafian.github.io/publications/brain-metastasis-invasion-pattern-mri-machine-learning/">
+<meta property="og:site_name" content="Keyhan Najafian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Machine learning prediction of brain metastasis invasion pattern on brain magnetic resonance imaging scans | Neuro-Oncology Advances 2024 | Keyhan Najafian">
+<meta name="twitter:description" content="Brain metastasis invasion pattern is prognostic but can currently only be read from resected tissue. This study shows it can be predicted from preoperative MRI with 85% accuracy, using radiomic features from the peritumoral edema, in a task where expert neuroradiologists reach only 44 to 59%.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0F172A;--muted:#475569;--faint:#64748B;--line:#E2E8F0;--bg:#F8FAFC;
+--card:#FFFFFF;--emerald:#047857;--emerald-bg:#ECFDF5;--sky:#0369A1;--sky-bg:#F0F9FF}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+line-height:1.65;-webkit-font-smoothing:antialiased}
+code,pre,.mono{font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+a{color:var(--sky);text-decoration:none}
+a:hover{text-decoration:underline}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:1rem;top:1rem;position:fixed;background:#fff;padding:.6rem 1rem;
+border-radius:8px;border:1px solid var(--line);z-index:50}
+.wrap{max-width:60rem;margin:0 auto;padding:0 1.25rem}
+header.site{background:rgba(248,250,252,.92);border-bottom:1px solid var(--line);
+position:sticky;top:0;z-index:20;backdrop-filter:blur(8px)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;
+gap:1rem;padding-top:.85rem;padding-bottom:.85rem;flex-wrap:wrap}
+.brand{font-weight:800;color:var(--ink);letter-spacing:-.01em}
+.brand span{display:block;font-size:.72rem;font-weight:500;color:var(--faint);letter-spacing:0}
+header.site nav{display:flex;gap:1rem;font-size:.86rem;font-weight:600}
+header.site nav a{color:var(--muted)}
+header.site nav a[aria-current="page"]{color:var(--emerald)}
+.crumbs{font-size:.78rem;color:var(--faint);padding:1.25rem 0 0}
+.crumbs a{color:var(--faint)}
+main{padding-bottom:4rem}
+h1{font-size:clamp(1.55rem,3.6vw,2.2rem);line-height:1.25;letter-spacing:-.02em;
+margin:.75rem 0 .5rem;font-weight:800}
+h2{font-size:1.15rem;margin:2.25rem 0 .65rem;letter-spacing:-.01em;font-weight:700;
+padding-bottom:.4rem;border-bottom:1px solid var(--line)}
+h3{font-size:1rem;margin:1.5rem 0 .4rem;font-weight:700}
+p{margin:.65rem 0}
+.lede{font-size:1.02rem;color:var(--muted)}
+.meta{color:var(--muted);font-size:.9rem;margin:.35rem 0}
+.meta .me{font-weight:700;color:var(--ink);border-bottom:2px solid #10B981}
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;margin:.9rem 0}
+.tag{font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:.2rem .55rem;
+border-radius:6px;background:#F1F5F9;border:1px solid var(--line);color:var(--muted)}
+.tag.area{background:var(--emerald-bg);border-color:#A7F3D0;color:var(--emerald);font-weight:600}
+.links{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.1rem 0 .25rem}
+.links a{font-size:.82rem;font-weight:600;padding:.45rem .8rem;border-radius:8px;
+border:1px solid var(--line);background:var(--card)}
+.links a.primary{background:var(--sky);border-color:var(--sky);color:#fff}
+blockquote.abstract{margin:0;padding:1rem 1.15rem;background:var(--card);
+border:1px solid var(--line);border-left:3px solid var(--emerald);border-radius:0 12px 12px 0}
+blockquote.abstract p{margin:0;color:#1E293B}
+ul{margin:.5rem 0;padding-left:1.15rem}
+li{margin:.3rem 0;color:#1E293B}
+dl.facts{display:grid;grid-template-columns:auto 1fr;gap:.35rem 1rem;margin:.5rem 0;
+font-size:.9rem}
+dl.facts dt{color:var(--faint);font-weight:600}
+dl.facts dd{margin:0}
+pre.cite{background:#0F172A;color:#E2E8F0;padding:1rem;border-radius:12px;
+overflow-x:auto;font-size:.74rem;line-height:1.55}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+padding:1.1rem 1.15rem;margin:.75rem 0}
+.card h3{margin:0 0 .3rem;font-size:1.02rem}
+.card h3 a{color:var(--ink)}
+.card p{margin:.35rem 0;font-size:.88rem;color:var(--muted)}
+.year{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--faint)}
+footer.site{border-top:1px solid var(--line);background:#0F172A;color:#94A3B8;
+padding:2rem 0;font-size:.85rem}
+footer.site a{color:#CBD5E1}
+@media(max-width:640px){dl.facts{grid-template-columns:1fr}dl.facts dd{margin-bottom:.5rem}}
+</style>
+<meta name="citation_title" content="Machine learning prediction of brain metastasis invasion pattern on brain magnetic resonance imaging scans">
+<meta name="citation_author" content="Keyhan Najafian">
+<meta name="citation_author" content="Benjamin Rehany">
+<meta name="citation_author" content="Alexander Nowakowski">
+<meta name="citation_author" content="Saba Ghazimoghadam">
+<meta name="citation_author" content="Kevin Pierre">
+<meta name="citation_author" content="Rita Zakarian">
+<meta name="citation_author" content="Tariq Al-Saadi">
+<meta name="citation_author" content="Caroline Reinhold">
+<meta name="citation_author" content="Abbas Babajani-Feremi">
+<meta name="citation_author" content="Joshua K. Wong">
+<meta name="citation_author" content="Marie-Christine Guiot">
+<meta name="citation_author" content="Marie-Constance Lacasse">
+<meta name="citation_author" content="Stephanie Lam">
+<meta name="citation_author" content="Peter M. Siegel">
+<meta name="citation_author" content="Kevin Petrecca">
+<meta name="citation_author" content="Matthew Dankner">
+<meta name="citation_author" content="Reza Forghani">
+<meta name="citation_publication_date" content="2024">
+<meta name="citation_date" content="2024">
+<meta name="citation_journal_title" content="Neuro-Oncology Advances, volume 6, issue 1, article vdae200">
+<meta name="citation_doi" content="10.1093/noajnl/vdae200">
+<meta name="citation_pmid" content="39679176">
+<meta name="citation_pdf_url" content="https://academic.oup.com/noa/article-pdf/6/1/vdae200/61137647/vdae200.pdf">
+<meta name="citation_abstract_html_url" content="https://keyhannajafian.github.io/publications/brain-metastasis-invasion-pattern-mri-machine-learning/">
+<meta name="DC.title" content="Machine learning prediction of brain metastasis invasion pattern on brain magnetic resonance imaging scans">
+<meta name="DC.creator" content="Keyhan Najafian">
+<meta name="DC.creator" content="Benjamin Rehany">
+<meta name="DC.creator" content="Alexander Nowakowski">
+<meta name="DC.creator" content="Saba Ghazimoghadam">
+<meta name="DC.creator" content="Kevin Pierre">
+<meta name="DC.creator" content="Rita Zakarian">
+<meta name="DC.creator" content="Tariq Al-Saadi">
+<meta name="DC.creator" content="Caroline Reinhold">
+<meta name="DC.creator" content="Abbas Babajani-Feremi">
+<meta name="DC.creator" content="Joshua K. Wong">
+<meta name="DC.creator" content="Marie-Christine Guiot">
+<meta name="DC.creator" content="Marie-Constance Lacasse">
+<meta name="DC.creator" content="Stephanie Lam">
+<meta name="DC.creator" content="Peter M. Siegel">
+<meta name="DC.creator" content="Kevin Petrecca">
+<meta name="DC.creator" content="Matthew Dankner">
+<meta name="DC.creator" content="Reza Forghani">
+<meta name="DC.date" content="2024">
+<meta name="DC.type" content="Text">
+<meta name="DC.source" content="Neuro-Oncology Advances, volume 6, issue 1, article vdae200">
+<meta name="DC.identifier" content="https://doi.org/10.1093/noajnl/vdae200">
+<meta name="DC.subject" content="brain metastasis">
+<meta name="DC.subject" content="brain metastasis invasion pattern">
+<meta name="DC.subject" content="BMIP">
+<meta name="DC.subject" content="radiomics">
+<meta name="DC.subject" content="machine learning">
+<meta name="DC.subject" content="noninvasive biomarker">
+<meta name="DC.subject" content="brain MRI">
+<meta name="DC.subject" content="peritumoral edema">
+<meta name="DC.subject" content="neuro-oncology">
+<meta name="DC.subject" content="EfficientNet">
+<meta name="DC.subject" content="ensemble learning">
+<meta name="DC.subject" content="precision health">
+<meta name="DC.subject" content="medical image analysis">
+<meta name="DC.subject" content="patient stratification">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  "headline": "Machine learning prediction of brain metastasis invasion pattern on brain magnetic resonance imaging scans",
+  "name": "Machine learning prediction of brain metastasis invasion pattern on brain magnetic resonance imaging scans",
+  "url": "https://keyhannajafian.github.io/publications/brain-metastasis-invasion-pattern-mri-machine-learning/",
+  "mainEntityOfPage": "https://keyhannajafian.github.io/publications/brain-metastasis-invasion-pattern-mri-machine-learning/",
+  "datePublished": "2024",
+  "inLanguage": "en",
+  "abstract": "Background. Brain metastasis invasion pattern (BMIP) is an emerging biomarker associated with recurrence-free and overall survival in patients, and differential response to therapy in preclinical models. Currently, BMIP can only be determined from the histopathological examination of surgical specimens, precluding its use as a biomarker prior to therapy initiation. The aim of this study was to investigate the potential of machine learning (ML) approaches to develop a noninvasive magnetic resonance imaging (MRI)-based biomarker for BMIP determination. Methods. From an initial cohort of 329 patients, a subset of 132 patients met the inclusion criteria for this retrospective study. We evaluated the ability of an expert neuroradiologist to reliably predict BMIP. Thereafter, the dataset was randomly divided into training/validation (80% of cases) and test subsets (20% of cases). The ground truth for BMIP was the histopathologic evaluation of resected specimens. Following MRI sequence co-registration, advanced feature extraction techniques deriving hand-crafted radiomic features with traditional ML classifiers and convolution-based deep learning (CDL) models were trained and evaluated. Different ML approaches were used individually or using ensembling techniques to determine the model with the best performance for BMIP prediction. Results. Expert evaluation of brain MRI scans could not reliably predict BMIP, with an accuracy of 44% to 59% depending on the semantic feature used. Among the different ML and CDL models evaluated, the best-performing model achieved an accuracy of 85% and an F1 score of 90%. Conclusions. ML approaches can effectively predict BMIP, representing a noninvasive MRI-based approach to guide the management of patients with brain metastases.",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Keyhan Najafian"
+    },
+    {
+      "@type": "Person",
+      "name": "Benjamin Rehany"
+    },
+    {
+      "@type": "Person",
+      "name": "Alexander Nowakowski"
+    },
+    {
+      "@type": "Person",
+      "name": "Saba Ghazimoghadam"
+    },
+    {
+      "@type": "Person",
+      "name": "Kevin Pierre"
+    },
+    {
+      "@type": "Person",
+      "name": "Rita Zakarian"
+    },
+    {
+      "@type": "Person",
+      "name": "Tariq Al-Saadi"
+    },
+    {
+      "@type": "Person",
+      "name": "Caroline Reinhold"
+    },
+    {
+      "@type": "Person",
+      "name": "Abbas Babajani-Feremi"
+    },
+    {
+      "@type": "Person",
+      "name": "Joshua K. Wong"
+    },
+    {
+      "@type": "Person",
+      "name": "Marie-Christine Guiot"
+    },
+    {
+      "@type": "Person",
+      "name": "Marie-Constance Lacasse"
+    },
+    {
+      "@type": "Person",
+      "name": "Stephanie Lam"
+    },
+    {
+      "@type": "Person",
+      "name": "Peter M. Siegel"
+    },
+    {
+      "@type": "Person",
+      "name": "Kevin Petrecca"
+    },
+    {
+      "@type": "Person",
+      "name": "Matthew Dankner"
+    },
+    {
+      "@type": "Person",
+      "name": "Reza Forghani"
+    }
+  ],
+  "about": [
+    {
+      "@type": "Thing",
+      "name": "brain metastasis"
+    },
+    {
+      "@type": "Thing",
+      "name": "brain metastasis invasion pattern"
+    },
+    {
+      "@type": "Thing",
+      "name": "BMIP"
+    },
+    {
+      "@type": "Thing",
+      "name": "radiomics"
+    },
+    {
+      "@type": "Thing",
+      "name": "machine learning"
+    },
+    {
+      "@type": "Thing",
+      "name": "noninvasive biomarker"
+    },
+    {
+      "@type": "Thing",
+      "name": "brain MRI"
+    },
+    {
+      "@type": "Thing",
+      "name": "peritumoral edema"
+    },
+    {
+      "@type": "Thing",
+      "name": "neuro-oncology"
+    },
+    {
+      "@type": "Thing",
+      "name": "EfficientNet"
+    },
+    {
+      "@type": "Thing",
+      "name": "ensemble learning"
+    },
+    {
+      "@type": "Thing",
+      "name": "precision health"
+    }
+  ],
+  "keywords": "brain metastasis, brain metastasis invasion pattern, BMIP, radiomics, machine learning, noninvasive biomarker, brain MRI, peritumoral edema, neuro-oncology, EfficientNet, ensemble learning, precision health, medical image analysis, patient stratification",
+  "isPartOf": {
+    "@type": "Periodical",
+    "name": "Neuro-Oncology Advances, volume 6, issue 1, article vdae200"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Neuro-Oncology Advances, volume 6, issue 1, article vdae200"
+  },
+  "creativeWorkStatus": "Published",
+  "citation": "Neuro-Oncology Advances, volume 6, issue 1, article vdae200",
+  "genre": "Precision Health",
+  "identifier": [
+    {
+      "@type": "PropertyValue",
+      "propertyID": "DOI",
+      "value": "10.1093/noajnl/vdae200"
+    }
+  ],
+  "sameAs": "https://doi.org/10.1093/noajnl/vdae200",
+  "license": "CC BY-NC 4.0"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://keyhannajafian.github.io/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Publications",
+      "item": "https://keyhannajafian.github.io/publications/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Precision Health",
+      "item": "https://keyhannajafian.github.io/publications/precision-health/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "Brain metastasis invasion pattern from MRI",
+      "item": "https://keyhannajafian.github.io/publications/brain-metastasis-invasion-pattern-mri-machine-learning/"
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="https://keyhannajafian.github.io/">Dr. Keyhan Najafian<span>Postdoctoral Researcher, Vision Research Lab, University of Calgary</span></a>
+    <nav aria-label="Main"><a href="https://keyhannajafian.github.io/">Home</a><a href="https://keyhannajafian.github.io/publications/" aria-current="page">Publications</a><a href="https://keyhannajafian.github.io/publications/precision-agriculture/">Precision Agriculture</a><a href="https://keyhannajafian.github.io/publications/precision-health/">Precision Health</a></nav>
+  </div>
+</header>
+
+<div class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="https://keyhannajafian.github.io/">Home</a> / <a href="https://keyhannajafian.github.io/publications/">Publications</a> / <a href="https://keyhannajafian.github.io/publications/precision-health/">Precision Health</a> / Brain metastasis invasion pattern from MRI</nav>
+<main id="main">
+<article>
+  <p><span class="tag area">Precision Health</span> <span class="year">Neuro-Oncology Advances 2024</span></p>
+  <h1>Machine learning prediction of brain metastasis invasion pattern on brain magnetic resonance imaging scans</h1>
+  <p class="meta"><span class="me">Keyhan Najafian</span>, Benjamin Rehany, Alexander Nowakowski, Saba Ghazimoghadam, Kevin Pierre, Rita Zakarian, Tariq Al-Saadi, Caroline Reinhold, Abbas Babajani-Feremi, Joshua K. Wong, Marie-Christine Guiot, Marie-Constance Lacasse, Stephanie Lam, Peter M. Siegel, Kevin Petrecca, Matthew Dankner, Reza Forghani</p>
+  <p class="meta">Keyhan Najafian and Benjamin Rehany contributed equally.</p>
+  <p class="lede">Brain metastasis invasion pattern is prognostic but can currently only be read from resected tissue. This study shows it can be predicted from preoperative MRI with 85% accuracy, using radiomic features from the peritumoral edema, in a task where expert neuroradiologists reach only 44 to 59%.</p>
+  <div class="links"><a class="primary" href="https://doi.org/10.1093/noajnl/vdae200" rel="noopener">Paper</a><a href="https://academic.oup.com/noa/article-pdf/6/1/vdae200/61137647/vdae200.pdf" rel="noopener">PDF</a><a href="https://pubmed.ncbi.nlm.nih.gov/39679176/" rel="noopener">PubMed</a></div>
+
+  <h2>Publication details</h2>
+  <dl class="facts"><dt>Venue</dt><dd>Neuro-Oncology Advances, volume 6, issue 1, article vdae200</dd><dt>Year</dt><dd>2024</dd><dt>DOI</dt><dd><a href="https://doi.org/10.1093/noajnl/vdae200">10.1093/noajnl/vdae200</a></dd><dt>PMID</dt><dd>39679176</dd><dt>License</dt><dd>CC BY-NC 4.0</dd></dl>
+
+  <h2>Abstract</h2>
+  <blockquote class="abstract"><p>Background. Brain metastasis invasion pattern (BMIP) is an emerging biomarker associated with recurrence-free and overall survival in patients, and differential response to therapy in preclinical models. Currently, BMIP can only be determined from the histopathological examination of surgical specimens, precluding its use as a biomarker prior to therapy initiation. The aim of this study was to investigate the potential of machine learning (ML) approaches to develop a noninvasive magnetic resonance imaging (MRI)-based biomarker for BMIP determination. Methods. From an initial cohort of 329 patients, a subset of 132 patients met the inclusion criteria for this retrospective study. We evaluated the ability of an expert neuroradiologist to reliably predict BMIP. Thereafter, the dataset was randomly divided into training/validation (80% of cases) and test subsets (20% of cases). The ground truth for BMIP was the histopathologic evaluation of resected specimens. Following MRI sequence co-registration, advanced feature extraction techniques deriving hand-crafted radiomic features with traditional ML classifiers and convolution-based deep learning (CDL) models were trained and evaluated. Different ML approaches were used individually or using ensembling techniques to determine the model with the best performance for BMIP prediction. Results. Expert evaluation of brain MRI scans could not reliably predict BMIP, with an accuracy of 44% to 59% depending on the semantic feature used. Among the different ML and CDL models evaluated, the best-performing model achieved an accuracy of 85% and an F1 score of 90%. Conclusions. ML approaches can effectively predict BMIP, representing a noninvasive MRI-based approach to guide the management of patients with brain metastases.</p></blockquote>
+  
+
+  <h2>Key contributions</h2><ul><li>First study to predict brain metastasis invasion pattern noninvasively from MRI using radiomics and machine learning.</li><li>Shows that conventional semantic imaging features read by an expert neuroradiologist do not reliably predict invasion pattern.</li><li>Finds that the peritumoral edema region on T2-weighted images, not the enhancing tumor itself, carries the most predictive signal.</li><li>Uses patient-wise splits, training-only feature selection, and image-level standardization across two scanners to guard against leakage and scanner bias.</li></ul>
+  <h2>Methods and techniques</h2><ul><li>Radiomics with PyRadiomics (107 hand-crafted features)</li><li>Support vector classifier, random forest, multi-layer perceptron</li><li>EfficientNet-B0/B1/B2 convolution-based deep learning</li><li>Two-level majority-vote ensembling</li><li>MRI sequence co-registration with ANTs</li><li>Variance filtering and chi-square feature selection</li><li>Manual volume-of-interest segmentation in 3D Slicer</li></ul>
+  <h2>Data and materials</h2><ul><li>329 screened patients, 132 eligible for machine learning analysis</li><li>Preoperative T2-weighted and post-contrast T1-weighted MRI acquired on 3.0 T Philips and 1.5 T GE Signa scanners</li><li>Histopathological invasion scoring by two blinded observers as ground truth</li><li>Source numerical data available on reasonable request; patient images cannot be shared for privacy reasons</li></ul>
+  <h2>Results</h2><ul><li>Best ensemble model: 85% accuracy, 93% precision, 87% recall, 90% F1 score</li><li>Peritumoral edema features outperformed enhancing tumor features by roughly 18%</li><li>Expert neuroradiologist accuracy ranged from 44.2% to 59.0% across semantic features</li><li>Inter-observer agreement for histopathological scoring: 83.7%, Cohen&#x27;s kappa 0.66</li></ul>
+  <h2>Applications</h2><ul><li>Noninvasive patient stratification before surgery or radiosurgery</li><li>Surgical planning and stereotactic radiosurgery margin selection</li><li>Predictive biomarker development for emerging targeted therapies in brain metastases</li></ul>
+
+  
+
+  <h2>Research topics and keywords</h2>
+  <div class="tags"><a class="tag" href="https://keyhannajafian.github.io/publications/precision-health/">brain metastasis</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-health/">brain metastasis invasion pattern</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-health/">BMIP</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-health/">radiomics</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-health/">machine learning</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-health/">noninvasive biomarker</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-health/">brain MRI</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-health/">peritumoral edema</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-health/">neuro-oncology</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-health/">EfficientNet</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-health/">ensemble learning</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-health/">precision health</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-health/">medical image analysis</a><a class="tag" href="https://keyhannajafian.github.io/publications/precision-health/">patient stratification</a></div>
+
+  <h2>Cite this work</h2>
+  <pre class="cite">@article{najafian2024bmip,
+  title   = {Machine learning prediction of brain metastasis invasion pattern on brain magnetic resonance imaging scans},
+  author  = {Najafian, Keyhan and Rehany, Benjamin and Nowakowski, Alexander and Ghazimoghadam, Saba and Pierre, Kevin and Zakarian, Rita and Al-Saadi, Tariq and Reinhold, Caroline and Babajani-Feremi, Abbas and Wong, Joshua K. and Guiot, Marie-Christine and Lacasse, Marie-Constance and Lam, Stephanie and Siegel, Peter M. and Petrecca, Kevin and Dankner, Matthew and Forghani, Reza},
+  journal = {Neuro-Oncology Advances},
+  volume  = {6},
+  number  = {1},
+  pages   = {vdae200},
+  year    = {2024},
+  doi     = {10.1093/noajnl/vdae200}
+}</pre>
+
+  <h2>Related work in Precision Health</h2>
+  
+  <p><a href="https://keyhannajafian.github.io/publications/precision-health/">All Precision Health publications</a> &middot;
+     <a href="https://keyhannajafian.github.io/publications/">Complete publication list</a></p>
+</article>
+</main>
+</div>
+
+<footer class="site">
+  <div class="wrap">
+    <p>Keyhan Najafian, Vision Research Lab, Department of Computer Science, University of Calgary.</p>
+    <p><a href="https://keyhannajafian.github.io/">Homepage</a> &middot; <a href="https://keyhannajafian.github.io/publications/">All publications</a> &middot;
+       <a href="https://scholar.google.ca/citations?hl=en&amp;user=3RI_XdQAAAAJ">Google Scholar</a> &middot;
+       <a href="https://github.com/KeyhanNajafian">GitHub</a></p>
+  </div>
+</footer>
+</body>
+</html>
