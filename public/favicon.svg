@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 500 500" fill="none">
+  <defs>
+    <linearGradient id="backboneGrad" x1="160" y1="80" x2="160" y2="420" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="50%" stop-color="#047857" />
+      <stop offset="100%" stop-color="#065F46" />
+    </linearGradient>
+    <linearGradient id="kUpperDiagGrad" x1="160" y1="250" x2="290" y2="120" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#047857" />
+      <stop offset="60%" stop-color="#059669" />
+      <stop offset="100%" stop-color="#10B981" />
+    </linearGradient>
+    <linearGradient id="kLowerDiagGrad" x1="160" y1="250" x2="290" y2="380" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#047857" />
+      <stop offset="60%" stop-color="#0284C7" />
+      <stop offset="100%" stop-color="#0369A1" />
+    </linearGradient>
+    <linearGradient id="nDiagonalGrad" x1="260" y1="90" x2="380" y2="410" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="35%" stop-color="#047857" />
+      <stop offset="75%" stop-color="#0284C7" />
+      <stop offset="100%" stop-color="#0369A1" />
+    </linearGradient>
+    <linearGradient id="nRightStemGrad" x1="380" y1="90" x2="380" y2="410" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0284C7" />
+      <stop offset="60%" stop-color="#0369A1" />
+      <stop offset="100%" stop-color="#0F172A" />
+    </linearGradient>
+  </defs>
+  <g id="geometric-kn-monogram" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 160 90 L 160 410" stroke="url(#backboneGrad)" stroke-width="26" />
+    <path d="M 160 250 L 285 125" stroke="url(#kUpperDiagGrad)" stroke-width="24" />
+    <path d="M 160 250 L 270 360" stroke="url(#kLowerDiagGrad)" stroke-width="24" />
+    <path d="M 160 100 L 260 100 L 260 410" stroke="#0F172A" stroke-width="18" fill="none" stroke-linejoin="miter" stroke-miterlimit="6" />
+    <path d="M 260 100 L 380 400" stroke="url(#nDiagonalGrad)" stroke-width="24" />
+    <path d="M 380 90 L 380 410" stroke="url(#nRightStemGrad)" stroke-width="24" />
+    <circle cx="160" cy="90" r="14" fill="#0F172A" />
+    <circle cx="160" cy="90" r="7" fill="#10B981" />
+    <circle cx="160" cy="410" r="14" fill="#065F46" />
+    <circle cx="160" cy="410" r="7" fill="#34D399" />
+    <circle cx="160" cy="250" r="16" fill="#047857" stroke="#0F172A" stroke-width="4" />
+    <circle cx="160" cy="250" r="6" fill="#FFFFFF" />
+    <circle cx="285" cy="125" r="13" fill="#10B981" />
+    <circle cx="285" cy="125" r="6" fill="#047857" />
+    <circle cx="270" cy="360" r="13" fill="#0369A1" />
+    <circle cx="270" cy="360" r="6" fill="#38BDF8" />
+    <circle cx="260" cy="100" r="15" fill="#0F172A" stroke="#047857" stroke-width="3" />
+    <circle cx="260" cy="100" r="6" fill="#10B981" />
+    <circle cx="380" cy="400" r="15" fill="#0369A1" stroke="#0F172A" stroke-width="3" />
+    <circle cx="380" cy="400" r="6" fill="#38BDF8" />
+    <circle cx="380" cy="90" r="14" fill="#0284C7" />
+    <circle cx="380" cy="90" r="6" fill="#E0F2FE" />
+  </g>
+</svg>
