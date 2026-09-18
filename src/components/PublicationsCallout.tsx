@@ -10,7 +10,7 @@ export const PublicationsCallout: React.FC = () => {
   ];
 
   return (
-    <section id="publications" className="py-12 sm:py-16">
+    <section id="publications" className="py-12 sm:py-16 bg-slate-50/50">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-3 mb-6">
           <span className="w-1.5 h-6 bg-[#047857] rounded-full" />
@@ -27,7 +27,7 @@ export const PublicationsCallout: React.FC = () => {
           </p>
           <p className="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed max-w-3xl">
             Every paper has its own page with the published abstract, the methods and datasets
-            behind it, the reported results and code where available, and a citation ready to copy.
+            behind it, the results as reported, and links to code where the repository is public.
           </p>
 
           <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3 py-4 border-y border-slate-100">
