@@ -11,7 +11,7 @@
     {
       "slug": "precision-agriculture",
       "name": "Precision Agriculture",
-      "title": "Precision Agriculture Research",
+      "title": "Precision Agriculture",
       "metaDescription": "Label-efficient computer vision for precision agriculture: wheat head detection and segmentation, Fusarium damaged kernel phenotyping, synthetic data generation, and video object segmentation in dense crop canopies.",
       "intro": [
         "Deep learning for crop phenotyping is limited less by model capacity than by annotation cost. Field images of cereal canopies contain hundreds of small, densely packed, self-occluded objects per frame, and pixel-accurate labels for those objects are slow and expensive to produce. Most of my precision agriculture research asks the same question in different forms: how far can a high-performing vision model be pushed when only a handful of human-annotated images exist?",
@@ -22,7 +22,7 @@
     {
       "slug": "precision-health",
       "name": "Precision Health",
-      "title": "Precision Health and Medical Imaging Research",
+      "title": "Precision Health",
       "metaDescription": "Machine learning and radiomics for precision health: noninvasive MRI-based biomarkers, brain metastasis invasion pattern prediction, and clinical model validation.",
       "intro": [
         "In clinical imaging the constraint is different from agriculture but structurally similar: the ground truth is scarce, expensive, and sometimes only obtainable through an invasive procedure. My precision health research develops machine learning models that recover clinically meaningful information from images that are already acquired as part of standard care, so that a biomarker can be estimated before treatment rather than after surgery.",
