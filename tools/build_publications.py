@@ -633,7 +633,7 @@ def render_index(data: Dict[str, Any]) -> str:
         if dsets:
             items = "".join(
                 f'<article class="card"><h4><a href="{base}/datasets/{d["slug"]}/">'
-                f'{esc(d["name"])}</a></h4><p>{esc(clip(d["description"], 320))}</p></article>'
+                f'{esc(d["title"])}</a></h4><p>{esc(clip(d["description"], 320))}</p></article>'
                 for d in dsets
             )
             dataset_html = (f'<h3 class="sub">Datasets from this area</h3>{items}')
