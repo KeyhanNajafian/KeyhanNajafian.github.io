@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { AboutSection } from './components/AboutSection';
-import { PublicationsSection } from './components/PublicationsSection';
+import { PublicationsCallout } from './components/PublicationsCallout';
 import { EducationAccolades } from './components/EducationAccolades';
 import { ExperienceSection } from './components/ExperienceSection';
 import { SkillsSection } from './components/SkillsSection';
@@ -24,7 +24,7 @@ export default function App() {
       <main className="flex-grow">
         <Hero onOpenCv={() => setCvModalOpen(true)} />
         <AboutSection />
-        <PublicationsSection />
+        <PublicationsCallout />
         <EducationAccolades />
         <ExperienceSection />
         <SkillsSection />
