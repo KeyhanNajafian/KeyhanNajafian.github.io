@@ -16,7 +16,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenCv }) => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
 
-      const sections = ['hero', 'about', 'publications', 'education', 'experience', 'skills', 'contact'];
+      const sections = ['hero', 'about', 'education', 'experience', 'skills', 'contact'];
       const scrollPos = window.scrollY + 120;
 
       for (const sectionId of sections) {
@@ -36,9 +36,9 @@ export const Header: React.FC<HeaderProps> = ({ onOpenCv }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
+  const navLinks: { id: string; label: string; href?: string }[] = [
     { id: 'about', label: 'About' },
-    { id: 'publications', label: 'Publications' },
+    { id: 'publications', label: 'Publications', href: '/publications/' },
     { id: 'education', label: 'Education & Honors' },
     { id: 'experience', label: 'Experience' },
     { id: 'skills', label: 'Skills' },
@@ -73,18 +73,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenCv }) => {
 
         {/* Desktop Nav Items */}
         <nav className="hidden md:flex items-center gap-1 text-sm font-medium">
-          <a
-            href="/publications/"
-            className="px-3 py-1.5 rounded-md text-slate-600 hover:text-[#0F172A] hover:bg-slate-100/70 transition-colors"
-          >
-            All Publications
-          </a>
           {navLinks.map((item) => {
             const isActive = activeSection === item.id;
             return (
               <a
                 key={item.id}
-                href={`#${item.id}`}
+                href={item.href ?? `#${item.id}`}
                 className={`px-3 py-1.5 rounded-md transition-colors ${
                   isActive
                     ? 'text-[#047857] bg-emerald-50/80 font-semibold'
@@ -163,16 +157,10 @@ export const Header: React.FC<HeaderProps> = ({ onOpenCv }) => {
       {/* Mobile Drawer Navigation */}
       {mobileMenuOpen && (
         <div className="sm:hidden bg-[#F8FAFC] border-b border-slate-200 px-4 pt-2 pb-4 space-y-1 shadow-lg">
-          <a
-            href="/publications/"
-            className="block px-3 py-2.5 rounded-lg text-base font-semibold text-[#047857] hover:bg-emerald-50/60"
-          >
-            All Publications
-          </a>
           {navLinks.map((item) => (
             <a
               key={item.id}
-              href={`#${item.id}`}
+              href={item.href ?? `#${item.id}`}
               onClick={() => setMobileMenuOpen(false)}
               className="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:text-[#047857] hover:bg-emerald-50/60"
             >
