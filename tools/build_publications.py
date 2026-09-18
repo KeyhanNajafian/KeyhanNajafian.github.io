@@ -600,9 +600,9 @@ def render_index(data: Dict[str, Any]) -> str:
 {breadcrumbs(base, trail)}
 <main id="main">
 <h1>Publications</h1>
-<p class="lede">Peer-reviewed research by Keyhan Najafian on label-efficient computer vision,
-organized into two areas. Each entry links to a page with the published abstract, the methods
-and datasets used, reported results, code repositories, and a citation.</p>
+<p class="lede">Research by Keyhan Najafian on label-efficient computer vision, organized into
+two areas. Each entry links to a page with the published abstract, the methods and datasets
+behind it, a citation, and links to code where the repository is public.</p>
 <nav class="tags" aria-label="Research areas">{"".join(toc)}</nav>
 <p class="meta">Complete record also on
 <a href="https://scholar.google.ca/citations?hl=en&amp;user=3RI_XdQAAAAJ">Google Scholar</a>.</p>
@@ -616,8 +616,8 @@ and datasets used, reported results, code repositories, and a citation.</p>
         "@type": "CollectionPage",
         "name": "Publications by Keyhan Najafian",
         "url": url,
-        "description": "Complete list of peer-reviewed publications by Keyhan Najafian in "
-                       "precision agriculture and precision health.",
+        "description": "Complete list of publications by Keyhan Najafian in precision "
+                       "agriculture and precision health.",
         "about": [{"@type": "Thing", "name": a["name"]} for a in data["areas"]],
         "hasPart": [
             {
@@ -662,9 +662,9 @@ and datasets used, reported results, code repositories, and a citation.</p>
     }
 
     extra_head = "\n".join([jsonld(ld), jsonld(person), jsonld(breadcrumb_ld(trail))])
-    description = ("Peer-reviewed publications by Keyhan Najafian on label-efficient computer "
-                   "vision, in two areas: precision agriculture and precision health, with "
-                   "abstracts, methods, datasets, code, and citations.")
+    description = ("Publications by Keyhan Najafian on label-efficient computer vision, in two "
+                   "areas: precision agriculture and precision health, with abstracts, methods, "
+                   "datasets, and citations.")
 
     return page(base, url, "Publications | Keyhan Najafian", description, body, extra_head)
 
