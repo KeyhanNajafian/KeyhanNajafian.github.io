@@ -52,7 +52,7 @@ export default function App() {
             <span>Overview</span>
           </a>
           <a
-            href="#publications"
+            href="/publications/"
             className="flex flex-col items-center justify-center text-slate-600 hover:text-[#047857] text-[10px] font-medium"
           >
             <Microscope className="w-4 h-4 mb-0.5" />
