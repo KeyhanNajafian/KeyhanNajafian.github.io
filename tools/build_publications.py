@@ -212,6 +212,9 @@ def page(
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(description)}">
 <link rel="canonical" href="{canonical}">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <meta name="author" content="Keyhan Najafian">
 <meta property="og:type" content="{og_type}">
 <meta property="og:title" content="{esc(title)}">
