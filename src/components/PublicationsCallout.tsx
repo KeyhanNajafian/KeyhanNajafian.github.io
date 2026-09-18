@@ -4,7 +4,7 @@ import { PERSONAL_INFO } from '../data/portfolioData';
 
 export const PublicationsCallout: React.FC = () => {
   const figures = [
-    { icon: <Microscope className="w-4 h-4 text-[#047857]" />, value: '10', label: 'publications' },
+    { icon: <Microscope className="w-4 h-4 text-[#047857]" />, value: '15', label: 'publications' },
     { icon: <Sprout className="w-4 h-4 text-[#047857]" />, value: '2', label: 'research areas' },
     { icon: <Database className="w-4 h-4 text-[#047857]" />, value: '2', label: 'public datasets' },
   ];
