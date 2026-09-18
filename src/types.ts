@@ -7,7 +7,7 @@ export interface Publication {
   venueShort: string;
   year: number;
   type: 'journal' | 'conference' | 'workshop' | 'preprint';
-  area: 'precision-ag' | 'medical-imaging' | 'systems' | 'foundation-models';
+  area: 'precision-ag' | 'medical-imaging';
   areaLabel: string;
   abstract?: string;
   doi?: string;
