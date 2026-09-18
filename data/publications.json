@@ -1,0 +1,826 @@
+{
+  "site": {
+    "baseUrl": "https://keyhannajafian.github.io",
+    "authorName": "Keyhan Najafian",
+    "authorAffiliation": "Vision Research Lab, Department of Computer Science, University of Calgary",
+    "scholarUrl": "https://scholar.google.ca/citations?hl=en&user=3RI_XdQAAAAJ",
+    "githubUrl": "https://github.com/KeyhanNajafian",
+    "linkedinUrl": "https://www.linkedin.com/in/keyhannajafian/"
+  },
+  "areas": [
+    {
+      "slug": "precision-agriculture",
+      "name": "Precision Agriculture",
+      "title": "Precision Agriculture Research",
+      "metaDescription": "Label-efficient computer vision for precision agriculture: wheat head detection and segmentation, Fusarium damaged kernel phenotyping, synthetic data generation, and video object segmentation in dense crop canopies.",
+      "intro": [
+        "Deep learning for crop phenotyping is limited less by model capacity than by annotation cost. Field images of cereal canopies contain hundreds of small, densely packed, self-occluded objects per frame, and pixel-accurate labels for those objects are slow and expensive to produce. Most of my precision agriculture research asks the same question in different forms: how far can a high-performing vision model be pushed when only a handful of human-annotated images exist?",
+        "The answer developed across these papers is a family of semi-self-supervised pipelines. A small number of manually annotated images is used to synthesize a large computationally annotated dataset, either by cut-and-paste composition, by generative models such as CycleGAN and denoising diffusion, or by procedural plant models built with L-systems and rendered in a game engine. A model trained on that synthetic data is then moved toward the real data distribution through staged domain adaptation, strong augmentation, and pseudo-labeling with student-teacher refinement.",
+        "The tasks span object detection, semantic segmentation, instance segmentation, and video object segmentation, and the crops and sensing setups vary from handheld video to drone flights to controlled seed-belt imaging. Alongside the methods, this work contributes public benchmark data: the WheatSeedBelt single-kernel damage dataset, and, through the Global Wheat Dataset Consortium, the GWFSS wheat organ segmentation dataset."
+      ]
+    },
+    {
+      "slug": "precision-health",
+      "name": "Precision Health",
+      "title": "Precision Health and Medical Imaging Research",
+      "metaDescription": "Machine learning and radiomics for precision health: noninvasive MRI-based biomarkers, brain metastasis invasion pattern prediction, and clinical model validation.",
+      "intro": [
+        "In clinical imaging the constraint is different from agriculture but structurally similar: the ground truth is scarce, expensive, and sometimes only obtainable through an invasive procedure. My precision health research develops machine learning models that recover clinically meaningful information from images that are already acquired as part of standard care, so that a biomarker can be estimated before treatment rather than after surgery.",
+        "The work combines hand-crafted radiomic feature extraction with convolution-based deep learning, ensemble aggregation across models and image slices, and careful methodological controls: patient-wise data splits to prevent leakage, feature selection performed only on training data, image-level standardization across scanners, and evaluation on held-out independent test sets.",
+        "This research is carried out with the Augmented Intelligence and Precision Health Laboratory at the Research Institute of the McGill University Health Centre and the Radiomics and Augmented Intelligence Laboratory at the University of Florida College of Medicine."
+      ]
+    }
+  ],
+  "publications": [
+    {
+      "slug": "wheat-head-detection-limited-labeled-samples",
+      "area": "precision-agriculture",
+      "title": "A Semi-Self-Supervised Learning Approach for Wheat Head Detection Using Extremely Small Number of Labeled Samples",
+      "shortTitle": "Wheat head detection from very few labels",
+      "authors": [
+        "Keyhan Najafian",
+        "Alireza Ghanbari",
+        "Ian Stavness",
+        "Lingling Jin",
+        "Gholam Hassan Shirdel",
+        "Farhad Maleki"
+      ],
+      "venue": "IEEE/CVF International Conference on Computer Vision Workshops (ICCVW), CVPPA",
+      "venueShort": "ICCVW 2021",
+      "venueType": "conference",
+      "year": 2021,
+      "pages": "1342-1350",
+      "doi": null,
+      "links": {
+        "paper": "https://openaccess.thecvf.com/content/ICCV2021W/CVPPA/papers/Najafian_A_Semi-Self-Supervised_Learning_Approach_for_Wheat_Head_Detection_Using_Extremely_ICCVW_2021_paper.pdf",
+        "pdf": "https://openaccess.thecvf.com/content/ICCV2021W/CVPPA/papers/Najafian_A_Semi-Self-Supervised_Learning_Approach_for_Wheat_Head_Detection_Using_Extremely_ICCVW_2021_paper.pdf",
+        "code": "https://github.com/KeyhanNajafian/ImageSimulatorPipeline"
+      },
+      "summary": "Trains a wheat head detector from three contoured images and a few minutes of handheld video. The annotated wheat heads are cut out, augmented, and pasted onto background field footage to simulate a large computationally annotated dataset, and two domain adaptation stages then close the gap to real imagery.",
+      "abstract": "Most of the success of deep learning is owed to supervised learning, where a large-scale annotated dataset is used for model training. However, developing such datasets is challenging. In this paper, we develop a semi-self-supervised learning approach for wheat head detection. The proposed method utilized a few short video clips and only one annotated image from each video clip of wheat fields to simulate a large computationally annotated dataset used for model building. Considering the domain gap between the simulated and real images, we applied two domain adaptation steps to alleviate the challenge of distributional shift. The resulting model achieved high performance when applied to real unannotated datasets. When fine-tuned on the dataset from the Global Wheat Head Detection Challenge, the performance was further improved. The model achieved a mean average precision of 0.827, where an overlap of 50% or more between a predicted bounding box and ground truth was considered as a correct prediction. Although the utility of the proposed methodology was shown by applying it to wheat head detection, the proposed method is not limited to this application and could be used for other domains, such as detecting different crop types, alleviating the barrier of lack of large-scale annotated datasets in those domains.",
+      "contributions": [
+        "Introduces a semi-self-supervised pipeline that generates labeled training data for the target task itself, rather than for an unrelated pretext task.",
+        "Uses short video clips of wheat fields and of empty background scenes as the raw data source, making data collection nearly free compared with building an annotated image dataset.",
+        "Applies two sequential domain adaptation stages: strong augmentation of rotated representative images, then pseudo-labeling of real unannotated video frames.",
+        "Reaches mAP@50 of 0.827 after fine-tuning on the Global Wheat Head Detection dataset, above the 0.741 supervised baseline trained on the same dataset."
+      ],
+      "methods": [
+        "Semi-self-supervised learning",
+        "Cut-and-paste image synthesis",
+        "Two-stage domain adaptation",
+        "Pseudo-labeling",
+        "YOLO object detection with CIoU loss",
+        "Stochastic augmentation pipelines (Albumentations)",
+        "External model evaluation"
+      ],
+      "data": [
+        "3 wheat field video clips and 17 background video clips (roughly 11 and 41 minutes)",
+        "294,511 extracted background frames; 17,979 wheat field frames; 3 contoured representative images",
+        "36,000 computationally annotated synthetic samples",
+        "Global Wheat Head Detection (GWHD) 2021 dataset, 1,381-image test subset"
+      ],
+      "results": [
+        "mAP@50 of 0.090 from synthetic data alone, exposing the domain gap",
+        "mAP@50 of 0.601 after both domain adaptation stages without seeing GWHD",
+        "mAP@50 of 0.827 after GWHD fine-tuning, versus 0.741 for the supervised baseline"
+      ],
+      "applications": [
+        "Wheat yield component estimation and spike counting",
+        "High-throughput plant phenotyping for breeding programs",
+        "Bootstrapping annotation for other crops and dense-object domains"
+      ],
+      "keywords": [
+        "wheat head detection",
+        "semi-self-supervised learning",
+        "limited annotated data",
+        "synthetic training data",
+        "domain adaptation",
+        "pseudo-labeling",
+        "object detection",
+        "YOLO",
+        "precision agriculture",
+        "plant phenotyping",
+        "Global Wheat Head Detection dataset"
+      ],
+      "bibtex": "@inproceedings{najafian2021semiselfsupervised,\n  title     = {A Semi-Self-Supervised Learning Approach for Wheat Head Detection Using Extremely Small Number of Labeled Samples},\n  author    = {Najafian, Keyhan and Ghanbari, Alireza and Stavness, Ian and Jin, Lingling and Shirdel, Gholam Hassan and Maleki, Farhad},\n  booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision Workshops (ICCVW)},\n  pages     = {1342--1350},\n  year      = {2021}\n}",
+      "repositories": [
+        {
+          "name": "ImageSimulatorPipeline",
+          "url": "https://github.com/KeyhanNajafian/ImageSimulatorPipeline",
+          "note": "Cut-and-paste image synthesis pipeline: frame extraction from field video, object extraction from a segmented representative image, and composition of computationally annotated image-mask pairs."
+        }
+      ]
+    },
+    {
+      "slug": "semi-self-supervised-segmentation-dense-patterns",
+      "area": "precision-agriculture",
+      "title": "Semi-Self-Supervised Learning for Semantic Segmentation in Images with Dense Patterns",
+      "shortTitle": "Dense-pattern semantic segmentation",
+      "authors": [
+        "Keyhan Najafian",
+        "Alireza Ghanbari",
+        "Mahdi Sabet Kish",
+        "Mark Eramian",
+        "Gholam Hassan Shirdel",
+        "Ian Stavness",
+        "Lingling Jin",
+        "Farhad Maleki"
+      ],
+      "venue": "Plant Phenomics, volume 5, article 0025",
+      "venueShort": "Plant Phenomics 2023",
+      "venueType": "journal",
+      "year": 2023,
+      "doi": "10.34133/plantphenomics.0025",
+      "links": {
+        "paper": "https://doi.org/10.34133/plantphenomics.0025",
+        "pdf": "https://spj.science.org/doi/full/10.34133/plantphenomics.0025",
+        "preprint": "https://doi.org/10.1101/2022.08.09.503251",
+        "code": "https://github.com/KeyhanNajafian/ImageSimulatorPipeline"
+      },
+      "license": "CC BY 4.0",
+      "summary": "Extends the synthesis-plus-domain-adaptation idea from detection to pixel-level segmentation. Two annotated images and one short video clip are enough to train a customized U-Net that reaches a Dice score of 0.89 internally and generalizes to wheat fields from 18 domains across five countries.",
+      "abstract": "Deep learning has shown potential in domains with large-scale annotated datasets. However, manual annotation is expensive, time-consuming, and tedious. Pixel-level annotations are particularly costly for semantic segmentation in images with dense irregular patterns of object instances, such as in plant images. In this work, we propose a method for developing high-performing deep learning models for semantic segmentation of such images utilizing little manual annotation. As a use case, we focus on wheat head segmentation. We synthesize a computationally annotated dataset - using a few annotated images, a short unannotated video clip of a wheat field, and several video clips with no wheat - to train a customized U-Net model. Considering the distribution shift between the synthesized and real images, we apply three domain adaptation steps to gradually bridge the domain gap. Only using two annotated images, we achieved a Dice score of 0.89 on the internal test set. When further evaluated on a diverse external dataset collected from 18 different domains across five countries, this model achieved a Dice score of 0.73.",
+      "abstractTruncated": true,
+      "contributions": [
+        "Adapts semi-self-supervised data synthesis from bounding-box detection to pixel-level semantic segmentation of dense irregular object patterns.",
+        "Uses a three-step domain adaptation schedule to move a model trained on synthetic composites toward real field imagery.",
+        "Demonstrates cross-country, cross-domain generalization by evaluating on wheat imagery from 18 distinct domains in five countries.",
+        "Shows that two manually annotated images can support a segmentation model competitive with supervised training."
+      ],
+      "methods": [
+        "Semi-self-supervised learning",
+        "Computational data synthesis from video",
+        "Three-stage domain adaptation",
+        "Customized U-Net semantic segmentation",
+        "Pseudo-labeling",
+        "Dice score evaluation"
+      ],
+      "data": [
+        "Two manually annotated wheat field images",
+        "One short unannotated wheat field video clip and several no-wheat background clips",
+        "External evaluation set spanning 18 domains across five countries"
+      ],
+      "results": [
+        "Dice score 0.89 on the internal test set using only two annotated images",
+        "Dice score 0.73 on the diverse external multi-domain test set"
+      ],
+      "applications": [
+        "Wheat head area and density estimation",
+        "Field phenomics and breeding trial analysis",
+        "Any segmentation task with dense, self-occluding, repeating object instances"
+      ],
+      "keywords": [
+        "semantic segmentation",
+        "dense patterns",
+        "wheat head segmentation",
+        "semi-self-supervised learning",
+        "domain adaptation",
+        "U-Net",
+        "synthetic data",
+        "label-efficient deep learning",
+        "plant phenomics",
+        "precision agriculture",
+        "generalization across domains"
+      ],
+      "bibtex": "@article{najafian2023semiselfsupervised,\n  title     = {Semi-Self-Supervised Learning for Semantic Segmentation in Images with Dense Patterns},\n  author    = {Najafian, Keyhan and Ghanbari, Alireza and Sabet Kish, Mahdi and Eramian, Mark and Shirdel, Gholam Hassan and Stavness, Ian and Jin, Lingling and Maleki, Farhad},\n  journal   = {Plant Phenomics},\n  volume    = {5},\n  pages     = {0025},\n  year      = {2023},\n  doi       = {10.34133/plantphenomics.0025}\n}",
+      "repositories": [
+        {
+          "name": "ImageSimulatorPipeline",
+          "url": "https://github.com/KeyhanNajafian/ImageSimulatorPipeline",
+          "note": "Cut-and-paste image synthesis pipeline: frame extraction from field video, object extraction from a segmented representative image, and composition of computationally annotated image-mask pairs."
+        },
+        {
+          "name": "glmask-semantic2instance",
+          "url": "https://github.com/USask-BINFO/glmask-semantic2instance",
+          "note": "Official GLMask implementation: grayscale, CIELAB lightness, and semantic mask channels, cut-and-paste synthesis, rotation-based domain adaptation, and YOLOv9 instance segmentation."
+        }
+      ]
+    },
+    {
+      "slug": "fusarium-damaged-kernel-detection-wheatseedbelt",
+      "area": "precision-agriculture",
+      "title": "Detection of Fusarium Damaged Kernels in Wheat Using Deep Semi-Supervised Learning on a Novel WheatSeedBelt Dataset",
+      "shortTitle": "Fusarium damaged kernel detection",
+      "authors": [
+        "Keyhan Najafian",
+        "Lingling Jin",
+        "H. Randy Kutcher",
+        "Mackenzie Hladun",
+        "Samuel Horovatin",
+        "Maria Alejandra Oviedo-Ludena",
+        "Sheila Maria Pereira De Andrade",
+        "Lipu Wang",
+        "Ian Stavness"
+      ],
+      "venue": "IEEE/CVF International Conference on Computer Vision Workshops (ICCVW)",
+      "venueShort": "ICCVW 2023",
+      "venueType": "conference",
+      "year": 2023,
+      "pages": "660-669",
+      "doi": "10.1109/ICCVW60793.2023.00073",
+      "links": {
+        "paper": "https://doi.org/10.1109/ICCVW60793.2023.00073",
+        "code": "https://github.com/USask-BINFO/WheatSeedBelt"
+      },
+      "summary": "Introduces WheatSeedBelt, a 40,420-image single-kernel dataset covering 268 wheat varieties with damage annotations, and uses it to train semi-supervised classifiers for Fusarium damaged kernel grading. An inter-rater study shows human experts do not outperform the model.",
+      "abstract": "Fusarium head blight, caused by Fusarium spp., is a destructive disease of wheat worldwide. Fusarium damaged kernels (FDKs) significantly reduce grain yield and quality. Thus, FDK detection is a priority for wheat breeders seeking to develop high-grain quality and FDK-resistant wheat cultivars. However, traditional FDK measurement methods are time-consuming, labor-intensive, and of variable accuracy. Image-based phenotyping methods have the potential to efficiently detect FDK, but are challenging to develop due to the lack of large-scale damage-annotated wheat kernel datasets. Addressing this issue, we introduced WheatSeedBelt, a high-resolution large-scale dataset including 40,420 close-up top- and side-view single-kernel images of 268 wheat varieties with kernel damage annotations. Utilizing this dataset, we developed an image-processing pipeline to efficiently process images and extract the representative features for machine and deep-learning purposes. We also conducted three experiments on the dataset using pretraining and semi-supervised fine-tuning phases to classify wheat kernels into healthy, unhealthy but non-FDK, and FDK affected. Our best models achieved an F1-score of 84.29% for the Healthy-Unhealthy (including FDKs) task, 56.35% for the binary FDK-nonFDK, and 68.30% for the 3-class task (Healthy, Unhealthy, and FDK). We also conducted an inter-rater reliability study, which indicated that human experts do not outperform our model in FDK prediction, providing evidence that visual classification of FDK from RGB images is a challenging task.",
+      "contributions": [
+        "Releases WheatSeedBelt, a large-scale annotated single-kernel wheat imaging dataset built on a seed belt imaging setup.",
+        "Provides an image-processing pipeline for kernel isolation and representative feature extraction from belt imagery.",
+        "Evaluates pretraining followed by semi-supervised fine-tuning across binary and three-class damage grading tasks.",
+        "Quantifies the ceiling of the task through an inter-rater reliability study with human experts."
+      ],
+      "methods": [
+        "Deep semi-supervised learning",
+        "Self-supervised pretraining and fine-tuning",
+        "Single-kernel image processing pipeline",
+        "Multi-class and binary classification",
+        "Inter-rater reliability analysis"
+      ],
+      "data": [
+        "WheatSeedBelt: 40,420 top- and side-view single-kernel images",
+        "268 wheat varieties with kernel damage annotations"
+      ],
+      "results": [
+        "F1-score 84.29% for the healthy versus unhealthy task",
+        "F1-score 68.30% for the three-class healthy / unhealthy / FDK task",
+        "F1-score 56.35% for the binary FDK versus non-FDK task",
+        "Human experts did not outperform the model on FDK prediction"
+      ],
+      "applications": [
+        "Fusarium head blight resistance screening in wheat breeding",
+        "Grain quality and food safety grading",
+        "Automated seed phenotyping on belt imaging systems"
+      ],
+      "keywords": [
+        "Fusarium head blight",
+        "Fusarium damaged kernels",
+        "FDK detection",
+        "wheat kernel classification",
+        "WheatSeedBelt dataset",
+        "semi-supervised learning",
+        "seed phenotyping",
+        "grain quality",
+        "plant disease detection",
+        "crop breeding",
+        "inter-rater reliability"
+      ],
+      "bibtex": "@inproceedings{najafian2023fusarium,\n  title     = {Detection of Fusarium Damaged Kernels in Wheat Using Deep Semi-Supervised Learning on a Novel WheatSeedBelt Dataset},\n  author    = {Najafian, Keyhan and Jin, Lingling and Kutcher, H. Randy and Hladun, Mackenzie and Horovatin, Samuel and Oviedo-Ludena, Maria Alejandra and De Andrade, Sheila Maria Pereira and Wang, Lipu and Stavness, Ian},\n  booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision Workshops (ICCVW)},\n  pages     = {660--669},\n  year      = {2023},\n  doi       = {10.1109/ICCVW60793.2023.00073}\n}",
+      "repositories": [
+        {
+          "name": "WheatSeedBelt",
+          "url": "https://github.com/USask-BINFO/WheatSeedBelt",
+          "note": "Image processing pipeline for the WheatSeedBelt dataset: .npy conversion, kernel segmentation, and region-of-interest extraction."
+        }
+      ]
+    },
+    {
+      "slug": "efficient-wheat-head-segmentation-generative",
+      "area": "precision-agriculture",
+      "title": "Efficient Wheat Head Segmentation with Minimal Annotation: A Generative Approach",
+      "shortTitle": "Generative wheat head segmentation",
+      "authors": [
+        "Jaden Myers",
+        "Keyhan Najafian",
+        "Farhad Maleki",
+        "Katie Ovens"
+      ],
+      "venue": "Journal of Imaging, volume 10, issue 7, article 152",
+      "venueShort": "J. Imaging 2024",
+      "venueType": "journal",
+      "year": 2024,
+      "doi": "10.3390/jimaging10070152",
+      "links": {
+        "paper": "https://doi.org/10.3390/jimaging10070152",
+        "pdf": "https://www.mdpi.com/2313-433X/10/7/152",
+        "preprint": "https://arxiv.org/abs/2402.15135"
+      },
+      "license": "CC BY 4.0",
+      "summary": "Closes the simulation-to-reality gap with a modified CycleGAN. A large computationally simulated annotated dataset is translated into realistic field imagery, and the resulting model is refined through pseudo-labeling without additional manual annotation.",
+      "abstract": "Deep learning models have been used for a variety of image processing tasks. However, most of these models are developed through supervised learning approaches, which rely heavily on the availability of large-scale annotated datasets. Developing such datasets is tedious and expensive. In the absence of an annotated dataset, synthetic data can be used for model development; however, due to the substantial differences between simulated and real data, a phenomenon referred to as domain gap, the resulting models often underperform when applied to real data. In this research, we aim to address this challenge by first computationally simulating a large-scale annotated dataset and then using a generative adversarial network (GAN) to fill the gap between simulated and real images.",
+      "abstractTruncated": true,
+      "contributions": [
+        "Adapts CycleGAN so that image translation preserves the geometry required for the paired segmentation masks to stay valid.",
+        "Combines computational simulation, unpaired image translation, and pseudo-label fine-tuning into one annotation-free pipeline.",
+        "Demonstrates that generative domain translation improves over training on raw simulated data."
+      ],
+      "methods": [
+        "Modified CycleGAN",
+        "Unpaired image-to-image translation",
+        "Computational data simulation",
+        "Pseudo-labeling and fine-tuning",
+        "Semantic segmentation"
+      ],
+      "data": [
+        "Computationally simulated annotated wheat field images",
+        "Real unannotated wheat field imagery"
+      ],
+      "applications": [
+        "Annotation-free segmentation model development for crops",
+        "Synthetic-to-real transfer in agricultural imaging"
+      ],
+      "keywords": [
+        "CycleGAN",
+        "generative adversarial network",
+        "domain gap",
+        "synthetic data",
+        "wheat head segmentation",
+        "minimal annotation",
+        "image-to-image translation",
+        "semantic segmentation",
+        "precision agriculture"
+      ],
+      "bibtex": "@article{myers2024efficient,\n  title     = {Efficient Wheat Head Segmentation with Minimal Annotation: A Generative Approach},\n  author    = {Myers, Jaden and Najafian, Keyhan and Maleki, Farhad and Ovens, Katie},\n  journal   = {Journal of Imaging},\n  volume    = {10},\n  number    = {7},\n  pages     = {152},\n  year      = {2024},\n  doi       = {10.3390/jimaging10070152}\n}"
+    },
+    {
+      "slug": "synthset-diffusion-semantic-segmentation",
+      "area": "precision-agriculture",
+      "title": "SynthSet: Generative Diffusion Model for Semantic Segmentation in Precision Agriculture",
+      "shortTitle": "SynthSet diffusion data generation",
+      "authors": [
+        "Andrew Heschl",
+        "Mauricio Murillo",
+        "Keyhan Najafian",
+        "Farhad Maleki"
+      ],
+      "venue": "Computer Vision - ECCV 2024 Workshops, Lecture Notes in Computer Science volume 15625",
+      "venueShort": "ECCVW 2024",
+      "venueType": "conference",
+      "year": 2024,
+      "pages": "267-283",
+      "doi": "10.1007/978-3-031-91835-3_18",
+      "links": {
+        "paper": "https://doi.org/10.1007/978-3-031-91835-3_18",
+        "preprint": "https://arxiv.org/abs/2411.03505",
+        "code": "https://github.com/VisionResearchLab/SynthSet"
+      },
+      "summary": "Generates image and mask pairs from noise. A dual diffusion architecture synthesizes agricultural imagery together with its own pixel-level annotation, with no human labeling at any stage, and super-resolution sharpens the phenotypic detail and image-mask coherence.",
+      "abstract": "This paper introduces a methodology for generating synthetic annotated data to address data scarcity in semantic segmentation tasks within the precision agriculture domain. Utilizing Denoising Diffusion Probabilistic Models (DDPMs) and Generative Adversarial Networks (GANs), we propose a dual diffusion model architecture for synthesizing realistic annotated agricultural data, without any human intervention. We employ super-resolution to enhance the phenotypic characteristics of the synthesized images and their coherence with the corresponding generated masks. We showcase the utility of the proposed method for wheat head segmentation. The high quality of synthesized data underscores the effectiveness of the proposed methodology in generating image-mask pairs. Furthermore, models trained on our generated data exhibit promising performance when tested on an external, diverse dataset of real wheat fields.",
+      "contributions": [
+        "Proposes a dual diffusion architecture that generates an image and its segmentation mask jointly rather than labeling generated images afterwards.",
+        "Removes human intervention entirely from the training data creation loop.",
+        "Adds a super-resolution stage to improve fine phenotypic structure and image-mask alignment.",
+        "Validates the synthetic data by training segmentation models and testing on external real wheat field imagery."
+      ],
+      "methods": [
+        "Denoising diffusion probabilistic models (DDPM)",
+        "Dual diffusion architecture",
+        "Generative adversarial networks",
+        "Super-resolution",
+        "Annotation-free dataset synthesis",
+        "Semantic segmentation"
+      ],
+      "data": [
+        "Fully synthetic wheat image and mask pairs generated by the model",
+        "External diverse real wheat field dataset used for evaluation"
+      ],
+      "applications": [
+        "Training data generation where annotation is infeasible",
+        "Benchmark augmentation for crop segmentation models",
+        "Transferable synthesis methodology for other dense-canopy crops"
+      ],
+      "keywords": [
+        "diffusion models",
+        "DDPM",
+        "generative data synthesis",
+        "image-mask pairs",
+        "super-resolution",
+        "semantic segmentation",
+        "precision agriculture",
+        "wheat head segmentation",
+        "annotation-free learning",
+        "synthetic datasets"
+      ],
+      "bibtex": "@inproceedings{heschl2024synthset,\n  title     = {SynthSet: Generative Diffusion Model for Semantic Segmentation in Precision Agriculture},\n  author    = {Heschl, Andrew and Murillo, Mauricio and Najafian, Keyhan and Maleki, Farhad},\n  booktitle = {Computer Vision -- ECCV 2024 Workshops},\n  series    = {Lecture Notes in Computer Science},\n  volume    = {15625},\n  pages     = {267--283},\n  year      = {2024},\n  publisher = {Springer},\n  doi       = {10.1007/978-3-031-91835-3_18}\n}",
+      "repositories": [
+        {
+          "name": "SynthSet",
+          "url": "https://github.com/VisionResearchLab/SynthSet",
+          "note": "Pipeline package for the dual diffusion synthesis method, built on the ClasSeg pipeline with super-resolution and unstable-diffusion extensions."
+        }
+      ]
+    },
+    {
+      "slug": "wheat-head-segmentation-l-systems-game-engines",
+      "area": "precision-agriculture",
+      "title": "Beyond Annotations: Efficient Wheat Head Segmentation Using L-Systems, Game Engines, and Student-Teacher Models",
+      "shortTitle": "L-systems and game engine synthesis",
+      "authors": [
+        "Hosein Beheshtifard",
+        "Elijah Mickelson",
+        "Keyhan Najafian",
+        "Farhad Maleki"
+      ],
+      "venue": "Computer Vision - ECCV 2024 Workshops, Lecture Notes in Computer Science volume 15625",
+      "venueShort": "ECCVW 2024",
+      "venueType": "conference",
+      "year": 2024,
+      "pages": "319-334",
+      "doi": "10.1007/978-3-031-91835-3_21",
+      "links": {
+        "paper": "https://doi.org/10.1007/978-3-031-91835-3_21"
+      },
+      "summary": "Builds the training set from a plant growth model instead of from photographs. Lindenmayer systems describe wheat morphology, a game engine renders the scenes with perfect masks, and a student-teacher loop adapts the resulting model to real fields, reaching a Dice score of 0.87 with no manual annotation.",
+      "abstract": "The increasing global population necessitates efficient monitoring of wheat fields to ensure food security. Traditional manual methods for crop monitoring are labor-intensive and inefficient, hindering the adoption of precision agriculture techniques. Deep learning-based semantic segmentation has shown promise in tasks such as yield prediction, crop health monitoring, and disease detection. However, the creation of large-scale annotated datasets required for training these models is resource-intensive. This paper proposes a self-supervised approach for wheat head segmentation, leveraging Lindenmayer systems (L-systems) to generate a synthetic dataset and employing a student-teacher model for domain adaptation. The methodology involves training a semantic segmentation model on synthetic data and refining it with pseudo-labeled real data. Our results demonstrate significant improvements in segmentation performance, achieving a Dice score of 0.87, setting a new benchmark in wheat head segmentation without requiring manual annotation.",
+      "contributions": [
+        "Uses procedural plant modeling with L-systems to encode wheat morphology rather than sampling it from photographs.",
+        "Renders synthetic scenes in a game engine, which yields pixel-perfect masks for free.",
+        "Applies student-teacher domain adaptation with pseudo-labeled real imagery.",
+        "Achieves a Dice score of 0.87 with no manual annotation."
+      ],
+      "methods": [
+        "Lindenmayer systems (L-systems)",
+        "Procedural plant modeling",
+        "Game engine rendering",
+        "Student-teacher knowledge distillation",
+        "Self-supervised learning",
+        "Domain adaptation with pseudo-labels"
+      ],
+      "data": [
+        "Procedurally generated synthetic wheat scenes with exact segmentation masks",
+        "Real unannotated wheat field imagery for pseudo-labeling"
+      ],
+      "results": [
+        "Dice score of 0.87 without any manual annotation"
+      ],
+      "applications": [
+        "Crop health monitoring and yield prediction",
+        "Simulation-driven training for agricultural vision systems",
+        "Procedural data generation for other plant species"
+      ],
+      "keywords": [
+        "L-systems",
+        "procedural generation",
+        "game engine rendering",
+        "synthetic data",
+        "student-teacher model",
+        "knowledge distillation",
+        "self-supervised learning",
+        "wheat head segmentation",
+        "domain adaptation",
+        "precision agriculture"
+      ],
+      "bibtex": "@inproceedings{beheshtifard2024beyond,\n  title     = {Beyond Annotations: Efficient Wheat Head Segmentation Using L-Systems, Game Engines, and Student-Teacher Models},\n  author    = {Beheshtifard, Hosein and Mickelson, Elijah and Najafian, Keyhan and Maleki, Farhad},\n  booktitle = {Computer Vision -- ECCV 2024 Workshops},\n  series    = {Lecture Notes in Computer Science},\n  volume    = {15625},\n  pages     = {319--334},\n  year      = {2024},\n  publisher = {Springer},\n  doi       = {10.1007/978-3-031-91835-3_21}\n}"
+    },
+    {
+      "slug": "dense-pattern-video-object-segmentation",
+      "area": "precision-agriculture",
+      "title": "A Semi-Self-Supervised Approach for Dense-Pattern Video Object Segmentation",
+      "shortTitle": "Dense-pattern video object segmentation",
+      "authors": [
+        "Keyhan Najafian",
+        "Farhad Maleki",
+        "Lingling Jin",
+        "Ian Stavness"
+      ],
+      "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+      "venueShort": "CVPRW 2025",
+      "venueType": "conference",
+      "year": 2025,
+      "pages": "5451-5460",
+      "doi": null,
+      "links": {
+        "paper": "https://openaccess.thecvf.com/content/CVPR2025W/V4A/html/Najafian_A_Semi-Self-Supervised_Approach_for_Dense-Pattern_Video_Object_Segmentation_CVPRW_2025_paper.html",
+        "preprint": "https://arxiv.org/abs/2406.05131",
+        "code": "https://github.com/USask-BINFO/DVOS"
+      },
+      "summary": "Extends dense-pattern segmentation from still images to video. Synthetic clips that mimic real camera and object motion are used for pretraining, then pseudo-labeled real video refines the model, which holds up on drone footage across growth stages from boot stage to harvest.",
+      "abstract": "Video object segmentation (VOS), predicting pixel-level regions for objects within each frame of a video, is particularly challenging in agricultural scenarios, where videos of crops include hundreds of small, dense, and occluded objects (stems, leaves, flowers, pods) that sway and move unpredictably in the wind. Supervised training is the state-of-the-art for VOS, but it requires large, pixel-accurate, human-annotated videos, which are costly to produce for videos with many densely packed objects in each frame. We train the model first with synthetic data that mimics the camera and object motion of real videos and then with pseudo-labeled videos. We evaluate our DVOS method for wheat head segmentation from a diverse set of videos (handheld, drone-captured, different field locations, and different growth stages, spanning from boot stage to wheat mature and harvest ready). Despite using only a few manually annotated video frames, the proposed approach yielded a high-performing model, achieving a Dice score of 0.79 when tested on a drone-captured external test set. While our method was evaluated on wheat head segmentation, it can be extended to other crops and domains, such as crowd analysis or microscopic image analysis.",
+      "contributions": [
+        "Defines dense video object segmentation (DVOS) as a distinct problem: hundreds of small, occluded, wind-moved objects per frame.",
+        "Synthesizes training video that reproduces both camera motion and object motion, not just static appearance.",
+        "Uses pseudo-labeled real video as the second training stage, requiring only a few annotated frames.",
+        "Validates across handheld and drone capture, multiple field locations, and growth stages from boot stage to harvest."
+      ],
+      "methods": [
+        "Dense video object segmentation (DVOS)",
+        "Semi-self-supervised learning",
+        "Synthetic video generation with motion simulation",
+        "Pseudo-labeling",
+        "Spatiotemporal attention",
+        "Multi-task UNet-style architecture",
+        "Diffusion-based and temporal modeling of frame sequences",
+        "External test set evaluation"
+      ],
+      "data": [
+        "Handheld and drone-captured wheat field video",
+        "Multiple field locations and growth stages (boot stage through harvest ready)",
+        "A small number of manually annotated video frames"
+      ],
+      "results": [
+        "Dice score of 0.79 on a drone-captured external test set"
+      ],
+      "applications": [
+        "Drone and handheld crop monitoring over time",
+        "Temporal plant phenotyping and growth-stage tracking",
+        "Transferable to crowd analysis and microscopy with similar density characteristics"
+      ],
+      "keywords": [
+        "video object segmentation",
+        "dense video object segmentation",
+        "DVOS",
+        "wheat head segmentation",
+        "semi-self-supervised learning",
+        "synthetic video",
+        "pseudo-labeling",
+        "drone imagery",
+        "UAV crop monitoring",
+        "temporal segmentation",
+        "precision agriculture"
+      ],
+      "bibtex": "@inproceedings{najafian2025dvos,\n  title     = {A Semi-Self-Supervised Approach for Dense-Pattern Video Object Segmentation},\n  author    = {Najafian, Keyhan and Maleki, Farhad and Jin, Lingling and Stavness, Ian},\n  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)},\n  pages     = {5451--5460},\n  year      = {2025}\n}",
+      "repositories": [
+        {
+          "name": "DVOS",
+          "url": "https://github.com/USask-BINFO/DVOS",
+          "note": "Official implementation: multi-task UNet-style architecture with diffusion and spatiotemporal attention, trained on synthetic video and pseudo-labeled real video."
+        }
+      ]
+    },
+    {
+      "slug": "semantic-to-instance-segmentation-glmask",
+      "area": "precision-agriculture",
+      "title": "From Semantic To Instance: A Semi-Self-Supervised Learning Approach",
+      "shortTitle": "Semantic to instance segmentation",
+      "authors": [
+        "Keyhan Najafian",
+        "Farhad Maleki",
+        "Lingling Jin",
+        "Ian Stavness"
+      ],
+      "venue": "arXiv preprint arXiv:2506.16563",
+      "venueShort": "Preprint 2025",
+      "venueType": "preprint",
+      "year": 2025,
+      "doi": "10.48550/arXiv.2506.16563",
+      "links": {
+        "paper": "https://arxiv.org/abs/2506.16563",
+        "pdf": "https://arxiv.org/pdf/2506.16563",
+        "code": "https://github.com/USask-BINFO/glmask-semantic2instance"
+      },
+      "summary": "Introduces GLMask, an image-mask representation that pushes the model toward shape, texture, and pattern rather than color, and a pipeline that converts semantic segmentation into instance segmentation. Reaches mAP@50 of 98.5% on wheat head instance segmentation and improves COCO by over 12.6 mAP@50.",
+      "abstract": "Instance segmentation is essential for applications such as automated monitoring of plant health, growth, and yield. However, extensive effort is required to create large-scale datasets with pixel-level annotations of each object instance for developing instance segmentation models that restrict the use of deep learning in these areas. This challenge is more significant in images with densely packed, self-occluded objects, which are common in agriculture. To address this challenge, we propose a semi-self-supervised learning approach that requires minimal manual annotation to develop a high-performing instance segmentation model. We design GLMask, an image-mask representation for the model to focus on shape, texture, and pattern while minimizing its dependence on color features. We develop a pipeline to generate semantic segmentation and then transform it into instance-level segmentation. The proposed approach substantially outperforms the conventional instance segmentation models, establishing a state-of-the-art wheat head instance segmentation model with mAP@50 of 98.5%. Additionally, we assessed the proposed methodology on the general-purpose Microsoft COCO dataset, achieving a significant performance improvement of over 12.6% mAP@50. This highlights that the utility of our proposed approach extends beyond precision agriculture and applies to other domains, specifically those with similar data characteristics.",
+      "contributions": [
+        "Designs GLMask, an image-mask representation that reduces the model's reliance on color and emphasizes shape, texture, and pattern.",
+        "Provides a pipeline that lifts semantic segmentation output into instance-level segmentation without instance-level annotation.",
+        "Sets a state-of-the-art wheat head instance segmentation result at mAP@50 of 98.5%.",
+        "Shows the method generalizes beyond agriculture with an improvement of over 12.6 mAP@50 on Microsoft COCO."
+      ],
+      "methods": [
+        "Instance segmentation",
+        "Semi-self-supervised learning",
+        "GLMask image-mask representation",
+        "Semantic-to-instance transformation pipeline",
+        "Minimal manual annotation",
+        "Grayscale and CIELAB lightness channels",
+        "Rotation-based domain adaptation",
+        "YOLOv9 instance segmentation"
+      ],
+      "data": [
+        "Wheat head imagery with densely packed, self-occluded instances",
+        "Microsoft COCO for general-purpose validation"
+      ],
+      "results": [
+        "mAP@50 of 98.5% for wheat head instance segmentation",
+        "Over 12.6% mAP@50 improvement on Microsoft COCO"
+      ],
+      "applications": [
+        "Per-plant and per-organ counting for yield estimation",
+        "Automated plant health and growth monitoring",
+        "Instance segmentation in any densely packed, self-occluded domain"
+      ],
+      "keywords": [
+        "instance segmentation",
+        "GLMask",
+        "semi-self-supervised learning",
+        "semantic segmentation",
+        "dense object instances",
+        "self-occlusion",
+        "wheat head instance segmentation",
+        "Microsoft COCO",
+        "label-efficient learning",
+        "precision agriculture"
+      ],
+      "bibtex": "@misc{najafian2025semantictoinstance,\n  title         = {From Semantic To Instance: A Semi-Self-Supervised Learning Approach},\n  author        = {Najafian, Keyhan and Maleki, Farhad and Jin, Lingling and Stavness, Ian},\n  year          = {2025},\n  eprint        = {2506.16563},\n  archivePrefix = {arXiv},\n  primaryClass  = {cs.CV},\n  doi           = {10.48550/arXiv.2506.16563}\n}",
+      "repositories": [
+        {
+          "name": "glmask-semantic2instance",
+          "url": "https://github.com/USask-BINFO/glmask-semantic2instance",
+          "note": "Official GLMask implementation: grayscale, CIELAB lightness, and semantic mask channels, cut-and-paste synthesis, rotation-based domain adaptation, and YOLOv9 instance segmentation."
+        }
+      ]
+    },
+    {
+      "slug": "global-wheat-full-semantic-organ-segmentation-dataset",
+      "area": "precision-agriculture",
+      "title": "The Global Wheat Full Semantic Organ Segmentation (GWFSS) Dataset",
+      "shortTitle": "GWFSS dataset",
+      "authors": [
+        "Zijian Wang",
+        "Radek Zenkl",
+        "Latifa Greche",
+        "Benoit De Solan",
+        "Lucas Bernigaud Samatan",
+        "Safaa Ouahid",
+        "Andrea Visioni",
+        "Carlos A. Robles-Zazueta",
+        "Francisco Pinto",
+        "Ivan Perez-Olivera",
+        "Matthew P. Reynolds",
+        "Chen Zhu",
+        "Shouyang Liu",
+        "Marie-Pia D'argaignon",
+        "Raul Lopez-Lozano",
+        "Marie Weiss",
+        "Afef Marzougui",
+        "Lukas Roth",
+        "Sebastien Dandrifosse",
+        "Alexis Carlier",
+        "Benjamin Dumont",
+        "Benoit Mercatoris",
+        "Javier Fernandez",
+        "Scott Chapman",
+        "Keyhan Najafian",
+        "Ian Stavness",
+        "Haozhou Wang",
+        "Wei Guo",
+        "Nicolas Virlet",
+        "Malcolm J. Hawkesford",
+        "Zhi Chen",
+        "Etienne David",
+        "Joss Gillet",
+        "Kamran Irfan",
+        "Alexis Comar",
+        "Andreas Hund"
+      ],
+      "venue": "Plant Phenomics, volume 7, issue 3, article 100084",
+      "venueShort": "Plant Phenomics 2025",
+      "venueType": "journal",
+      "year": 2025,
+      "doi": "10.1016/j.plaphe.2025.100084",
+      "links": {
+        "paper": "https://doi.org/10.1016/j.plaphe.2025.100084",
+        "preprint": "https://doi.org/10.1101/2025.03.18.642594",
+        "dataset": "https://doi.org/10.3929/ethz-b-000734546"
+      },
+      "summary": "The Global Wheat Dataset Consortium's successor to GWHD. Where GWHD provided bounding boxes for wheat heads, GWFSS provides full semantic segmentation of leaves, stems, and spikes across all developmental stages, assembled from 11 institutions and many different imaging setups.",
+      "abstract": "Computer vision is increasingly used in farmers' fields and agricultural experiments to quantify important traits. Imaging setups with a sub-millimeter ground sampling distance enable the detection and tracking of plant features, including size, shape, and colour. Although today's AI-driven foundation models segment almost any object in an image, they still fail for complex plant canopies. To improve model performance, the global wheat dataset consortium assembled a diverse set of images from experiments around the globe. After the head detection dataset (GWHD), the new dataset targets a full semantic segmentation (GWFSS) of organs (leaves, stems and spikes) covering all developmental stages. Images were collected by 11 institutions using a wide range of imaging setups.",
+      "abstractTruncated": true,
+      "contributions": [
+        "Extends the Global Wheat Dataset Consortium benchmark from head detection to full organ-level semantic segmentation.",
+        "Covers leaves, stems, and spikes across all wheat developmental stages.",
+        "Aggregates imagery from 11 institutions with heterogeneous imaging setups, making domain diversity part of the benchmark.",
+        "Ships a labelled subset of 1,096 ground-truth images alongside a larger unlabelled set, released through the ETH Research Collection."
+      ],
+      "methods": [
+        "Multi-institutional dataset construction",
+        "Wheat organ semantic segmentation benchmark",
+        "High-throughput field phenotyping",
+        "Domain diversity analysis with UMAP"
+      ],
+      "data": [
+        "GWFSS_v1.0_full plus GWFSS_v1.0_labelled with 1,096 ground-truth labelled images",
+        "Images from 11 institutions across multiple countries and imaging setups",
+        "Hosted in the ETH Research Collection (doi:10.3929/ethz-b-000734546)"
+      ],
+      "applications": [
+        "Benchmarking segmentation foundation models on complex plant canopies",
+        "Trait extraction for wheat breeding and crop management",
+        "Cross-domain generalization studies in field phenomics"
+      ],
+      "keywords": [
+        "wheat organ segmentation",
+        "field phenomics",
+        "high-throughput phenotyping",
+        "breeding",
+        "GWFSS dataset",
+        "Global Wheat Dataset Consortium",
+        "semantic segmentation benchmark",
+        "foundation models",
+        "plant canopy segmentation"
+      ],
+      "bibtex": "@article{wang2025gwfss,\n  title   = {The Global Wheat Full Semantic Organ Segmentation (GWFSS) dataset},\n  author  = {Wang, Zijian and Zenkl, Radek and Greche, Latifa and De Solan, Benoit and Bernigaud Samatan, Lucas and Ouahid, Safaa and Visioni, Andrea and Robles-Zazueta, Carlos A. and Pinto, Francisco and Perez-Olivera, Ivan and Reynolds, Matthew P. and Zhu, Chen and Liu, Shouyang and D'argaignon, Marie-Pia and Lopez-Lozano, Raul and Weiss, Marie and Marzougui, Afef and Roth, Lukas and Dandrifosse, S{\\'e}bastien and Carlier, Alexis and Dumont, Benjamin and Mercatoris, Beno{\\^i}t and Fernandez, Javier and Chapman, Scott and Najafian, Keyhan and Stavness, Ian and Wang, Haozhou and Guo, Wei and Virlet, Nicolas and Hawkesford, Malcolm J. and Chen, Zhi and David, Etienne and Gillet, Joss and Irfan, Kamran and Comar, Alexis and Hund, Andreas},\n  journal = {Plant Phenomics},\n  volume  = {7},\n  number  = {3},\n  pages   = {100084},\n  year    = {2025},\n  doi     = {10.1016/j.plaphe.2025.100084}\n}"
+    },
+    {
+      "slug": "brain-metastasis-invasion-pattern-mri-machine-learning",
+      "area": "precision-health",
+      "title": "Machine learning prediction of brain metastasis invasion pattern on brain magnetic resonance imaging scans",
+      "shortTitle": "Brain metastasis invasion pattern from MRI",
+      "authors": [
+        "Keyhan Najafian",
+        "Benjamin Rehany",
+        "Alexander Nowakowski",
+        "Saba Ghazimoghadam",
+        "Kevin Pierre",
+        "Rita Zakarian",
+        "Tariq Al-Saadi",
+        "Caroline Reinhold",
+        "Abbas Babajani-Feremi",
+        "Joshua K. Wong",
+        "Marie-Christine Guiot",
+        "Marie-Constance Lacasse",
+        "Stephanie Lam",
+        "Peter M. Siegel",
+        "Kevin Petrecca",
+        "Matthew Dankner",
+        "Reza Forghani"
+      ],
+      "authorNote": "Keyhan Najafian and Benjamin Rehany contributed equally.",
+      "venue": "Neuro-Oncology Advances, volume 6, issue 1, article vdae200",
+      "venueShort": "Neuro-Oncology Advances 2024",
+      "venueType": "journal",
+      "year": 2024,
+      "doi": "10.1093/noajnl/vdae200",
+      "pmid": "39679176",
+      "links": {
+        "paper": "https://doi.org/10.1093/noajnl/vdae200",
+        "pdf": "https://academic.oup.com/noa/article-pdf/6/1/vdae200/61137647/vdae200.pdf",
+        "pubmed": "https://pubmed.ncbi.nlm.nih.gov/39679176/"
+      },
+      "license": "CC BY-NC 4.0",
+      "summary": "Brain metastasis invasion pattern is prognostic but can currently only be read from resected tissue. This study shows it can be predicted from preoperative MRI with 85% accuracy, using radiomic features from the peritumoral edema, in a task where expert neuroradiologists reach only 44 to 59%.",
+      "abstract": "Background. Brain metastasis invasion pattern (BMIP) is an emerging biomarker associated with recurrence-free and overall survival in patients, and differential response to therapy in preclinical models. Currently, BMIP can only be determined from the histopathological examination of surgical specimens, precluding its use as a biomarker prior to therapy initiation. The aim of this study was to investigate the potential of machine learning (ML) approaches to develop a noninvasive magnetic resonance imaging (MRI)-based biomarker for BMIP determination. Methods. From an initial cohort of 329 patients, a subset of 132 patients met the inclusion criteria for this retrospective study. We evaluated the ability of an expert neuroradiologist to reliably predict BMIP. Thereafter, the dataset was randomly divided into training/validation (80% of cases) and test subsets (20% of cases). The ground truth for BMIP was the histopathologic evaluation of resected specimens. Following MRI sequence co-registration, advanced feature extraction techniques deriving hand-crafted radiomic features with traditional ML classifiers and convolution-based deep learning (CDL) models were trained and evaluated. Different ML approaches were used individually or using ensembling techniques to determine the model with the best performance for BMIP prediction. Results. Expert evaluation of brain MRI scans could not reliably predict BMIP, with an accuracy of 44% to 59% depending on the semantic feature used. Among the different ML and CDL models evaluated, the best-performing model achieved an accuracy of 85% and an F1 score of 90%. Conclusions. ML approaches can effectively predict BMIP, representing a noninvasive MRI-based approach to guide the management of patients with brain metastases.",
+      "contributions": [
+        "First study to predict brain metastasis invasion pattern noninvasively from MRI using radiomics and machine learning.",
+        "Shows that conventional semantic imaging features read by an expert neuroradiologist do not reliably predict invasion pattern.",
+        "Finds that the peritumoral edema region on T2-weighted images, not the enhancing tumor itself, carries the most predictive signal.",
+        "Uses patient-wise splits, training-only feature selection, and image-level standardization across two scanners to guard against leakage and scanner bias."
+      ],
+      "methods": [
+        "Radiomics with PyRadiomics (107 hand-crafted features)",
+        "Support vector classifier, random forest, multi-layer perceptron",
+        "EfficientNet-B0/B1/B2 convolution-based deep learning",
+        "Two-level majority-vote ensembling",
+        "MRI sequence co-registration with ANTs",
+        "Variance filtering and chi-square feature selection",
+        "Manual volume-of-interest segmentation in 3D Slicer"
+      ],
+      "data": [
+        "329 screened patients, 132 eligible for machine learning analysis",
+        "Preoperative T2-weighted and post-contrast T1-weighted MRI acquired on 3.0 T Philips and 1.5 T GE Signa scanners",
+        "Histopathological invasion scoring by two blinded observers as ground truth",
+        "Source numerical data available on reasonable request; patient images cannot be shared for privacy reasons"
+      ],
+      "results": [
+        "Best ensemble model: 85% accuracy, 93% precision, 87% recall, 90% F1 score",
+        "Peritumoral edema features outperformed enhancing tumor features by roughly 18%",
+        "Expert neuroradiologist accuracy ranged from 44.2% to 59.0% across semantic features",
+        "Inter-observer agreement for histopathological scoring: 83.7%, Cohen's kappa 0.66"
+      ],
+      "applications": [
+        "Noninvasive patient stratification before surgery or radiosurgery",
+        "Surgical planning and stereotactic radiosurgery margin selection",
+        "Predictive biomarker development for emerging targeted therapies in brain metastases"
+      ],
+      "keywords": [
+        "brain metastasis",
+        "brain metastasis invasion pattern",
+        "BMIP",
+        "radiomics",
+        "machine learning",
+        "noninvasive biomarker",
+        "brain MRI",
+        "peritumoral edema",
+        "neuro-oncology",
+        "EfficientNet",
+        "ensemble learning",
+        "precision health",
+        "medical image analysis",
+        "patient stratification"
+      ],
+      "bibtex": "@article{najafian2024bmip,\n  title   = {Machine learning prediction of brain metastasis invasion pattern on brain magnetic resonance imaging scans},\n  author  = {Najafian, Keyhan and Rehany, Benjamin and Nowakowski, Alexander and Ghazimoghadam, Saba and Pierre, Kevin and Zakarian, Rita and Al-Saadi, Tariq and Reinhold, Caroline and Babajani-Feremi, Abbas and Wong, Joshua K. and Guiot, Marie-Christine and Lacasse, Marie-Constance and Lam, Stephanie and Siegel, Peter M. and Petrecca, Kevin and Dankner, Matthew and Forghani, Reza},\n  journal = {Neuro-Oncology Advances},\n  volume  = {6},\n  number  = {1},\n  pages   = {vdae200},\n  year    = {2024},\n  doi     = {10.1093/noajnl/vdae200}\n}"
+    }
+  ],
+  "datasets": [
+    {
+      "slug": "wheatseedbelt",
+      "name": "WheatSeedBelt",
+      "title": "WheatSeedBelt: single-kernel wheat imaging dataset with Fusarium damage annotations",
+      "description": "A high-resolution, large-scale dataset of 40,420 close-up top- and side-view single-kernel images covering 268 wheat varieties, annotated for kernel damage including Fusarium damaged kernels. Introduced to support image-based phenotyping of Fusarium head blight resistance where large-scale damage-annotated kernel data did not previously exist.",
+      "relatedPublication": "fusarium-damaged-kernel-detection-wheatseedbelt",
+      "keywords": [
+        "WheatSeedBelt",
+        "wheat kernel dataset",
+        "Fusarium damaged kernels",
+        "seed phenotyping",
+        "grain quality dataset"
+      ],
+      "repositoryUrl": "https://github.com/USask-BINFO/WheatSeedBelt"
+    },
+    {
+      "slug": "gwfss",
+      "name": "GWFSS",
+      "title": "GWFSS: Global Wheat Full Semantic Organ Segmentation dataset",
+      "description": "A multi-institutional benchmark for full semantic segmentation of wheat organs (leaves, stems, spikes) across all developmental stages, assembled by the Global Wheat Dataset Consortium from 11 institutions using a wide range of imaging setups. Version 1.0 includes 1,096 ground-truth labelled images alongside a larger unlabelled collection, distributed via the ETH Research Collection.",
+      "relatedPublication": "global-wheat-full-semantic-organ-segmentation-dataset",
+      "externalUrl": "https://doi.org/10.3929/ethz-b-000734546",
+      "keywords": [
+        "GWFSS",
+        "wheat organ segmentation dataset",
+        "field phenomics benchmark",
+        "Global Wheat Dataset Consortium",
+        "semantic segmentation dataset"
+      ]
+    }
+  ]
+}
