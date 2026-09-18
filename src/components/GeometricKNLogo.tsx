@@ -68,9 +68,9 @@ export const GeometricKNLogo: React.FC<GeometricKNLogoProps> = ({
         <path d="M 160 250 L 285 125" stroke="url(#kUpperDiagGrad)" strokeWidth="24" />
         <path d="M 160 250 L 270 360" stroke="url(#kLowerDiagGrad)" strokeWidth="24" />
 
-        {/* 3. N Left Pillar & Interlock Link */}
+        {/* 3. N Left Pillar */}
         <path
-          d="M 160 100 L 260 100 L 260 410"
+          d="M 260 100 L 260 410"
           stroke="#0F172A"
           strokeWidth="18"
           fill="none"
