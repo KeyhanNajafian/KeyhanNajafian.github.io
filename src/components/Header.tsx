@@ -73,6 +73,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenCv }) => {
 
         {/* Desktop Nav Items */}
         <nav className="hidden md:flex items-center gap-1 text-sm font-medium">
+          <a
+            href="/publications/"
+            className="px-3 py-1.5 rounded-md text-slate-600 hover:text-[#0F172A] hover:bg-slate-100/70 transition-colors"
+          >
+            All Publications
+          </a>
           {navLinks.map((item) => {
             const isActive = activeSection === item.id;
             return (
@@ -157,6 +163,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenCv }) => {
       {/* Mobile Drawer Navigation */}
       {mobileMenuOpen && (
         <div className="sm:hidden bg-[#F8FAFC] border-b border-slate-200 px-4 pt-2 pb-4 space-y-1 shadow-lg">
+          <a
+            href="/publications/"
+            className="block px-3 py-2.5 rounded-lg text-base font-semibold text-[#047857] hover:bg-emerald-50/60"
+          >
+            All Publications
+          </a>
           {navLinks.map((item) => (
             <a
               key={item.id}
