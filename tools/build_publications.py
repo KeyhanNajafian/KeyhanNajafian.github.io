@@ -57,7 +57,7 @@ h3{font-size:1rem;margin:1.5rem 0 .4rem;font-weight:700}
 p{margin:.65rem 0}
 .lede{font-size:1.02rem;color:var(--muted)}
 .meta{color:var(--muted);font-size:.9rem;margin:.35rem 0}
-.meta .me{font-weight:700;color:var(--ink);border-bottom:2px solid #10B981}
+.meta .me,.authors .me{font-weight:700;color:var(--ink);border-bottom:2px solid #10B981}
 .tags{display:flex;flex-wrap:wrap;gap:.4rem;margin:.9rem 0}
 .tag{font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:.2rem .55rem;
 border-radius:6px;background:#F1F5F9;border:1px solid var(--line);color:var(--muted)}
@@ -150,6 +150,35 @@ def jsonld(payload: Dict[str, Any]) -> str:
     """
     body = json.dumps(payload, ensure_ascii=False, indent=2)
     return f'<script type="application/ld+json">\n{body}\n</script>'
+
+
+def card_authors(authors: List[str], me: str) -> str:
+    """ Render a shortened author list that always includes the site owner.
+
+        Shows the first few authors, then elides to the owner when the owner falls
+        outside that opening group, so his name is visible on every card.
+
+        Args:
+            authors: Ordered author names.
+            me: Name to keep visible and emphasize.
+
+        Returns:
+            HTML fragment.
+    """
+    if not authors:
+        return ""
+
+    if len(authors) <= 4:
+        return author_html(authors, me)
+
+    if me in authors[:4]:
+        return f"{author_html(authors[:4], me)} et al."
+
+    if me in authors:
+        lead = author_html(authors[:3], me)
+        return f"{lead} &hellip; {author_html([me], me)} &hellip; et al."
+
+    return f"{author_html(authors[:4], me)} et al."
 
 
 def author_html(authors: List[str], me: str) -> str:
@@ -665,9 +694,7 @@ def dataset_card(
     """
     src = next(p for p in data["publications"] if p["slug"] == dset["relatedPublication"])
 
-    authors = author_html(src["authors"][:4], data["site"]["authorName"])
-    if len(src["authors"]) > 4:
-        authors += " et al."
+    authors = card_authors(src["authors"], data["site"]["authorName"])
 
     doi_line = ""
     if src.get("doi"):
@@ -711,8 +738,7 @@ def render_index(data: Dict[str, Any]) -> str:
         if pub["authors"]:
             authors_html = (
                 f'<p class="authors">'
-                f'{author_html(pub["authors"][:4], data["site"]["authorName"])}'
-                f'{" et al." if len(pub["authors"]) > 4 else ""}</p>'
+                f'{card_authors(pub["authors"], data["site"]["authorName"])}</p>'
             )
         else:
             authors_html = ""
@@ -733,8 +759,7 @@ def render_index(data: Dict[str, Any]) -> str:
             f'<article class="card">'
             f'<h3><a href="{base}/publications/{pub["slug"]}/">{esc(pub["title"])}</a></h3>'
             f'<p class="year">{esc(pub["venueShort"])} &middot; {esc(pub["venue"])}</p>'
-            f'<p class="authors">{author_html(pub["authors"][:4], data["site"]["authorName"])}'
-            f'{" et al." if len(pub["authors"]) > 4 else ""}</p>'
+            f'{authors_html}'
             f'<p>{esc(pub["summary"])}</p>'
             f'{doi_line}{repo_line}'
             f'</article>'
@@ -879,9 +904,7 @@ def render_dataset(dset: Dict[str, Any], data: Dict[str, Any]) -> str:
 
     tags = "".join(f'<span class="tag">{esc(k)}</span>' for k in dset["keywords"])
 
-    source_authors = author_html(pub["authors"][:4], data["site"]["authorName"])
-    if len(pub["authors"]) > 4:
-        source_authors += " et al."
+    source_authors = card_authors(pub["authors"], data["site"]["authorName"])
     source_meta = f'{source_authors} &middot; {esc(pub["venueShort"])}'
 
     facts = [("Introduced in", esc(pub["venue"])), ("Year", str(pub["year"]))]
