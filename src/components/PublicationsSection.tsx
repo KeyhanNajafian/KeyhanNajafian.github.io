@@ -163,21 +163,7 @@ export const PublicationsSection: React.FC = () => {
                   {/* Top metadata row */}
                   <div className="flex items-start justify-between gap-2 mb-2">
                     <span className="inline-block px-2.5 py-0.5 rounded-md bg-emerald-50 border border-emerald-200/70 text-[#047857] text-[11px] font-mono font-semibold">
-                      {pub.venue.includes('ECCV')
-                        ? 'ECCV'
-                        : pub.venue.includes('ICCV')
-                        ? 'ICCV'
-                        : pub.venue.includes('CVPR')
-                        ? 'CVPR'
-                        : pub.venue.includes('Journal of Imaging')
-                        ? 'J. Imaging'
-                        : pub.venue.includes('Plant Phenomics')
-                        ? 'Plant Phenomics'
-                        : pub.venue.includes('Neuro-Oncology')
-                        ? 'Neuro-Oncology'
-                        : pub.venue.includes('EPA')
-                        ? 'EPA'
-                        : pub.venue.slice(0, 18)}
+                      {pub.venueShort}
                     </span>
                     <span className="text-xs font-mono font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
                       {pub.year}
