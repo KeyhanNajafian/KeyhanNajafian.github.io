@@ -6,9 +6,9 @@
 <title>Using Deep Learning to Determine Kidney Function Decline in Patients with ADPKD | JASN 2023 | Keyhan Najafian</title>
 <meta name="description" content="Predicts which patients with autosomal dominant polycystic kidney disease will lose kidney function rapidly, by fusing MRI features with clinical variables rather than relying on height-adjusted total kidney volume alone.">
 <link rel="canonical" href="https://keyhannajafian.github.io/publications/kidney-function-decline-adpkd-deep-learning/">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
-<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="author" content="Keyhan Najafian">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Using Deep Learning to Determine Kidney Function Decline in Patients with ADPKD | JASN 2023 | Keyhan Najafian">
@@ -95,12 +95,27 @@ footer.site a{color:#CBD5E1}
 @media(max-width:640px){dl.facts{grid-template-columns:1fr}dl.facts dd{margin-bottom:.5rem}}
 </style>
 <meta name="citation_title" content="Using Deep Learning to Determine Kidney Function Decline in Patients with ADPKD">
+<meta name="citation_author" content="Hyun Bae Jang">
+<meta name="citation_author" content="Caroline Reinhold">
+<meta name="citation_author" content="Keyhan Najafian">
+<meta name="citation_author" content="Farhad Maleki">
+<meta name="citation_author" content="Ahsan Alam">
 <meta name="citation_publication_date" content="2023">
 <meta name="citation_date" content="2023">
-<meta name="citation_conference_title" content="Journal of the American Society of Nephrology, volume 34, issue 11S, page 406">
+<meta name="citation_conference_title" content="Journal of the American Society of Nephrology">
+<meta name="citation_volume" content="34">
+<meta name="citation_issue" content="11S">
+<meta name="citation_publisher" content="Wolters Kluwer">
+<meta name="citation_language" content="en">
 <meta name="citation_doi" content="10.1681/ASN.20233411S1406f">
+<meta name="citation_author_orcid" content="0000-0003-3050-8107">
 <meta name="citation_abstract_html_url" content="https://keyhannajafian.github.io/publications/kidney-function-decline-adpkd-deep-learning/">
 <meta name="DC.title" content="Using Deep Learning to Determine Kidney Function Decline in Patients with ADPKD">
+<meta name="DC.creator" content="Hyun Bae Jang">
+<meta name="DC.creator" content="Caroline Reinhold">
+<meta name="DC.creator" content="Keyhan Najafian">
+<meta name="DC.creator" content="Farhad Maleki">
+<meta name="DC.creator" content="Ahsan Alam">
 <meta name="DC.date" content="2023">
 <meta name="DC.type" content="Text">
 <meta name="DC.source" content="Journal of the American Society of Nephrology, volume 34, issue 11S, page 406">
@@ -126,6 +141,7 @@ footer.site a{color:#CBD5E1}
   "url": "https://keyhannajafian.github.io/publications/kidney-function-decline-adpkd-deep-learning/",
   "mainEntityOfPage": "https://keyhannajafian.github.io/publications/kidney-function-decline-adpkd-deep-learning/",
   "datePublished": "2023",
+  "dateModified": "2026-09-18",
   "inLanguage": "en",
   "abstract": "Autosomal dominant polycystic kidney disease (ADPKD) is associated with progressive kidney cyst growth, eventually leading to kidney failure in many patients. The current risk stratification tool uses height-adjusted total kidney volume (TKV) by age. However, it does not include clinical or other imaging features that may contribute to kidney function decline. In this study, we developed a deep learning classifier that integrates clinical and imaging features to predict rapid estimated GFR (eGFR) decline in patients with ADPKD. We included 120 patients with confirmed ADPKD with at least one MRI scan and at least 3 serial eGFR measures. An eGFR decline of 4 mL/min/1.73 m2 per year or greater was defined as rapid progression. We tripled the sample size by extracting the largest manually segmented 2D MRI slice and its two neighbouring slices for each patient. Pixel-level and spatial-level transformations were applied to the images to enhance our deep model's generalizability and robustness. The model consisted of three components: EfficientNet-b2, FuseNet, and a classifier, with a train:validation:test split of 63:17:20. The EfficientNet-b2 extracted 1000 features from each MRI slice. The FuseNet performed feature fusion on 15 clinically relevant features associated with ADPKD. The feature maps obtained from both models were concatenated and fed into the classifier. Weighted-average F1 and AUC scores and the confusion matrix were used to assess the model's performance.",
   "about": [
@@ -185,11 +201,35 @@ footer.site a{color:#CBD5E1}
   },
   "publisher": {
     "@type": "Organization",
-    "name": "Journal of the American Society of Nephrology, volume 34, issue 11S, page 406"
+    "name": "Wolters Kluwer"
   },
   "creativeWorkStatus": "Published",
   "citation": "Journal of the American Society of Nephrology, volume 34, issue 11S, page 406",
   "genre": "Precision Health",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Hyun Bae Jang"
+    },
+    {
+      "@type": "Person",
+      "name": "Caroline Reinhold"
+    },
+    {
+      "@type": "Person",
+      "name": "Keyhan Najafian",
+      "identifier": "https://orcid.org/0000-0003-3050-8107",
+      "sameAs": "https://orcid.org/0000-0003-3050-8107"
+    },
+    {
+      "@type": "Person",
+      "name": "Farhad Maleki"
+    },
+    {
+      "@type": "Person",
+      "name": "Ahsan Alam"
+    }
+  ],
   "identifier": [
     {
       "@type": "PropertyValue",
@@ -242,7 +282,7 @@ footer.site a{color:#CBD5E1}
 <article>
   <p><span class="tag area">Precision Health</span> <span class="year">JASN 2023</span></p>
   <h1>Using Deep Learning to Determine Kidney Function Decline in Patients with ADPKD</h1>
-  <p class="meta">Full author list to be added.</p>
+  <p class="meta">Hyun Bae Jang, Caroline Reinhold, <span class="me">Keyhan Najafian</span>, Farhad Maleki, Ahsan Alam</p>
   
   <p class="lede">Predicts which patients with autosomal dominant polycystic kidney disease will lose kidney function rapidly, by fusing MRI features with clinical variables rather than relying on height-adjusted total kidney volume alone.</p>
   <div class="links"><a class="primary" href="https://doi.org/10.1681/ASN.20233411S1406f" rel="noopener">Paper</a></div>
@@ -266,8 +306,9 @@ footer.site a{color:#CBD5E1}
   <div class="tags"><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">autosomal dominant polycystic kidney disease</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">ADPKD</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">kidney function decline</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">eGFR</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">kidney MRI</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">total kidney volume</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">deep learning</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">multimodal feature fusion</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">EfficientNet</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">risk stratification</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">nephrology</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">precision health</a></div>
 
   <h2>Cite this work</h2>
-  <pre class="cite">@article{najafian2023adpkd,
+  <pre class="cite">@article{jang2023adpkd,
   title   = {Using Deep Learning to Determine Kidney Function Decline in Patients with ADPKD},
+  author  = {Jang, Hyun Bae and Reinhold, Caroline and Najafian, Keyhan and Maleki, Farhad and Alam, Ahsan},
   journal = {Journal of the American Society of Nephrology},
   volume  = {34},
   number  = {11S},
