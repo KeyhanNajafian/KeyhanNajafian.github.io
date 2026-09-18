@@ -24,9 +24,7 @@ export const PublicationsSection: React.FC = () => {
   const categories = [
     { id: 'all', label: 'Chosen Publications' },
     { id: 'precision-ag', label: 'Precision Agriculture' },
-    { id: 'medical-imaging', label: 'Medical Imaging' },
-    { id: 'foundation-models', label: 'Foundation Models & Video' },
-    { id: 'systems', label: 'Systems & Architecture' },
+    { id: 'medical-imaging', label: 'Precision Health' },
   ];
 
   const filteredPublications = useMemo(() => {
