@@ -4,6 +4,7 @@ export interface Publication {
   title: string;
   authors: string[];
   venue: string;
+  venueShort: string;
   year: number;
   type: 'journal' | 'conference' | 'workshop' | 'preprint';
   area: 'precision-ag' | 'medical-imaging' | 'systems' | 'foundation-models';
