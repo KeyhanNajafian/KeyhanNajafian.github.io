@@ -5,7 +5,9 @@
     "authorAffiliation": "Vision Research Lab, Department of Computer Science, University of Calgary",
     "scholarUrl": "https://scholar.google.ca/citations?hl=en&user=3RI_XdQAAAAJ",
     "githubUrl": "https://github.com/KeyhanNajafian",
-    "linkedinUrl": "https://www.linkedin.com/in/keyhannajafian/"
+    "linkedinUrl": "https://www.linkedin.com/in/keyhannajafian/",
+    "orcid": "0000-0003-3050-8107",
+    "orcidUrl": "https://orcid.org/0000-0003-3050-8107"
   },
   "areas": [
     {
@@ -110,7 +112,8 @@
           "url": "https://github.com/KeyhanNajafian/ImageSimulatorPipeline",
           "note": "Cut-and-paste image synthesis pipeline: frame extraction from field video, object extraction from a segmented representative image, and composition of computationally annotated image-mask pairs."
         }
-      ]
+      ],
+      "publisher": "IEEE/CVF"
     },
     {
       "slug": "semi-self-supervised-segmentation-dense-patterns",
@@ -195,7 +198,10 @@
           "url": "https://github.com/USask-BINFO/glmask-semantic2instance",
           "note": "Official GLMask implementation: grayscale, CIELAB lightness, and semantic mask channels, cut-and-paste synthesis, rotation-based domain adaptation, and YOLOv9 instance segmentation."
         }
-      ]
+      ],
+      "volume": "5",
+      "publisher": "American Association for the Advancement of Science",
+      "issn": "2643-6515"
     },
     {
       "slug": "fusarium-damaged-kernel-detection-wheatseedbelt",
@@ -273,7 +279,8 @@
           "url": "https://github.com/USask-BINFO/WheatSeedBelt",
           "note": "Image processing pipeline for the WheatSeedBelt dataset: .npy conversion, kernel segmentation, and region-of-interest extraction."
         }
-      ]
+      ],
+      "publisher": "IEEE"
     },
     {
       "slug": "efficient-wheat-head-segmentation-generative",
@@ -331,7 +338,11 @@
         "semantic segmentation",
         "precision agriculture"
       ],
-      "bibtex": "@article{myers2024efficient,\n  title     = {Efficient Wheat Head Segmentation with Minimal Annotation: A Generative Approach},\n  author    = {Myers, Jaden and Najafian, Keyhan and Maleki, Farhad and Ovens, Katie},\n  journal   = {Journal of Imaging},\n  volume    = {10},\n  number    = {7},\n  pages     = {152},\n  year      = {2024},\n  doi       = {10.3390/jimaging10070152}\n}"
+      "bibtex": "@article{myers2024efficient,\n  title     = {Efficient Wheat Head Segmentation with Minimal Annotation: A Generative Approach},\n  author    = {Myers, Jaden and Najafian, Keyhan and Maleki, Farhad and Ovens, Katie},\n  journal   = {Journal of Imaging},\n  volume    = {10},\n  number    = {7},\n  pages     = {152},\n  year      = {2024},\n  doi       = {10.3390/jimaging10070152}\n}",
+      "volume": "10",
+      "issue": "7",
+      "publisher": "MDPI",
+      "issn": "2313-433X"
     },
     {
       "slug": "synthset-diffusion-semantic-segmentation",
@@ -399,7 +410,9 @@
           "url": "https://github.com/VisionResearchLab/SynthSet",
           "note": "Pipeline package for the dual diffusion synthesis method, built on the ClasSeg pipeline with super-resolution and unstable-diffusion extensions."
         }
-      ]
+      ],
+      "volume": "15625",
+      "publisher": "Springer"
     },
     {
       "slug": "wheat-head-segmentation-l-systems-game-engines",
@@ -461,7 +474,9 @@
         "domain adaptation",
         "precision agriculture"
       ],
-      "bibtex": "@inproceedings{beheshtifard2024beyond,\n  title     = {Beyond Annotations: Efficient Wheat Head Segmentation Using L-Systems, Game Engines, and Student-Teacher Models},\n  author    = {Beheshtifard, Hosein and Mickelson, Elijah and Najafian, Keyhan and Maleki, Farhad},\n  booktitle = {Computer Vision -- ECCV 2024 Workshops},\n  series    = {Lecture Notes in Computer Science},\n  volume    = {15625},\n  pages     = {319--334},\n  year      = {2024},\n  publisher = {Springer},\n  doi       = {10.1007/978-3-031-91835-3_21}\n}"
+      "bibtex": "@inproceedings{beheshtifard2024beyond,\n  title     = {Beyond Annotations: Efficient Wheat Head Segmentation Using L-Systems, Game Engines, and Student-Teacher Models},\n  author    = {Beheshtifard, Hosein and Mickelson, Elijah and Najafian, Keyhan and Maleki, Farhad},\n  booktitle = {Computer Vision -- ECCV 2024 Workshops},\n  series    = {Lecture Notes in Computer Science},\n  volume    = {15625},\n  pages     = {319--334},\n  year      = {2024},\n  publisher = {Springer},\n  doi       = {10.1007/978-3-031-91835-3_21}\n}",
+      "volume": "15625",
+      "publisher": "Springer"
     },
     {
       "slug": "dense-pattern-video-object-segmentation",
@@ -536,7 +551,8 @@
           "url": "https://github.com/USask-BINFO/DVOS",
           "note": "Official implementation: multi-task UNet-style architecture with diffusion and spatiotemporal attention, trained on synthetic video and pseudo-labeled real video."
         }
-      ]
+      ],
+      "publisher": "IEEE/CVF"
     },
     {
       "slug": "semantic-to-instance-segmentation-glmask",
@@ -609,7 +625,9 @@
           "url": "https://github.com/USask-BINFO/glmask-semantic2instance",
           "note": "Official GLMask implementation: grayscale, CIELAB lightness, and semantic mask channels, cut-and-paste synthesis, rotation-based domain adaptation, and YOLOv9 instance segmentation."
         }
-      ]
+      ],
+      "publisher": "arXiv",
+      "arxivId": "2506.16563"
     },
     {
       "slug": "global-wheat-full-semantic-organ-segmentation-dataset",
@@ -700,7 +718,11 @@
         "foundation models",
         "plant canopy segmentation"
       ],
-      "bibtex": "@article{wang2025gwfss,\n  title   = {The Global Wheat Full Semantic Organ Segmentation (GWFSS) dataset},\n  author  = {Wang, Zijian and Zenkl, Radek and Greche, Latifa and De Solan, Benoit and Bernigaud Samatan, Lucas and Ouahid, Safaa and Visioni, Andrea and Robles-Zazueta, Carlos A. and Pinto, Francisco and Perez-Olivera, Ivan and Reynolds, Matthew P. and Zhu, Chen and Liu, Shouyang and D'argaignon, Marie-Pia and Lopez-Lozano, Raul and Weiss, Marie and Marzougui, Afef and Roth, Lukas and Dandrifosse, S{\\'e}bastien and Carlier, Alexis and Dumont, Benjamin and Mercatoris, Beno{\\^i}t and Fernandez, Javier and Chapman, Scott and Najafian, Keyhan and Stavness, Ian and Wang, Haozhou and Guo, Wei and Virlet, Nicolas and Hawkesford, Malcolm J. and Chen, Zhi and David, Etienne and Gillet, Joss and Irfan, Kamran and Comar, Alexis and Hund, Andreas},\n  journal = {Plant Phenomics},\n  volume  = {7},\n  number  = {3},\n  pages   = {100084},\n  year    = {2025},\n  doi     = {10.1016/j.plaphe.2025.100084}\n}"
+      "bibtex": "@article{wang2025gwfss,\n  title   = {The Global Wheat Full Semantic Organ Segmentation (GWFSS) dataset},\n  author  = {Wang, Zijian and Zenkl, Radek and Greche, Latifa and De Solan, Benoit and Bernigaud Samatan, Lucas and Ouahid, Safaa and Visioni, Andrea and Robles-Zazueta, Carlos A. and Pinto, Francisco and Perez-Olivera, Ivan and Reynolds, Matthew P. and Zhu, Chen and Liu, Shouyang and D'argaignon, Marie-Pia and Lopez-Lozano, Raul and Weiss, Marie and Marzougui, Afef and Roth, Lukas and Dandrifosse, S{\\'e}bastien and Carlier, Alexis and Dumont, Benjamin and Mercatoris, Beno{\\^i}t and Fernandez, Javier and Chapman, Scott and Najafian, Keyhan and Stavness, Ian and Wang, Haozhou and Guo, Wei and Virlet, Nicolas and Hawkesford, Malcolm J. and Chen, Zhi and David, Etienne and Gillet, Joss and Irfan, Kamran and Comar, Alexis and Hund, Andreas},\n  journal = {Plant Phenomics},\n  volume  = {7},\n  number  = {3},\n  pages   = {100084},\n  year    = {2025},\n  doi     = {10.1016/j.plaphe.2025.100084}\n}",
+      "volume": "7",
+      "issue": "3",
+      "publisher": "Elsevier",
+      "issn": "2643-6515"
     },
     {
       "slug": "brain-metastasis-invasion-pattern-mri-machine-learning",
@@ -789,7 +811,11 @@
         "medical image analysis",
         "patient stratification"
       ],
-      "bibtex": "@article{najafian2024bmip,\n  title   = {Machine learning prediction of brain metastasis invasion pattern on brain magnetic resonance imaging scans},\n  author  = {Najafian, Keyhan and Rehany, Benjamin and Nowakowski, Alexander and Ghazimoghadam, Saba and Pierre, Kevin and Zakarian, Rita and Al-Saadi, Tariq and Reinhold, Caroline and Babajani-Feremi, Abbas and Wong, Joshua K. and Guiot, Marie-Christine and Lacasse, Marie-Constance and Lam, Stephanie and Siegel, Peter M. and Petrecca, Kevin and Dankner, Matthew and Forghani, Reza},\n  journal = {Neuro-Oncology Advances},\n  volume  = {6},\n  number  = {1},\n  pages   = {vdae200},\n  year    = {2024},\n  doi     = {10.1093/noajnl/vdae200}\n}"
+      "bibtex": "@article{najafian2024bmip,\n  title   = {Machine learning prediction of brain metastasis invasion pattern on brain magnetic resonance imaging scans},\n  author  = {Najafian, Keyhan and Rehany, Benjamin and Nowakowski, Alexander and Ghazimoghadam, Saba and Pierre, Kevin and Zakarian, Rita and Al-Saadi, Tariq and Reinhold, Caroline and Babajani-Feremi, Abbas and Wong, Joshua K. and Guiot, Marie-Christine and Lacasse, Marie-Constance and Lam, Stephanie and Siegel, Peter M. and Petrecca, Kevin and Dankner, Matthew and Forghani, Reza},\n  journal = {Neuro-Oncology Advances},\n  volume  = {6},\n  number  = {1},\n  pages   = {vdae200},\n  year    = {2024},\n  doi     = {10.1093/noajnl/vdae200}\n}",
+      "volume": "6",
+      "issue": "1",
+      "publisher": "Oxford University Press",
+      "issn": "2632-2498"
     },
     {
       "slug": "celiac-disease-diagnosis-histopathology-deep-learning",
@@ -864,7 +890,9 @@
         "intestinal biopsy",
         "villous atrophy"
       ],
-      "bibtex": "@inproceedings{maleki2021celiac,\n  title     = {A Deep Learning-Based Pipeline for Celiac Disease Diagnosis Using Histopathological Images},\n  author    = {Maleki, Farhad and Cote, Kevin and Najafian, Keyhan and Ovens, Katie and Miao, Yan and Zakarian, Rita and Reinhold, Caroline and Forghani, Reza and Savadjiev, Peter and Gao, Zu-hua},\n  booktitle = {Computer Analysis of Images and Patterns (CAIP)},\n  series    = {Lecture Notes in Computer Science},\n  volume    = {13052},\n  pages     = {206--214},\n  year      = {2021},\n  publisher = {Springer},\n  doi       = {10.1007/978-3-030-89128-2_20}\n}"
+      "bibtex": "@inproceedings{maleki2021celiac,\n  title     = {A Deep Learning-Based Pipeline for Celiac Disease Diagnosis Using Histopathological Images},\n  author    = {Maleki, Farhad and Cote, Kevin and Najafian, Keyhan and Ovens, Katie and Miao, Yan and Zakarian, Rita and Reinhold, Caroline and Forghani, Reza and Savadjiev, Peter and Gao, Zu-hua},\n  booktitle = {Computer Analysis of Images and Patterns (CAIP)},\n  series    = {Lecture Notes in Computer Science},\n  volume    = {13052},\n  pages     = {206--214},\n  year      = {2021},\n  publisher = {Springer},\n  doi       = {10.1007/978-3-030-89128-2_20}\n}",
+      "volume": "13052",
+      "publisher": "Springer"
     },
     {
       "slug": "overview-of-machine-learning-fundamentals-classic-approaches",
@@ -929,15 +957,24 @@
         "neuroimaging",
         "radiology"
       ],
-      "bibtex": "@article{maleki2020overview,\n  title   = {Overview of Machine Learning Part 1: Fundamentals and Classic Approaches},\n  author  = {Maleki, Farhad and Ovens, Katie and Najafian, Keyhan and Forghani, Behzad and Reinhold, Caroline and Forghani, Reza},\n  journal = {Neuroimaging Clinics of North America},\n  volume  = {30},\n  number  = {4},\n  pages   = {e17--e32},\n  year    = {2020},\n  doi     = {10.1016/j.nic.2020.08.007}\n}"
+      "bibtex": "@article{maleki2020overview,\n  title   = {Overview of Machine Learning Part 1: Fundamentals and Classic Approaches},\n  author  = {Maleki, Farhad and Ovens, Katie and Najafian, Keyhan and Forghani, Behzad and Reinhold, Caroline and Forghani, Reza},\n  journal = {Neuroimaging Clinics of North America},\n  volume  = {30},\n  number  = {4},\n  pages   = {e17--e32},\n  year    = {2020},\n  doi     = {10.1016/j.nic.2020.08.007}\n}",
+      "volume": "30",
+      "issue": "4",
+      "publisher": "Elsevier",
+      "issn": "1052-5149"
     },
     {
       "slug": "kidney-function-decline-adpkd-deep-learning",
       "area": "precision-health",
       "title": "Using Deep Learning to Determine Kidney Function Decline in Patients with ADPKD",
       "shortTitle": "Kidney function decline in ADPKD",
-      "authors": [],
-      "authorsPending": true,
+      "authors": [
+        "Hyun Bae Jang",
+        "Caroline Reinhold",
+        "Keyhan Najafian",
+        "Farhad Maleki",
+        "Ahsan Alam"
+      ],
       "venue": "Journal of the American Society of Nephrology, volume 34, issue 11S, page 406",
       "venueShort": "JASN 2023",
       "venueType": "conference",
@@ -986,7 +1023,10 @@
         "nephrology",
         "precision health"
       ],
-      "bibtex": "@article{najafian2023adpkd,\n  title   = {Using Deep Learning to Determine Kidney Function Decline in Patients with ADPKD},\n  journal = {Journal of the American Society of Nephrology},\n  volume  = {34},\n  number  = {11S},\n  pages   = {406},\n  year    = {2023},\n  doi     = {10.1681/ASN.20233411S1406f}\n}"
+      "bibtex": "@article{jang2023adpkd,\n  title   = {Using Deep Learning to Determine Kidney Function Decline in Patients with ADPKD},\n  author  = {Jang, Hyun Bae and Reinhold, Caroline and Najafian, Keyhan and Maleki, Farhad and Alam, Ahsan},\n  journal = {Journal of the American Society of Nephrology},\n  volume  = {34},\n  number  = {11S},\n  pages   = {406},\n  year    = {2023},\n  doi     = {10.1681/ASN.20233411S1406f}\n}",
+      "volume": "34",
+      "issue": "11S",
+      "publisher": "Wolters Kluwer"
     },
     {
       "slug": "predicting-phenotypes-novel-genomic-markers-deep-learning",
@@ -1061,7 +1101,10 @@
           "note": "Keras implementation of the 1D convolutional genomic selection model, with the marker encoding and cross-validation pipeline."
         }
       ],
-      "bibtex": "@article{sehrawat2023predicting,\n  title   = {Predicting phenotypes from novel genomic markers using deep learning},\n  author  = {Sehrawat, Shivani and Najafian, Keyhan and Jin, Lingling},\n  journal = {Bioinformatics Advances},\n  volume  = {3},\n  number  = {1},\n  pages   = {vbad028},\n  year    = {2023},\n  doi     = {10.1093/bioadv/vbad028}\n}"
+      "bibtex": "@article{sehrawat2023predicting,\n  title   = {Predicting phenotypes from novel genomic markers using deep learning},\n  author  = {Sehrawat, Shivani and Najafian, Keyhan and Jin, Lingling},\n  journal = {Bioinformatics Advances},\n  volume  = {3},\n  number  = {1},\n  pages   = {vbad028},\n  year    = {2023},\n  doi     = {10.1093/bioadv/vbad028}\n}",
+      "volume": "3",
+      "issue": "1",
+      "publisher": "Oxford University Press"
     },
     {
       "slug": "oppia-nitens-integument-colour-soil-toxicity",
@@ -1129,7 +1172,9 @@
         "environmental remediation",
         "soil science"
       ],
-      "bibtex": "@article{jegede2023integument,\n  title   = {Integument colour change: Tracking delayed growth of Oppia nitens as a sub-lethal indicator of soil toxicity},\n  author  = {Jegede, Olukayode O. and Fajana, Hamzat O. and Adedokun, Adedamola and Najafian, Keyhan and Jin, Lingling and Stavness, Ian and Siciliano, Steven D.},\n  journal = {Environmental Pollution},\n  volume  = {339},\n  pages   = {122772},\n  year    = {2023},\n  doi     = {10.1016/j.envpol.2023.122772}\n}"
+      "bibtex": "@article{jegede2023integument,\n  title   = {Integument colour change: Tracking delayed growth of Oppia nitens as a sub-lethal indicator of soil toxicity},\n  author  = {Jegede, Olukayode O. and Fajana, Hamzat O. and Adedokun, Adedamola and Najafian, Keyhan and Jin, Lingling and Stavness, Ian and Siciliano, Steven D.},\n  journal = {Environmental Pollution},\n  volume  = {339},\n  pages   = {122772},\n  year    = {2023},\n  doi     = {10.1016/j.envpol.2023.122772}\n}",
+      "volume": "339",
+      "publisher": "Elsevier"
     }
   ],
   "datasets": [

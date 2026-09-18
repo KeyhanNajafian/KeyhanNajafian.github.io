@@ -6,9 +6,9 @@
 <title>Semi-Self-Supervised Learning for Semantic Segmentation in Images with Dense Patterns | Plant Phenomics 2023 | Keyhan Najafian</title>
 <meta name="description" content="Extends the synthesis-plus-domain-adaptation idea from detection to pixel-level segmentation. Two annotated images and one short video clip are enough to train a customized U-Net that reaches a Dice score of 0.89 internally and generalizes to wheat fields from 18 domains across five countries.">
 <link rel="canonical" href="https://keyhannajafian.github.io/publications/semi-self-supervised-segmentation-dense-patterns/">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
-<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="author" content="Keyhan Najafian">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Semi-Self-Supervised Learning for Semantic Segmentation in Images with Dense Patterns | Plant Phenomics 2023 | Keyhan Najafian">
@@ -105,8 +105,13 @@ footer.site a{color:#CBD5E1}
 <meta name="citation_author" content="Farhad Maleki">
 <meta name="citation_publication_date" content="2023">
 <meta name="citation_date" content="2023">
-<meta name="citation_journal_title" content="Plant Phenomics, volume 5, article 0025">
+<meta name="citation_journal_title" content="Plant Phenomics">
+<meta name="citation_volume" content="5">
+<meta name="citation_issn" content="2643-6515">
+<meta name="citation_publisher" content="American Association for the Advancement of Science">
+<meta name="citation_language" content="en">
 <meta name="citation_doi" content="10.34133/plantphenomics.0025">
+<meta name="citation_author_orcid" content="0000-0003-3050-8107">
 <meta name="citation_abstract_html_url" content="https://keyhannajafian.github.io/publications/semi-self-supervised-segmentation-dense-patterns/">
 <meta name="DC.title" content="Semi-Self-Supervised Learning for Semantic Segmentation in Images with Dense Patterns">
 <meta name="DC.creator" content="Keyhan Najafian">
@@ -141,6 +146,7 @@ footer.site a{color:#CBD5E1}
   "url": "https://keyhannajafian.github.io/publications/semi-self-supervised-segmentation-dense-patterns/",
   "mainEntityOfPage": "https://keyhannajafian.github.io/publications/semi-self-supervised-segmentation-dense-patterns/",
   "datePublished": "2023",
+  "dateModified": "2026-09-18",
   "inLanguage": "en",
   "abstract": "Deep learning has shown potential in domains with large-scale annotated datasets. However, manual annotation is expensive, time-consuming, and tedious. Pixel-level annotations are particularly costly for semantic segmentation in images with dense irregular patterns of object instances, such as in plant images. In this work, we propose a method for developing high-performing deep learning models for semantic segmentation of such images utilizing little manual annotation. As a use case, we focus on wheat head segmentation. We synthesize a computationally annotated dataset - using a few annotated images, a short unannotated video clip of a wheat field, and several video clips with no wheat - to train a customized U-Net model. Considering the distribution shift between the synthesized and real images, we apply three domain adaptation steps to gradually bridge the domain gap. Only using two annotated images, we achieved a Dice score of 0.89 on the internal test set. When further evaluated on a diverse external dataset collected from 18 different domains across five countries, this model achieved a Dice score of 0.73.",
   "about": [
@@ -191,12 +197,17 @@ footer.site a{color:#CBD5E1}
   ],
   "keywords": "semantic segmentation, dense patterns, wheat head segmentation, semi-self-supervised learning, domain adaptation, U-Net, synthetic data, label-efficient deep learning, plant phenomics, precision agriculture, generalization across domains",
   "isPartOf": {
-    "@type": "Periodical",
-    "name": "Plant Phenomics, volume 5, article 0025"
+    "@type": "PublicationVolume",
+    "volumeNumber": "5",
+    "isPartOf": {
+      "@type": "Periodical",
+      "name": "Plant Phenomics, volume 5, article 0025",
+      "issn": "2643-6515"
+    }
   },
   "publisher": {
     "@type": "Organization",
-    "name": "Plant Phenomics, volume 5, article 0025"
+    "name": "American Association for the Advancement of Science"
   },
   "creativeWorkStatus": "Published",
   "citation": "Plant Phenomics, volume 5, article 0025",
@@ -204,7 +215,9 @@ footer.site a{color:#CBD5E1}
   "author": [
     {
       "@type": "Person",
-      "name": "Keyhan Najafian"
+      "name": "Keyhan Najafian",
+      "identifier": "https://orcid.org/0000-0003-3050-8107",
+      "sameAs": "https://orcid.org/0000-0003-3050-8107"
     },
     {
       "@type": "Person",
@@ -244,6 +257,7 @@ footer.site a{color:#CBD5E1}
   ],
   "sameAs": "https://doi.org/10.34133/plantphenomics.0025",
   "license": "CC BY 4.0",
+  "isAccessibleForFree": true,
   "codeRepository": [
     "https://github.com/KeyhanNajafian/ImageSimulatorPipeline",
     "https://github.com/USask-BINFO/glmask-semantic2instance"

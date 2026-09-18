@@ -19,6 +19,7 @@ DATA_PATH = os.path.join(ROOT, "data", "publications.json")
 OUT_ROOT = os.path.join(ROOT, "public")
 
 TODAY = date.today().isoformat()
+ORCID = ""
 
 
 CSS = """
@@ -212,9 +213,9 @@ def page(
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(description)}">
 <link rel="canonical" href="{canonical}">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
-<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="author" content="Keyhan Najafian">
 <meta property="og:type" content="{og_type}">
 <meta property="og:title" content="{esc(title)}">
@@ -309,10 +310,11 @@ def citation_tags(pub: Dict[str, Any], base: str) -> str:
     lines.append(f'<meta name="citation_publication_date" content="{pub["year"]}">')
     lines.append(f'<meta name="citation_date" content="{pub["year"]}">')
 
+    venue_name = pub["venue"].split(",")[0].strip()
     if pub["venueType"] == "journal":
-        lines.append(f'<meta name="citation_journal_title" content="{esc(pub["venue"])}">')
+        lines.append(f'<meta name="citation_journal_title" content="{esc(venue_name)}">')
     elif pub["venueType"] == "conference":
-        lines.append(f'<meta name="citation_conference_title" content="{esc(pub["venue"])}">')
+        lines.append(f'<meta name="citation_conference_title" content="{esc(venue_name)}">')
     else:
         lines.append(f'<meta name="citation_technical_report_institution" content="arXiv">')
 
@@ -321,6 +323,24 @@ def citation_tags(pub: Dict[str, Any], base: str) -> str:
         lines.append(f'<meta name="citation_firstpage" content="{esc(start)}">')
         if end:
             lines.append(f'<meta name="citation_lastpage" content="{esc(end)}">')
+
+    if pub.get("volume"):
+        lines.append(f'<meta name="citation_volume" content="{esc(pub["volume"])}">')
+
+    if pub.get("issue"):
+        lines.append(f'<meta name="citation_issue" content="{esc(pub["issue"])}">')
+
+    if pub.get("issn"):
+        lines.append(f'<meta name="citation_issn" content="{esc(pub["issn"])}">')
+
+
+    if pub.get("publisher"):
+        lines.append(f'<meta name="citation_publisher" content="{esc(pub["publisher"])}">')
+
+    if pub.get("arxivId"):
+        lines.append(f'<meta name="citation_arxiv_id" content="{esc(pub["arxivId"])}">')
+
+    lines.append('<meta name="citation_language" content="en">')
 
     if pub.get("doi"):
         lines.append(f'<meta name="citation_doi" content="{esc(pub["doi"])}">')
@@ -331,6 +351,9 @@ def citation_tags(pub: Dict[str, Any], base: str) -> str:
     pdf_url = pub["links"].get("pdf") or pub["links"].get("paper")
     if pdf_url and pdf_url.lower().endswith(".pdf"):
         lines.append(f'<meta name="citation_pdf_url" content="{esc(pdf_url)}">')
+
+    if ORCID and any(n == "Keyhan Najafian" for n in pub["authors"]):
+        lines.append(f'<meta name="citation_author_orcid" content="{ORCID}">')
 
     lines.append(
         f'<meta name="citation_abstract_html_url" '
@@ -350,6 +373,60 @@ def citation_tags(pub: Dict[str, Any], base: str) -> str:
         lines.append(f'<meta name="DC.subject" content="{esc(term)}">')
 
     return "\n".join(lines)
+
+
+def periodical_ld(pub: Dict[str, Any]) -> Dict[str, Any]:
+    """ Describe the containing venue, including volume, issue, and ISSN where known.
+
+        Args:
+            pub: Publication record.
+
+        Returns:
+            JSON-LD mapping for isPartOf.
+    """
+    if pub["venueType"] != "journal":
+        return {"@type": "PublicationEvent", "name": pub["venue"]}
+
+    periodical: Dict[str, Any] = {"@type": "Periodical", "name": pub["venue"]}
+    if pub.get("issn"):
+        periodical["issn"] = pub["issn"]
+
+    part: Dict[str, Any] = periodical
+    if pub.get("volume"):
+        part = {
+            "@type": "PublicationVolume",
+            "volumeNumber": pub["volume"],
+            "isPartOf": periodical,
+        }
+
+    if pub.get("issue"):
+        part = {
+            "@type": "PublicationIssue",
+            "issueNumber": pub["issue"],
+            "isPartOf": part,
+        }
+
+    return part
+
+
+def author_ld(name: str) -> Dict[str, Any]:
+    """ Build a Person entry, attaching the ORCID identifier for the site owner.
+
+        Args:
+            name: Author name as published.
+
+        Returns:
+            JSON-LD Person mapping.
+    """
+    if name == "Keyhan Najafian" and ORCID:
+        return {
+            "@type": "Person",
+            "name": name,
+            "identifier": f"https://orcid.org/{ORCID}",
+            "sameAs": f"https://orcid.org/{ORCID}",
+        }
+
+    return {"@type": "Person", "name": name}
 
 
 def article_ld(pub: Dict[str, Any], base: str, area_name: str) -> Dict[str, Any]:
@@ -372,23 +449,23 @@ def article_ld(pub: Dict[str, Any], base: str, area_name: str) -> Dict[str, Any]
         "url": url,
         "mainEntityOfPage": url,
         "datePublished": str(pub["year"]),
+        "dateModified": TODAY,
         "inLanguage": "en",
         "abstract": pub["abstract"],
 
         "about": [{"@type": "Thing", "name": term} for term in pub["keywords"][:12]],
         "keywords": ", ".join(pub["keywords"]),
-        "isPartOf": {
-            "@type": "Periodical" if pub["venueType"] == "journal" else "PublicationEvent",
-            "name": pub["venue"],
-        },
-        "publisher": {"@type": "Organization", "name": pub["venue"]},
+        "isPartOf": periodical_ld(pub),
+        "publisher": {"@type": "Organization",
+                      "name": pub.get("publisher") or pub["venue"]},
+        "dateModified": TODAY,
         "creativeWorkStatus": "Published" if pub["venueType"] != "preprint" else "Preprint",
         "citation": pub["venue"],
         "genre": area_name,
     }
 
     if pub["authors"]:
-        data["author"] = [{"@type": "Person", "name": name} for name in pub["authors"]]
+        data["author"] = [author_ld(name) for name in pub["authors"]]
 
     if pub.get("doi"):
         data["identifier"] = [
@@ -398,6 +475,7 @@ def article_ld(pub: Dict[str, Any], base: str, area_name: str) -> Dict[str, Any]
 
     if pub.get("license"):
         data["license"] = pub["license"]
+        data["isAccessibleForFree"] = True
 
     repos = pub.get("repositories") or []
     if repos:
@@ -709,11 +787,17 @@ behind it, a citation, and links to code where the repository is public.</p>
             "plant phenotyping", "medical image analysis", "radiomics", "semantic segmentation",
         ],
         "sameAs": [
-            data["site"]["scholarUrl"],
-            data["site"]["githubUrl"],
-            data["site"]["linkedinUrl"],
+            u for u in [
+                data["site"].get("orcidUrl"),
+                data["site"]["scholarUrl"],
+                data["site"]["githubUrl"],
+                data["site"]["linkedinUrl"],
+            ] if u
         ],
     }
+
+    if data["site"].get("orcidUrl"):
+        person["identifier"] = data["site"]["orcidUrl"]
 
     extra_head = "\n".join([jsonld(ld), jsonld(person), jsonld(breadcrumb_ld(trail))])
     description = ("Publications by Keyhan Najafian on label-efficient computer vision, in two "
@@ -815,6 +899,9 @@ def build() -> List[str]:
     """
     with open(DATA_PATH, encoding="utf-8") as handle:
         data = json.load(handle)
+
+    global ORCID
+    ORCID = data["site"].get("orcid", "")
 
     base = data["site"]["baseUrl"]
     urls: List[str] = [f"{base}/", f"{base}/publications/"]

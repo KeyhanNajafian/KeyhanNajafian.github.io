@@ -6,9 +6,9 @@
 <title>Predicting phenotypes from novel genomic markers using deep learning | Bioinformatics Advances 2023 | Keyhan Najafian</title>
 <meta name="description" content="Genomic selection usually runs on SNP markers. This work shows that structural variants and transposable elements predict crop phenotypes better, using NovGMDeep, a 1D convolutional network evaluated on Arabidopsis thaliana and Oryza sativa.">
 <link rel="canonical" href="https://keyhannajafian.github.io/publications/predicting-phenotypes-novel-genomic-markers-deep-learning/">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
-<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="author" content="Keyhan Najafian">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Predicting phenotypes from novel genomic markers using deep learning | Bioinformatics Advances 2023 | Keyhan Najafian">
@@ -100,8 +100,13 @@ footer.site a{color:#CBD5E1}
 <meta name="citation_author" content="Lingling Jin">
 <meta name="citation_publication_date" content="2023">
 <meta name="citation_date" content="2023">
-<meta name="citation_journal_title" content="Bioinformatics Advances, volume 3, issue 1, article vbad028">
+<meta name="citation_journal_title" content="Bioinformatics Advances">
+<meta name="citation_volume" content="3">
+<meta name="citation_issue" content="1">
+<meta name="citation_publisher" content="Oxford University Press">
+<meta name="citation_language" content="en">
 <meta name="citation_doi" content="10.1093/bioadv/vbad028">
+<meta name="citation_author_orcid" content="0000-0003-3050-8107">
 <meta name="citation_abstract_html_url" content="https://keyhannajafian.github.io/publications/predicting-phenotypes-novel-genomic-markers-deep-learning/">
 <meta name="DC.title" content="Predicting phenotypes from novel genomic markers using deep learning">
 <meta name="DC.creator" content="Shivani Sehrawat">
@@ -132,6 +137,7 @@ footer.site a{color:#CBD5E1}
   "url": "https://keyhannajafian.github.io/publications/predicting-phenotypes-novel-genomic-markers-deep-learning/",
   "mainEntityOfPage": "https://keyhannajafian.github.io/publications/predicting-phenotypes-novel-genomic-markers-deep-learning/",
   "datePublished": "2023",
+  "dateModified": "2026-09-18",
   "inLanguage": "en",
   "abstract": "Genomic selection (GS) models use single nucleotide polymorphism (SNP) markers to predict phenotypes. However, these predictive models face challenges due to the high dimensionality of genome-wide SNP marker data. Thanks to recent breakthroughs in DNA sequencing and decreased sequencing cost, the study of novel genomic variants such as structural variations (SVs) and transposable elements (TEs) become increasingly prevalent. In this article, we develop a deep convolutional neural network model, NovGMDeep, to predict phenotypes using SVs and TEs markers for GS. The proposed model is trained and tested on samples of Arabidopsis thaliana and Oryza sativa using k-fold cross-validation. The prediction accuracy is evaluated using Pearson's Correlation Coefficient (PCC), mean absolute error (MAE) and SD of MAE. The predicted results showed higher correlation when the model is trained with SVs and TEs than with SNPs. NovGMDeep also has higher prediction accuracy when comparing with conventional statistical models. This work sheds light on the unappreciated function of SVs and TEs in genotype-to-phenotype associations, as well as their extensive significance and value in crop development.",
   "about": [
@@ -186,12 +192,20 @@ footer.site a{color:#CBD5E1}
   ],
   "keywords": "genomic selection, structural variants, transposable elements, SNP markers, phenotype prediction, deep learning, convolutional neural network, Arabidopsis thaliana, Oryza sativa, crop breeding, bioinformatics, genotype to phenotype",
   "isPartOf": {
-    "@type": "Periodical",
-    "name": "Bioinformatics Advances, volume 3, issue 1, article vbad028"
+    "@type": "PublicationIssue",
+    "issueNumber": "1",
+    "isPartOf": {
+      "@type": "PublicationVolume",
+      "volumeNumber": "3",
+      "isPartOf": {
+        "@type": "Periodical",
+        "name": "Bioinformatics Advances, volume 3, issue 1, article vbad028"
+      }
+    }
   },
   "publisher": {
     "@type": "Organization",
-    "name": "Bioinformatics Advances, volume 3, issue 1, article vbad028"
+    "name": "Oxford University Press"
   },
   "creativeWorkStatus": "Published",
   "citation": "Bioinformatics Advances, volume 3, issue 1, article vbad028",
@@ -203,7 +217,9 @@ footer.site a{color:#CBD5E1}
     },
     {
       "@type": "Person",
-      "name": "Keyhan Najafian"
+      "name": "Keyhan Najafian",
+      "identifier": "https://orcid.org/0000-0003-3050-8107",
+      "sameAs": "https://orcid.org/0000-0003-3050-8107"
     },
     {
       "@type": "Person",
@@ -219,6 +235,7 @@ footer.site a{color:#CBD5E1}
   ],
   "sameAs": "https://doi.org/10.1093/bioadv/vbad028",
   "license": "CC BY 4.0",
+  "isAccessibleForFree": true,
   "codeRepository": [
     "https://github.com/shivanisehrawat4/NovGMDeep"
   ]
