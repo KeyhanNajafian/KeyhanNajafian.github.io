@@ -163,9 +163,6 @@ export const PublicationsSection: React.FC = () => {
                     <span className="inline-block px-2.5 py-0.5 rounded-md bg-emerald-50 border border-emerald-200/70 text-[#047857] text-[11px] font-mono font-semibold">
                       {pub.venueShort}
                     </span>
-                    <span className="text-xs font-mono font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
-                      {pub.year}
-                    </span>
                   </div>
 
                   {/* Title */}
