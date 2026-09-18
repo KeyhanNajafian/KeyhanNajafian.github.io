@@ -648,6 +648,50 @@ def render_publication(pub: Dict[str, Any], data: Dict[str, Any], area: Dict[str
                 og_type="article")
 
 
+def dataset_card(
+    dset: Dict[str, Any],
+    data: Dict[str, Any],
+    base: str
+) -> str:
+    """ Render a dataset card carrying the metadata of the paper that introduced it.
+
+        Args:
+            dset: Dataset record.
+            data: Full data file.
+            base: Site base URL.
+
+        Returns:
+            HTML fragment.
+    """
+    src = next(p for p in data["publications"] if p["slug"] == dset["relatedPublication"])
+
+    authors = author_html(src["authors"][:4], data["site"]["authorName"])
+    if len(src["authors"]) > 4:
+        authors += " et al."
+
+    doi_line = ""
+    if src.get("doi"):
+        doi_line = (f'<p class="year"><a href="https://doi.org/{esc(src["doi"])}">'
+                    f'doi:{esc(src["doi"])}</a></p>')
+
+    links = []
+    if dset.get("externalUrl"):
+        links.append(f'<a href="{esc(dset["externalUrl"])}" rel="noopener">Download</a>')
+    if dset.get("repositoryUrl"):
+        links.append(f'<a href="{esc(dset["repositoryUrl"])}" rel="noopener">Code</a>')
+    link_line = f'<p class="year">Dataset: {" &middot; ".join(links)}</p>' if links else ""
+
+    return (
+        f'<article class="card">'
+        f'<h4><a href="{base}/datasets/{dset["slug"]}/">{esc(dset["title"])}</a></h4>'
+        f'<p class="year">{esc(src["venueShort"])} &middot; {esc(src["venue"])}</p>'
+        f'<p class="authors">{authors}</p>'
+        f'<p>{esc(clip(dset["description"], 320))}</p>'
+        f'{doi_line}{link_line}'
+        f'</article>'
+    )
+
+
 def render_index(data: Dict[str, Any]) -> str:
     """ Render the single publications page, divided into the two research areas.
 
@@ -712,11 +756,7 @@ def render_index(data: Dict[str, Any]) -> str:
                  if any(p["slug"] == d["relatedPublication"] for p in pubs)]
         dataset_html = ""
         if dsets:
-            items = "".join(
-                f'<article class="card"><h4><a href="{base}/datasets/{d["slug"]}/">'
-                f'{esc(d["title"])}</a></h4><p>{esc(clip(d["description"], 320))}</p></article>'
-                for d in dsets
-            )
+            items = "".join(dataset_card(d, data, base) for d in dsets)
             dataset_html = (f'<h3 class="sub">Datasets from this area</h3>{items}')
 
         sections.append(
@@ -839,13 +879,27 @@ def render_dataset(dset: Dict[str, Any], data: Dict[str, Any]) -> str:
 
     tags = "".join(f'<span class="tag">{esc(k)}</span>' for k in dset["keywords"])
 
+    source_authors = author_html(pub["authors"][:4], data["site"]["authorName"])
+    if len(pub["authors"]) > 4:
+        source_authors += " et al."
+    source_meta = f'{source_authors} &middot; {esc(pub["venueShort"])}'
+
+    facts = [("Introduced in", esc(pub["venue"])), ("Year", str(pub["year"]))]
+    if pub.get("doi"):
+        facts.append(("DOI", f'<a href="https://doi.org/{esc(pub["doi"])}">{esc(pub["doi"])}</a>'))
+    if dset.get("repositoryUrl"):
+        facts.append(("Code", f'<a href="{esc(dset["repositoryUrl"])}">{esc(dset["repositoryUrl"])}</a>'))
+    facts_html = "".join(f"<dt>{esc(k)}</dt><dd>{v}</dd>" for k, v in facts)
+
     body = f"""
 <div class="wrap">
 {breadcrumbs(base, trail)}
 <main id="main">
 <h1>{esc(dset["title"])}</h1>
+<p class="meta">{source_meta}</p>
 <p class="lede">{esc(dset["description"])}</p>
 {external}
+<dl class="facts">{facts_html}</dl>
 <h2>Associated publication</h2>
 <article class="card"><h3><a href="{base}/publications/{pub["slug"]}/">{esc(pub["title"])}</a></h3>
 <p class="year">{esc(pub["venueShort"])}</p><p>{esc(pub["summary"])}</p></article>
