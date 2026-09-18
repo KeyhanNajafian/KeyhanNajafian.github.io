@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Using Deep Learning to Determine Kidney Function Decline in Patients with ADPKD | JASN 2023 | Keyhan Najafian</title>
+<meta name="description" content="Predicts which patients with autosomal dominant polycystic kidney disease will lose kidney function rapidly, by fusing MRI features with clinical variables rather than relying on height-adjusted total kidney volume alone.">
+<link rel="canonical" href="https://keyhannajafian.github.io/publications/kidney-function-decline-adpkd-deep-learning/">
+<meta name="author" content="Keyhan Najafian">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Using Deep Learning to Determine Kidney Function Decline in Patients with ADPKD | JASN 2023 | Keyhan Najafian">
+<meta property="og:description" content="Predicts which patients with autosomal dominant polycystic kidney disease will lose kidney function rapidly, by fusing MRI features with clinical variables rather than relying on height-adjusted total kidney volume alone.">
+<meta property="og:url" content="https://keyhannajafian.github.io/publications/kidney-function-decline-adpkd-deep-learning/">
+<meta property="og:site_name" content="Keyhan Najafian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Using Deep Learning to Determine Kidney Function Decline in Patients with ADPKD | JASN 2023 | Keyhan Najafian">
+<meta name="twitter:description" content="Predicts which patients with autosomal dominant polycystic kidney disease will lose kidney function rapidly, by fusing MRI features with clinical variables rather than relying on height-adjusted total kidney volume alone.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0F172A;--muted:#475569;--faint:#64748B;--line:#E2E8F0;--bg:#F8FAFC;
+--card:#FFFFFF;--emerald:#047857;--emerald-bg:#ECFDF5;--sky:#0369A1;--sky-bg:#F0F9FF}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+line-height:1.65;-webkit-font-smoothing:antialiased}
+code,pre,.mono{font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+a{color:var(--sky);text-decoration:none}
+a:hover{text-decoration:underline}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:1rem;top:1rem;position:fixed;background:#fff;padding:.6rem 1rem;
+border-radius:8px;border:1px solid var(--line);z-index:50}
+.wrap{max-width:60rem;margin:0 auto;padding:0 1.25rem}
+header.site{background:rgba(248,250,252,.92);border-bottom:1px solid var(--line);
+position:sticky;top:0;z-index:20;backdrop-filter:blur(8px)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;
+gap:1rem;padding-top:.85rem;padding-bottom:.85rem;flex-wrap:wrap}
+.brand{font-weight:800;color:var(--ink);letter-spacing:-.01em}
+.brand span{display:block;font-size:.72rem;font-weight:500;color:var(--faint);letter-spacing:0}
+header.site nav{display:flex;gap:1rem;font-size:.86rem;font-weight:600}
+header.site nav a{color:var(--muted)}
+header.site nav a[aria-current="page"]{color:var(--emerald)}
+.crumbs{font-size:.78rem;color:var(--faint);padding:1.25rem 0 0}
+.crumbs a{color:var(--faint)}
+main{padding-bottom:4rem}
+h1{font-size:clamp(1.55rem,3.6vw,2.2rem);line-height:1.25;letter-spacing:-.02em;
+margin:.75rem 0 .5rem;font-weight:800}
+h2{font-size:1.15rem;margin:2.25rem 0 .65rem;letter-spacing:-.01em;font-weight:700;
+padding-bottom:.4rem;border-bottom:1px solid var(--line)}
+h3{font-size:1rem;margin:1.5rem 0 .4rem;font-weight:700}
+p{margin:.65rem 0}
+.lede{font-size:1.02rem;color:var(--muted)}
+.meta{color:var(--muted);font-size:.9rem;margin:.35rem 0}
+.meta .me{font-weight:700;color:var(--ink);border-bottom:2px solid #10B981}
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;margin:.9rem 0}
+.tag{font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:.2rem .55rem;
+border-radius:6px;background:#F1F5F9;border:1px solid var(--line);color:var(--muted)}
+.tag.area{background:var(--emerald-bg);border-color:#A7F3D0;color:var(--emerald);font-weight:600}
+.links{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.1rem 0 .25rem}
+.links a{font-size:.82rem;font-weight:600;padding:.45rem .8rem;border-radius:8px;
+border:1px solid var(--line);background:var(--card)}
+.links a.primary{background:var(--sky);border-color:var(--sky);color:#fff}
+blockquote.abstract{margin:0;padding:1rem 1.15rem;background:var(--card);
+border:1px solid var(--line);border-left:3px solid var(--emerald);border-radius:0 12px 12px 0}
+blockquote.abstract p{margin:0;color:#1E293B}
+ul{margin:.5rem 0;padding-left:1.15rem}
+li{margin:.3rem 0;color:#1E293B}
+dl.facts{display:grid;grid-template-columns:auto 1fr;gap:.35rem 1rem;margin:.5rem 0;
+font-size:.9rem}
+dl.facts dt{color:var(--faint);font-weight:600}
+dl.facts dd{margin:0}
+pre.cite{background:#0F172A;color:#E2E8F0;padding:1rem;border-radius:12px;
+overflow-x:auto;font-size:.74rem;line-height:1.55}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+padding:1.1rem 1.15rem;margin:.75rem 0}
+.card h3{margin:0 0 .3rem;font-size:1.02rem}
+.card h3 a{color:var(--ink)}
+.card p{margin:.35rem 0;font-size:.88rem;color:var(--muted)}
+.year{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--faint);margin:.2rem 0}
+.authors{font-size:.85rem;color:var(--muted);margin:.25rem 0}
+h3.sub{margin-top:1.75rem;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;
+color:var(--faint);font-family:'JetBrains Mono',monospace}
+section[id]{scroll-margin-top:5rem;padding-top:.5rem}
+a.tag.area{text-decoration:none}
+a.tag.area:hover{background:#D1FAE5}
+.backtop{font-size:.78rem;margin-top:1.25rem}
+footer.site{border-top:1px solid var(--line);background:#0F172A;color:#94A3B8;
+padding:2rem 0;font-size:.85rem}
+footer.site a{color:#CBD5E1}
+@media(max-width:640px){dl.facts{grid-template-columns:1fr}dl.facts dd{margin-bottom:.5rem}}
+</style>
+<meta name="citation_title" content="Using Deep Learning to Determine Kidney Function Decline in Patients with ADPKD">
+<meta name="citation_publication_date" content="2023">
+<meta name="citation_date" content="2023">
+<meta name="citation_conference_title" content="Journal of the American Society of Nephrology, volume 34, issue 11S, page 406">
+<meta name="citation_doi" content="10.1681/ASN.20233411S1406f">
+<meta name="citation_abstract_html_url" content="https://keyhannajafian.github.io/publications/kidney-function-decline-adpkd-deep-learning/">
+<meta name="DC.title" content="Using Deep Learning to Determine Kidney Function Decline in Patients with ADPKD">
+<meta name="DC.date" content="2023">
+<meta name="DC.type" content="Text">
+<meta name="DC.source" content="Journal of the American Society of Nephrology, volume 34, issue 11S, page 406">
+<meta name="DC.identifier" content="https://doi.org/10.1681/ASN.20233411S1406f">
+<meta name="DC.subject" content="autosomal dominant polycystic kidney disease">
+<meta name="DC.subject" content="ADPKD">
+<meta name="DC.subject" content="kidney function decline">
+<meta name="DC.subject" content="eGFR">
+<meta name="DC.subject" content="kidney MRI">
+<meta name="DC.subject" content="total kidney volume">
+<meta name="DC.subject" content="deep learning">
+<meta name="DC.subject" content="multimodal feature fusion">
+<meta name="DC.subject" content="EfficientNet">
+<meta name="DC.subject" content="risk stratification">
+<meta name="DC.subject" content="nephrology">
+<meta name="DC.subject" content="precision health">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  "headline": "Using Deep Learning to Determine Kidney Function Decline in Patients with ADPKD",
+  "name": "Using Deep Learning to Determine Kidney Function Decline in Patients with ADPKD",
+  "url": "https://keyhannajafian.github.io/publications/kidney-function-decline-adpkd-deep-learning/",
+  "mainEntityOfPage": "https://keyhannajafian.github.io/publications/kidney-function-decline-adpkd-deep-learning/",
+  "datePublished": "2023",
+  "inLanguage": "en",
+  "abstract": "Autosomal dominant polycystic kidney disease (ADPKD) is associated with progressive kidney cyst growth, eventually leading to kidney failure in many patients. The current risk stratification tool uses height-adjusted total kidney volume (TKV) by age. However, it does not include clinical or other imaging features that may contribute to kidney function decline. In this study, we developed a deep learning classifier that integrates clinical and imaging features to predict rapid estimated GFR (eGFR) decline in patients with ADPKD. We included 120 patients with confirmed ADPKD with at least one MRI scan and at least 3 serial eGFR measures. An eGFR decline of 4 mL/min/1.73 m2 per year or greater was defined as rapid progression. We tripled the sample size by extracting the largest manually segmented 2D MRI slice and its two neighbouring slices for each patient. Pixel-level and spatial-level transformations were applied to the images to enhance our deep model's generalizability and robustness. The model consisted of three components: EfficientNet-b2, FuseNet, and a classifier, with a train:validation:test split of 63:17:20. The EfficientNet-b2 extracted 1000 features from each MRI slice. The FuseNet performed feature fusion on 15 clinically relevant features associated with ADPKD. The feature maps obtained from both models were concatenated and fed into the classifier. Weighted-average F1 and AUC scores and the confusion matrix were used to assess the model's performance.",
+  "about": [
+    {
+      "@type": "Thing",
+      "name": "autosomal dominant polycystic kidney disease"
+    },
+    {
+      "@type": "Thing",
+      "name": "ADPKD"
+    },
+    {
+      "@type": "Thing",
+      "name": "kidney function decline"
+    },
+    {
+      "@type": "Thing",
+      "name": "eGFR"
+    },
+    {
+      "@type": "Thing",
+      "name": "kidney MRI"
+    },
+    {
+      "@type": "Thing",
+      "name": "total kidney volume"
+    },
+    {
+      "@type": "Thing",
+      "name": "deep learning"
+    },
+    {
+      "@type": "Thing",
+      "name": "multimodal feature fusion"
+    },
+    {
+      "@type": "Thing",
+      "name": "EfficientNet"
+    },
+    {
+      "@type": "Thing",
+      "name": "risk stratification"
+    },
+    {
+      "@type": "Thing",
+      "name": "nephrology"
+    },
+    {
+      "@type": "Thing",
+      "name": "precision health"
+    }
+  ],
+  "keywords": "autosomal dominant polycystic kidney disease, ADPKD, kidney function decline, eGFR, kidney MRI, total kidney volume, deep learning, multimodal feature fusion, EfficientNet, risk stratification, nephrology, precision health",
+  "isPartOf": {
+    "@type": "PublicationEvent",
+    "name": "Journal of the American Society of Nephrology, volume 34, issue 11S, page 406"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Journal of the American Society of Nephrology, volume 34, issue 11S, page 406"
+  },
+  "creativeWorkStatus": "Published",
+  "citation": "Journal of the American Society of Nephrology, volume 34, issue 11S, page 406",
+  "genre": "Precision Health",
+  "identifier": [
+    {
+      "@type": "PropertyValue",
+      "propertyID": "DOI",
+      "value": "10.1681/ASN.20233411S1406f"
+    }
+  ],
+  "sameAs": "https://doi.org/10.1681/ASN.20233411S1406f"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://keyhannajafian.github.io/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Publications",
+      "item": "https://keyhannajafian.github.io/publications/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Kidney function decline in ADPKD",
+      "item": "https://keyhannajafian.github.io/publications/kidney-function-decline-adpkd-deep-learning/"
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="https://keyhannajafian.github.io/">Dr. Keyhan Najafian<span>Postdoctoral Researcher, Vision Research Lab, University of Calgary</span></a>
+    <nav aria-label="Main"><a href="https://keyhannajafian.github.io/">Home</a><a href="https://keyhannajafian.github.io/publications/" aria-current="page">Publications</a></nav>
+  </div>
+</header>
+
+<div class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="https://keyhannajafian.github.io/">Home</a> / <a href="https://keyhannajafian.github.io/publications/">Publications</a> / Kidney function decline in ADPKD</nav>
+<main id="main">
+<article>
+  <p><span class="tag area">Precision Health</span> <span class="year">JASN 2023</span></p>
+  <h1>Using Deep Learning to Determine Kidney Function Decline in Patients with ADPKD</h1>
+  <p class="meta">Full author list to be added.</p>
+  
+  <p class="lede">Predicts which patients with autosomal dominant polycystic kidney disease will lose kidney function rapidly, by fusing MRI features with clinical variables rather than relying on height-adjusted total kidney volume alone.</p>
+  <div class="links"><a class="primary" href="https://doi.org/10.1681/ASN.20233411S1406f" rel="noopener">Paper</a></div>
+
+  <h2>Publication details</h2>
+  <dl class="facts"><dt>Venue</dt><dd>Journal of the American Society of Nephrology, volume 34, issue 11S, page 406</dd><dt>Year</dt><dd>2023</dd><dt>DOI</dt><dd><a href="https://doi.org/10.1681/ASN.20233411S1406f">10.1681/ASN.20233411S1406f</a></dd></dl>
+
+  <h2>Abstract</h2>
+  <blockquote class="abstract"><p>Autosomal dominant polycystic kidney disease (ADPKD) is associated with progressive kidney cyst growth, eventually leading to kidney failure in many patients. The current risk stratification tool uses height-adjusted total kidney volume (TKV) by age. However, it does not include clinical or other imaging features that may contribute to kidney function decline. In this study, we developed a deep learning classifier that integrates clinical and imaging features to predict rapid estimated GFR (eGFR) decline in patients with ADPKD. We included 120 patients with confirmed ADPKD with at least one MRI scan and at least 3 serial eGFR measures. An eGFR decline of 4 mL/min/1.73 m2 per year or greater was defined as rapid progression. We tripled the sample size by extracting the largest manually segmented 2D MRI slice and its two neighbouring slices for each patient. Pixel-level and spatial-level transformations were applied to the images to enhance our deep model&#x27;s generalizability and robustness. The model consisted of three components: EfficientNet-b2, FuseNet, and a classifier, with a train:validation:test split of 63:17:20. The EfficientNet-b2 extracted 1000 features from each MRI slice. The FuseNet performed feature fusion on 15 clinically relevant features associated with ADPKD. The feature maps obtained from both models were concatenated and fed into the classifier. Weighted-average F1 and AUC scores and the confusion matrix were used to assess the model&#x27;s performance.</p></blockquote>
+  <p class="meta">Abstract shown as published; see the publisher page for the complete text.</p>
+
+  <h2>Key contributions</h2><ul><li>Combines imaging and clinical information rather than relying on height-adjusted total kidney volume by age, the current risk stratification standard.</li><li>Fuses 1000 image features from EfficientNet-b2 with 15 clinically relevant ADPKD variables through a dedicated fusion network.</li><li>Expands a small cohort by using the largest segmented slice and its two neighbours per patient, with pixel-level and spatial-level augmentation.</li></ul>
+  <h2>Methods and techniques</h2><ul><li>EfficientNet-b2 feature extraction</li><li>FuseNet clinical feature fusion</li><li>Multimodal feature concatenation</li><li>Pixel-level and spatial-level augmentation</li><li>Weighted-average F1 and AUC evaluation</li></ul>
+  <h2>Data and materials</h2><ul><li>120 patients with confirmed ADPKD, each with at least one MRI scan and at least three serial eGFR measures</li><li>Rapid progression defined as eGFR decline of 4 mL/min/1.73 m2 per year or greater</li><li>Manually segmented 2D MRI slices plus two neighbouring slices per patient</li><li>Train, validation, and test split of 63:17:20</li></ul>
+  
+  <h2>Applications</h2><ul><li>Risk stratification of ADPKD patients before kidney failure</li><li>Multimodal prognostic modeling in nephrology</li><li>Earlier identification of candidates for intervention</li></ul>
+
+  
+
+  <h2>Research topics and keywords</h2>
+  <div class="tags"><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">autosomal dominant polycystic kidney disease</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">ADPKD</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">kidney function decline</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">eGFR</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">kidney MRI</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">total kidney volume</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">deep learning</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">multimodal feature fusion</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">EfficientNet</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">risk stratification</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">nephrology</a><a class="tag" href="https://keyhannajafian.github.io/publications/#precision-health">precision health</a></div>
+
+  <h2>Cite this work</h2>
+  <pre class="cite">@article{najafian2023adpkd,
+  title   = {Using Deep Learning to Determine Kidney Function Decline in Patients with ADPKD},
+  journal = {Journal of the American Society of Nephrology},
+  volume  = {34},
+  number  = {11S},
+  pages   = {406},
+  year    = {2023},
+  doi     = {10.1681/ASN.20233411S1406f}
+}</pre>
+
+  <h2>Related work in Precision Health</h2>
+  <article class="card"><h3><a href="https://keyhannajafian.github.io/publications/brain-metastasis-invasion-pattern-mri-machine-learning/">Machine learning prediction of brain metastasis invasion pattern on brain magnetic resonance imaging scans</a></h3><p class="year">Neuro-Oncology Advances 2024</p><p>Brain metastasis invasion pattern is prognostic but can currently only be read from resected tissue. This study shows it can be predicted from preoperative MRI with 85% accuracy, using radiomic features from the peritumoral edema, in a task where expert neuroradiologists reach only 44 to 59%.</p></article><article class="card"><h3><a href="https://keyhannajafian.github.io/publications/celiac-disease-diagnosis-histopathology-deep-learning/">A Deep Learning-Based Pipeline for Celiac Disease Diagnosis Using Histopathological Images</a></h3><p class="year">CAIP 2021</p><p>Diagnoses celiac disease from whole slide images of duodenal biopsies using far fewer slides than a conventional pipeline needs. An Image Assembler synthesizes training examples by recomposing tissue segments onto a blank canvas, and patient-level predictions come from a majority vote across 101 synthesized images.</p></article><article class="card"><h3><a href="https://keyhannajafian.github.io/publications/overview-of-machine-learning-fundamentals-classic-approaches/">Overview of Machine Learning Part 1: Fundamentals and Classic Approaches</a></h3><p class="year">Neuroimaging Clin. N. Am. 2020</p><p>A review written for clinicians and imaging researchers, covering classic supervised and unsupervised machine learning, the full predictive modeling workflow, and the practices that decide whether a model generalizes. Written around the constraint that defines medical datasets: small sample sizes and missing values.</p></article>
+  <p><a href="https://keyhannajafian.github.io/publications/#precision-health">All Precision Health publications</a> &middot;
+     <a href="https://keyhannajafian.github.io/publications/">Complete publication list</a></p>
+</article>
+</main>
+</div>
+
+<footer class="site">
+  <div class="wrap">
+    <p>Keyhan Najafian, Vision Research Lab, Department of Computer Science, University of Calgary.</p>
+    <p><a href="https://keyhannajafian.github.io/">Homepage</a> &middot; <a href="https://keyhannajafian.github.io/publications/">All publications</a> &middot;
+       <a href="https://scholar.google.ca/citations?hl=en&amp;user=3RI_XdQAAAAJ">Google Scholar</a> &middot;
+       <a href="https://github.com/KeyhanNajafian">GitHub</a></p>
+  </div>
+</footer>
+</body>
+</html>
