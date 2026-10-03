@@ -37,23 +37,6 @@ export const AboutSection: React.FC = () => {
               </p>
             ))}
           </div>
-
-          {/* Farm-to-Edge AI Context Callout */}
-          <div className="mt-6 p-4 sm:p-5 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex items-start gap-3">
-              <div className="p-2 rounded-lg bg-emerald-100/70 text-[#047857] mt-0.5 sm:mt-0 flex-shrink-0">
-                <Sprout className="w-5 h-5" />
-              </div>
-              <div>
-                <h4 className="text-sm font-bold text-[#0F172A]">
-                  Applied Philosophy: Theory Grounded in In-Field Deployment
-                </h4>
-                <p className="text-xs sm:text-sm text-slate-600 mt-0.5">
-                  Bridging pure machine learning theory with robust edge-hardware execution, high-bandwidth streaming, and reliable real-world inference.
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Core Pillars / Strategic Research Axes */}

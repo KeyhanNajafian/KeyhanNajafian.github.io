@@ -37,12 +37,12 @@ export const CORE_PILLARS = [
   },
   {
     title: 'Medical Imaging & Diagnostics',
-    description: 'Developing high-precision clinical neural solvers for volumetric MRI reconstruction, brain metastasis invasion prediction, and histopathological diagnosis.',
+    description: 'Developing radiomic and convolutional deep learning models for noninvasive MRI biomarkers, brain metastasis invasion prediction, and histopathological image classification.',
     icon: 'Activity'
   },
   {
     title: 'Edge Deployment & Real-time Systems',
-    description: 'Deploying high-throughput distributed inference pipelines on embedded CUDA devices and edge clusters.',
+    description: 'Deploying high-throughput inference on embedded CUDA devices and edge clusters.',
     icon: 'Cpu'
   }
 ];
