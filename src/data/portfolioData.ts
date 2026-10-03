@@ -13,7 +13,7 @@ export const PERSONAL_INFO = {
   scholarUrl: 'https://scholar.google.ca/citations?hl=en&user=3RI_XdQAAAAJ',
   labUrl: 'https://vision.cpsc.ucalgary.ca/',
   bioSubtitle: "Postdoctoral Researcher in AI Systems and Deployment at the University of Calgary's Vision Research Lab.",
-  aboutMeText: "With over eight years of experience in computer vision and deep learning, Dr. Najafian specializes in architecting robust automation backends for precision agriculture, medical imaging, and signal processing. Having grown up on a farm, his firsthand experience with agricultural data collection profoundly shapes his approach to building practical, deployment-ready AI systems. His expertise spans the end-to-end development of multilevel AI architectures, from high-capacity foundation models to resource-efficient systems engineered for portable edge-computing hardware.",
+  aboutMeText: "Dr. Keyhan Najafian builds vision and signal models that perform when labeled data is scarce. His doctoral research introduced semi-self-supervised pipelines that synthesize training data from a handful of annotated examples, then adapt to real-world imagery through staged domain adaptation and pseudo-labeling, cutting annotation requirements by roughly ninety percent while matching or surpassing fully supervised baselines.\n\nThe approach generalizes across domains. In precision agriculture it spans detection, semantic and instance segmentation, and video analysis of dense crop canopies, alongside public benchmarks built with the Global Wheat Dataset Consortium. In medical imaging it recovers noninvasive biomarkers from MRI and histopathology, including a radiomics model that predicts brain metastasis invasion pattern at 85% accuracy where expert radiologists reach 44 to 59%. In biosignal analysis it extends to EEG foundation models and brain-computer interface decoding.\n\nA second thread runs through all of it: making research deployable. He designs tiered architectures spanning high-capacity foundation models and resource-efficient variants for edge hardware, and has delivered systems in production use for crop disease screening.",
   researchFocusTags: [
     'Precision Agriculture',
     'Medical Imaging Systems',
@@ -42,7 +42,7 @@ export const CORE_PILLARS = [
   },
   {
     title: 'Edge Deployment & Real-time Systems',
-    description: 'Deploying high-throughput distributed inference pipelines on embedded CUDA devices and edge clusters with sub-15ms latency and zero frame loss.',
+    description: 'Deploying high-throughput distributed inference pipelines on embedded CUDA devices and edge clusters.',
     icon: 'Cpu'
   }
 ];

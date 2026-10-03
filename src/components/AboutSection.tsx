@@ -26,17 +26,16 @@ export const AboutSection: React.FC = () => {
           <h2 className="text-2xl sm:text-3xl font-bold text-[#0F172A] tracking-tight">
             About Me
           </h2>
-          <span className="ml-auto text-xs font-mono font-semibold uppercase tracking-wider text-[#047857] bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-            Vision & Systems Research
-          </span>
         </div>
 
         {/* Primary Narrative Card */}
         <div className="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 shadow-sm">
-          <div className="prose prose-slate max-w-none">
-            <p className="text-base sm:text-lg text-slate-800 leading-relaxed font-normal">
-              {PERSONAL_INFO.aboutMeText}
-            </p>
+          <div className="prose prose-slate max-w-none space-y-4">
+            {PERSONAL_INFO.aboutMeText.split('\n\n').map((paragraph, index) => (
+              <p key={index} className="text-base sm:text-lg text-slate-800 leading-relaxed font-normal">
+                {paragraph}
+              </p>
+            ))}
           </div>
 
           {/* Farm-to-Edge AI Context Callout */}
@@ -53,9 +52,6 @@ export const AboutSection: React.FC = () => {
                   Bridging pure machine learning theory with robust edge-hardware execution, high-bandwidth streaming, and reliable real-world inference.
                 </p>
               </div>
-            </div>
-            <div className="flex items-center gap-2 font-mono text-xs text-[#0369A1] font-semibold flex-shrink-0">
-              <span className="px-2.5 py-1 rounded bg-sky-50 border border-sky-200">8+ Years Experience</span>
             </div>
           </div>
         </div>

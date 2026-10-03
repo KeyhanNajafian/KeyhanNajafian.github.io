@@ -128,9 +128,13 @@ export const CvModal: React.FC<CvModalProps> = ({ isOpen, onClose }) => {
             <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-500 border-b border-slate-200 pb-1 mb-2">
               Research Profile & Summary
             </h4>
-            <p className="text-xs sm:text-sm text-slate-800 leading-relaxed">
-              {PERSONAL_INFO.aboutMeText}
-            </p>
+            <div className="space-y-2">
+              {PERSONAL_INFO.aboutMeText.split('\n\n').map((paragraph, index) => (
+                <p key={index} className="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
           </div>
 
           {/* Education */}
