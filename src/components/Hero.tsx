@@ -6,7 +6,6 @@ import {
   Mail,
   Check,
   Copy,
-  FileText,
   MapPin,
   Building2,
   Sparkles,
@@ -14,11 +13,7 @@ import {
 } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 
-interface HeroProps {
-  onOpenCv: () => void;
-}
-
-export const Hero: React.FC<HeroProps> = ({ onOpenCv }) => {
+export const Hero: React.FC = () => {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [imgError, setImgError] = useState(false);
 
@@ -154,15 +149,6 @@ export const Hero: React.FC<HeroProps> = ({ onOpenCv }) => {
                   </button>
                 </div>
 
-                {/* CV Button */}
-                <button
-                  onClick={onOpenCv}
-                  id="hero-cv-btn"
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-lg border border-emerald-300 bg-emerald-50/70 hover:bg-emerald-100/70 text-[#047857] text-sm font-semibold transition-colors"
-                >
-                  <FileText className="w-4 h-4" />
-                  <span>Curriculum Vitae</span>
-                </button>
               </div>
             </div>
 

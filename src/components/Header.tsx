@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { FileText, Menu, X, ExternalLink, GraduationCap, Github, Linkedin, Mail } from 'lucide-react';
+import { Menu, X, GraduationCap, Github, Linkedin } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { GeometricKNLogo } from './GeometricKNLogo';
 
-interface HeaderProps {
-  onOpenCv: () => void;
-}
-
-export const Header: React.FC<HeaderProps> = ({ onOpenCv }) => {
+export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
@@ -16,7 +12,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenCv }) => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
 
-      const sections = ['hero', 'about', 'education', 'experience', 'skills', 'contact'];
+      const sections = ['hero', 'about', 'contact'];
       const scrollPos = window.scrollY + 120;
 
       for (const sectionId of sections) {
@@ -39,9 +35,6 @@ export const Header: React.FC<HeaderProps> = ({ onOpenCv }) => {
   const navLinks: { id: string; label: string; href?: string }[] = [
     { id: 'about', label: 'About' },
     { id: 'publications', label: 'Publications', href: '/publications/' },
-    { id: 'education', label: 'Education & Honors' },
-    { id: 'experience', label: 'Experience' },
-    { id: 'skills', label: 'Skills' },
     { id: 'contact', label: 'Contact' },
   ];
 
@@ -123,26 +116,10 @@ export const Header: React.FC<HeaderProps> = ({ onOpenCv }) => {
           >
             <Linkedin className="w-4 h-4" />
           </a>
-
-          <button
-            onClick={onOpenCv}
-            id="header-cv-button"
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#0369A1] hover:bg-[#025a8b] text-white text-xs font-semibold shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-[#0369A1] focus:ring-offset-2"
-          >
-            <FileText className="w-3.5 h-3.5" />
-            <span>CV</span>
-          </button>
         </div>
 
         {/* Mobile menu toggle */}
         <div className="flex sm:hidden items-center gap-2">
-          <button
-            onClick={onOpenCv}
-            className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-[#0369A1] text-white text-xs font-semibold"
-          >
-            <FileText className="w-3.5 h-3.5" />
-            <span>CV</span>
-          </button>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle navigation menu"

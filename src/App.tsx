@@ -1,42 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { AboutSection } from './components/AboutSection';
 import { PublicationsCallout } from './components/PublicationsCallout';
-import { EducationAccolades } from './components/EducationAccolades';
-import { ExperienceSection } from './components/ExperienceSection';
-import { SkillsSection } from './components/SkillsSection';
-import { TeachingServiceSection } from './components/TeachingServiceSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
-import { CvModal } from './components/CvModal';
-import { LayoutGrid, GraduationCap, Microscope, Mail } from 'lucide-react';
+import { LayoutGrid, Microscope, Mail } from 'lucide-react';
 
 export default function App() {
-  const [cvModalOpen, setCvModalOpen] = useState(false);
-
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A] flex flex-col font-sans pb-16 sm:pb-0">
       {/* Top Header */}
-      <Header onOpenCv={() => setCvModalOpen(true)} />
+      <Header />
 
       {/* Main Content Sections */}
       <main className="flex-grow">
-        <Hero onOpenCv={() => setCvModalOpen(true)} />
+        <Hero />
         <AboutSection />
         <PublicationsCallout />
-        <EducationAccolades />
-        <ExperienceSection />
-        <SkillsSection />
-        <TeachingServiceSection />
         <ContactSection />
       </main>
 
       {/* Footer */}
       <Footer />
-
-      {/* Academic Curriculum Vitae Modal */}
-      <CvModal isOpen={cvModalOpen} onClose={() => setCvModalOpen(false)} />
 
       {/* Mobile-Friendly Bottom Navigation Bar (matches mobile-first design) */}
       <nav
@@ -57,13 +43,6 @@ export default function App() {
           >
             <Microscope className="w-4 h-4 mb-0.5" />
             <span>Research</span>
-          </a>
-          <a
-            href="#education"
-            className="flex flex-col items-center justify-center text-slate-600 hover:text-[#047857] text-[10px] font-medium"
-          >
-            <GraduationCap className="w-4 h-4 mb-0.5" />
-            <span>Education</span>
           </a>
           <a
             href="#contact"
