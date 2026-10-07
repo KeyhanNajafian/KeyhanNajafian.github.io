@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, Linkedin, GraduationCap, BookOpen, Mail, ArrowUp, ExternalLink } from 'lucide-react';
+import { Github, Linkedin, GraduationCap, BookOpen, ArrowUp, ExternalLink } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { GeometricKNLogo } from './GeometricKNLogo';
 
@@ -65,13 +65,6 @@ export const Footer: React.FC = () => {
               className="w-9 h-9 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-colors"
             >
               <Linkedin className="w-4 h-4" />
-            </a>
-            <a
-              href={`mailto:${PERSONAL_INFO.email}`}
-              aria-label="Email"
-              className="w-9 h-9 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-colors"
-            >
-              <Mail className="w-4 h-4" />
             </a>
             <button
               onClick={scrollToTop}

@@ -3,8 +3,6 @@ export const PERSONAL_INFO = {
   title: 'Postdoctoral Researcher in AI Systems & Deployment',
   affiliation: "Vision Research Lab, University of Calgary",
   location: 'Calgary, Alberta, Canada',
-  email: '***REMOVED***',
-  altEmail: '***REMOVED***',
   avatarUrl: '/headshot.png',
   githubUrl: 'https://github.com/KeyhanNajafian',
   linkedinUrl: 'https://www.linkedin.com/in/keyhannajafian/',

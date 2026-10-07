@@ -3,25 +3,14 @@ import {
   Github,
   Linkedin,
   GraduationCap,
-  Mail,
-  Check,
-  Copy,
   MapPin,
   Building2,
-  Sparkles,
-  ExternalLink
+  Sparkles
 } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 
 export const Hero: React.FC = () => {
-  const [copiedEmail, setCopiedEmail] = useState(false);
   const [imgError, setImgError] = useState(false);
-
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText(PERSONAL_INFO.email);
-    setCopiedEmail(true);
-    setTimeout(() => setCopiedEmail(false), 2000);
-  };
 
   return (
     <section id="hero" className="pt-24 sm:pt-28 pb-12 sm:pb-16 relative">
@@ -124,31 +113,6 @@ export const Hero: React.FC = () => {
                   <Linkedin className="w-4 h-4" />
                   <span>LinkedIn</span>
                 </a>
-
-                {/* Email / Copy CTA */}
-                <div className="flex items-center">
-                  <a
-                    href={`mailto:${PERSONAL_INFO.email}`}
-                    id="hero-email-btn"
-                    className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-l-lg border border-slate-300 hover:border-slate-400 bg-slate-50 hover:bg-slate-100 text-[#0F172A] text-sm font-medium transition-colors"
-                  >
-                    <Mail className="w-4 h-4 text-slate-500" />
-                    <span>Email</span>
-                  </a>
-                  <button
-                    onClick={handleCopyEmail}
-                    title="Copy email to clipboard"
-                    id="hero-copy-email-btn"
-                    className="inline-flex items-center px-2.5 py-2.5 rounded-r-lg border-y border-r border-slate-300 hover:border-slate-400 bg-slate-50 hover:bg-slate-100 text-slate-600 transition-colors"
-                  >
-                    {copiedEmail ? (
-                      <Check className="w-4 h-4 text-[#047857]" />
-                    ) : (
-                      <Copy className="w-4 h-4" />
-                    )}
-                  </button>
-                </div>
-
               </div>
             </div>
 
