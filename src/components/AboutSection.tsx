@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sprout, Activity, Cpu, Layers, Award, CheckCircle2, ChevronRight } from 'lucide-react';
+import { Sprout, Activity, Cpu, Layers } from 'lucide-react';
 import { PERSONAL_INFO, CORE_PILLARS } from '../data/portfolioData';
 
 export const AboutSection: React.FC = () => {
